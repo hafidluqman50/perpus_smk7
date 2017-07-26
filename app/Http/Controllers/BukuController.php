@@ -168,7 +168,7 @@ class BukuController extends Controller
         $stok_pinjam   = $get_transaksi->stok_pinjam;
         $stok_buku     = $get_buku->stok_buku;
         $stok_kembali  = $stok_pinjam+$stok_buku;
-        $tgl_kembali   = $request->tanggal_kembali;
+        $tgl_kembali   = date('Y-m-d');
         $denda         = $this->HitungDenda($tgl_wajib,$tgl_kembali);
         if ($request->status==1) {    
             $data_kembali = [

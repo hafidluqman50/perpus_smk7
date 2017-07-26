@@ -107,4 +107,15 @@ class BukuPageController extends Controller
                      ->first();
         return view('Pengurus.Buku.page.kembalikan',compact('transaksi'));
     }
+
+    // public function DetailKembali($id_transaksi)
+    // {
+    //     $transaksi = DB::table('transaksi_buku')
+    //                  ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
+    //                  ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+    //                  ->select('transaksi_buku.*','siswa.nisn','siswa.nama_siswa','siswa.kelas','buku.judul_buku','buku.penerbit','buku.tahun_terbit')
+    //                  ->where('id_transaksi',$id_transaksi)
+    //                  ->first();
+    //     return view('Pengurus.Buku.page.detail-data_pengembalian',compact('transaksi'));  
+    // }
 }

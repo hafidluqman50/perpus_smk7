@@ -50,20 +50,10 @@
 											Kembalikan
 										</button>
 									</a>
-									<a href="{{ url('/petugas/detail-kembali',$data->id_transaksi) }}">
-										<button class="btn btn-warning">
-											Detail Kembali
-										</button>
-									</a>
 								@elseif(Auth::user()->level==2)
 									<a href="{{ url('/admin/kembali-buku',$data->id_transaksi) }}">
 										<button class="btn btn-success">
 											Kembalikan
-										</button>
-									</a>
-									<a href="{{ url('/admin/detail-kembali',$data->id_transaksi) }}">
-										<button class="btn btn-warning">
-											Detail Kembali
 										</button>
 									</a>
 								@endif

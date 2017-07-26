@@ -17,7 +17,7 @@ class BukuController extends Controller
     {
     	$this->buku = $buku;
     	$this->kategori_buku = $kategori_buku;
-        $this->transasksi = $transaksi;
+        $this->transaksi = $transaksi;
     }
 
     public function TambahBuku(Request $request)
@@ -161,14 +161,15 @@ class BukuController extends Controller
     public function KembalikanBuku($id_transaksi,Request $request)
     {
         $get_transaksi = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
-        $get_buku      = $this->buku->where('id_buku',$buku)->firstOrFail();
-        $tgl_pinjam    = $get_transaksi->tanggal_pinjam_buku;
+        $id_buku       = $get_transaksi->id_buku;
+        $get_buku      = $this->buku->where('id_buku',$id_buku)->firstOrFail();
+        $tgl_wajib     = $get_transaksi->tanggal_jatuh_tempo;
         $buku          = $get_transaksi->id_buku;
-        $stok_pinjam   = $get_transaksi->stok_dipinjam;
+        $stok_pinjam   = $get_transaksi->stok_pinjam;
         $stok_buku     = $get_buku->stok_buku;
         $stok_kembali  = $stok_pinjam+$stok_buku;
         $tgl_kembali   = $request->tanggal_kembali;
-        $denda = HitungDenda($tgl_pinjam,$tgl_kembali);
+        $denda         = $this->HitungDenda($tgl_wajib,$tgl_kembali);
         if ($request->status==1) {    
             $data_kembali = [
                 'status'                  => $request->status,
@@ -177,20 +178,20 @@ class BukuController extends Controller
         }
         else if($request->status==2) {
             $data_kembali = [
-                'tanggal_kembalikan_buku' => $tanggal_kembali,
+                'tanggal_kembalikan_buku' => $tgl_kembali,
                 'status'                  => $request->status,
                 'stok_pinjam'             => 0, 
                 'denda'                   => $denda*10000,
                 'updated_at'              => date('Y-m-d H:i:s')
             ];
         }
-        $this->buku->where('id_buku',$buku)->update(['stok_buku'=>$stok_kembali]);
+        $this->buku->where('id_buku',$id_buku)->update(['stok_buku'=>$stok_kembali]);
         $this->transaksi->where('id_transaksi',$id_transaksi)->update($data_kembali);
         if ($request->segment(2)=="petugas") {
-            return redirect('/petugas/data-kembali-buku');
+            return redirect('/petugas/data-pengembalian');
         }
         else if ($request->segment(2)=="admin") {
-            return redirect('/admin/data-kembali-buku');
+            return redirect('/admin/data-pengembalian');
         }
     }
 
@@ -207,6 +208,6 @@ class BukuController extends Controller
                 $minggu++;
             }
         }
-        echo $minggu;
+        return $minggu;
     }
 }

@@ -49,7 +49,7 @@ Route::group(['middleware'=>'isAuth'],function (){
 		// END UPDATE PROFILE PETUGAS //
 
 		// Route::get('/petugas/profile',['uses'=>'Petugas\PetugasPageController@DataUser','as'=>'data-user-petugas']);
-		// Route::delete('/delete/petugas/{username}',['uses'=>'Petugas\PetugasController@DeleteUser','as'=>'delete-petugas-siswa']);
+		// Route::get('/delete/petugas/{username}',['uses'=>'Petugas\PetugasController@DeleteUser','as'=>'delete-petugas-siswa']);
 
 		// CRUD BUKU //
 		Route::get('/petugas/data-buku',['uses'=>'BukuPageController@ShowBuku','as'=>'show-data-buku']);
@@ -67,7 +67,7 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::post('/insert/petugas/data-kategori',['uses'=>'BukuController@TambahKategori','as'=>'insert-data-kategori']);
 		Route::get('/petugas/edit-kategori/{id_kategori_buku}',['uses'=>'BukuPageController@EditKategori','as'=>'edit-data-kategori']);
 		Route::post('/update/petugas/data-kategori/{id_kategori_buku}',['uses'=>'BukuController@UpdateKategori','as'=>'insert-data-kategori']);
-		Route::delete('/delete/petugas/data-kategori/{id_kategori_buku}',['uses'=>'BukuController@DeleteKategori','as'=>'delete-data-kategori']);
+		Route::get('/delete/petugas/data-kategori/{id_kategori_buku}',['uses'=>'BukuController@DeleteKategori','as'=>'delete-data-kategori']);
 		// END CRUD KATEGORI BUKU //
 
 		// CRUD PEMINJAMAN BUKU //
@@ -76,7 +76,7 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::post('/pinjam/petugas/data-peminjaman',['uses'=>'BukuController@PinjamBuku','as'=>'insert-pinjam-buku']);
 		Route::get('/petugas/edit-data-peminjaman/{id_transaksi}',['uses'=>'BukuPageController@EditPinjam','as'=>'edit-pinjam-buku']);
 		Route::post('/edit/petugas/data-peminjaman/{id_transaksi}',['uses'=>'BukuController@UpdatePinjam','as'=>'update-pinjam-buku']);
-		Route::delete('/delete/petugas/data-pinjam/{id_transaksi}',['uses'=>'BukuController@DeletePinjam','as'=>'delete-pinjam-buku']);
+		Route::get('/delete/petugas/data-pinjam/{id_transaksi}',['uses'=>'BukuController@DeletePinjam','as'=>'delete-pinjam-buku']);
 		// END CRUD PEMINJAMAN BUKU //
 
 		// CRUD PENGEMBALIAN BUKU //
@@ -84,7 +84,7 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::post('/insert/petugas/data-pengembalian',['uses'=>'BukuController@KembalikanBuku','as'=>'insert-pinjam-buku']);
 		Route::get('/petugas/edit-data-pengembalian/{id_transaksi}',['uses'=>'BukuPageController@EditPengembalian','as'=>'edit-pinjam-buku']);
 		Route::post('/edit/petugas/data-pengembalian/{id_transaksi}',['uses'=>'BukuController@UpdatePengembalian','as'=>'update-pinjam-buku']);
-		Route::delete('/delete/petugas/data-pinjam/{id_transaksi}',['uses'=>'BukuController@DeletePengembalian','as'=>'delete-pinjam-buku']);
+		Route::get('/delete/petugas/data-pinjam/{id_transaksi}',['uses'=>'BukuController@DeletePengembalian','as'=>'delete-pinjam-buku']);
 		// END CRUD PENGEMBALIAN BUKU //
 	});
 //----------End Petugas--------//
@@ -128,7 +128,7 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::post('/pinjam/admin/data-peminjaman',['uses'=>'BukuController@PinjamBuku','as'=>'insert-pinjam-buku']);
 		Route::get('/admin/edit-data-peminjaman/{id_transaksi}',['uses'=>'BukuPageController@EditPinjam','as'=>'edit-pinjam-buku']);
 		Route::post('/edit/admin/data-peminjaman/{id_transaksi}',['uses'=>'BukuController@UpdatePinjam','as'=>'update-pinjam-buku']);
-		Route::delete('/delete/admin/data-pinjam/{id_transaksi}',['uses'=>'BukuController@DeletePinjam','as'=>'delete-pinjam-buku']);
+		Route::get('/delete/admin/data-pinjam/{id_transaksi}',['uses'=>'BukuController@DeletePinjam','as'=>'delete-pinjam-buku']);
 		// END CRUD PEMINJAMAN BUKU //
 
 		// CRUD PENGEMBALIAN BUKU //

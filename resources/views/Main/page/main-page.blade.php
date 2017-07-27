@@ -140,7 +140,7 @@
 			<div class="hero-body">
 				<div class="container">
 					<div class="columns is-multiline is-tablet is-mobile">
-						<div class="column is-12-mobile is-12-tablet is-3-desktop">
+						<div data-aos="fade-right" data-aos-offset="200" class="column is-12-mobile is-12-tablet is-3-desktop">
 							<h1 class="title">
 								Buku Terpopuler
 							</h1>
@@ -149,7 +149,7 @@
 								Beberapa buku dengan rating tertinggi
 							</p>
 						</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-right" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -198,7 +198,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-right" data-aos-delay="400" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -247,7 +247,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-right" data-aos-delay="600" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -296,7 +296,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			 			<div class="column is-12">
+			 			<div data-aos="fade-left" data-aos-offset="-100" class="column is-12">
 			 				<p class="title is-4 has-text-centered">
 			 					<a href="{{ url('/buku') }}">Buku Lainnya</a>
 			 					<span class="icon">
@@ -312,7 +312,7 @@
 			<div class="hero-body">
 				<div class="container">
 					<div class="columns is-multiline is-tablet is-mobile">
-						<div class="column is-12-mobile is-12-tablet is-hidden-desktop">
+						<div data-aos="fade-right" data-aos-delay="100" data-aos-offset="200" class="column is-12-mobile is-12-tablet is-hidden-desktop">
 							<h1 class="title">
 								Buku Terbaru
 							</h1>
@@ -321,7 +321,7 @@
 								Beberapa buku dengan baru yg telah ditambah
 							</p>
 						</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 			    			<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -368,7 +368,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-down" data-aos-delay="300" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 			    			<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -415,7 +415,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-left" data-aos-delay="500" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 			    			<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -462,7 +462,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-						<div class="column is-hidden-mobile is-hidden-tablet-only is-block-desktop is-3-desktop">
+						<div data-aos="fade-up" data-aos-delay="700" data-aos-offset="200" class="column is-hidden-mobile is-hidden-tablet-only is-block-desktop is-3-desktop">
 							<h1 class="title">
 								Buku Terbaru
 							</h1>
@@ -471,7 +471,7 @@
 								Beberapa buku dengan baru yg telah ditambah
 							</p>
 						</div>
-			 			<div class="column is-12">
+			 			<div data-aos="fade-up" data-aos-offset="-100" class="column is-12">
 			 				<p class="title is-4 has-text-centered">
 			 					<a href="#">Buku Lainnya</a>
 			 					<span class="icon">
@@ -486,7 +486,7 @@
 		<section id="panduan" class="hero is-medium is-warning is-bold">
 		  <div class="hero-body">
 		    <div class="container">
-				<div class="has-text-centered">
+				<div data-aos="fade-down" data-aos-delay="100" data-aos-offset="200" class="has-text-centered">
 				      <h1 class="title">
 				      	Panduan Perpustakaan
 				      </h1>
@@ -494,7 +494,7 @@
 				       	Ikuti semua cara dengan langkah per langkah agar mudah dalam peminjaman
 				      </p>
 				</div>
-				<div class="center-slide">
+				<div data-aos="fade-up" data-aos-delay="400" data-aos-offset="200" class="center-slide">
           			<div>
           				<img src="{{ asset('/front-assets/img/buku.jpg') }}">
           				<h5 class="title is-5">Langkah 1</h5>
@@ -533,7 +533,7 @@
 		  <div class="hero-body">
 		    <div class="container">
 		    	<div class="columns is-multiline is-tablet is-mobile">
-		    		<div class="column is-hidden-desktop is-12-mobile is-12-tablet has-text-centered">
+		    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200"  class="column is-hidden-desktop is-12-mobile is-12-tablet has-text-centered">
 		    			<div>
 			    			  <h1 class="title">
 					      	  Petugas Perpustakaan
@@ -544,7 +544,7 @@
 						      </p>
 					     </div>
 		    		</div>
-		    		<div class="column is-12-mobile is-half-tablet is-4-desktop">
+		    		<div data-aos="fade-right" data-aos-delay="300" data-aos-offset="200" class="column is-12-mobile is-half-tablet is-4-desktop">
     					<figure class="image">
     						<img src="{{ asset('/front-assets/img/petugas.jpg') }}">
     						<figcaption>
@@ -553,7 +553,7 @@
     						</figcaption>
     					</figure>
 		    		</div>
-		    		<div class="column is-4-desktop is-hidden-mobile is-hidden-tablet-only has-text-centered">
+		    		<div data-aos="fade-down" data-aos-delay="200" data-aos-offset="200" class="column is-4-desktop is-hidden-mobile is-hidden-tablet-only has-text-centered">
 		    			<div>
 			    			  <h1 class="title">
 					      	  Petugas Perpustakaan
@@ -564,7 +564,7 @@
 						      </p>
 					     </div>
 		    		</div>
-		    		<div class="column is-12-mobile is-half-tablet is-4-desktop">
+		    		<div data-aos="fade-left" data-aos-delay="300" data-aos-offset="200" class="column is-12-mobile is-half-tablet is-4-desktop">
     					<figure class="image">
     						<img src="{{ asset('/front-assets/img/petugas2.jpg') }}">
     						<figcaption>

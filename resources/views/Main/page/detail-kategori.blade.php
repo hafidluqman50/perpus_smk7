@@ -252,14 +252,6 @@ $(document).ready(function(){
   	$('#container').css({
   		'background-color':'#f5f5f5'
 	});
-    $("button.close-menu, .overlay").click(function(){
-        $("#side-menu").css("left", "-300px");
-        $('.overlay').fadeOut(200);
-    });
-    $("button.open-menu").click(function(){
-        $("#side-menu").css("left", "0");
-        $('.overlay').fadeIn(200);
-    });
 });
 </script>
 @endsection

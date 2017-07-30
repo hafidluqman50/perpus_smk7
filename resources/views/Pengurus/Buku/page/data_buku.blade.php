@@ -1,6 +1,37 @@
 @extends('Pengurus.layout.layout-app')
 @section('title') Data Buku @endsection
 @section('content')
+@if (session()->has('tmbh_buku'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-success">
+				{{ session('tmbh_buku') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@elseif(session()->has('edt_buku'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-success">
+				{{ session('edt_buku') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@elseif(session()->has('dlt_buku'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-success">
+				{{ session('dlt_buku') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@endif	
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">

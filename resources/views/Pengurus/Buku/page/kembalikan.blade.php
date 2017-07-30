@@ -31,6 +31,10 @@
 					@endif
 					{{ csrf_field() }}
 					<div class="form-group">
+						<label for="">Tanggal Kembalikan</label>
+						<input type="text" class="form-control date2" name="tanggal_kembali">
+					</div>
+					<div class="form-group">
 					<label for="">Status</label>
 					<select name="status" class="form-control">
 						<option value="" selected disabled>==============</option>

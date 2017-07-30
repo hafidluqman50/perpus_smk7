@@ -1,6 +1,17 @@
 @extends('Pengurus.layout.layout-app')
 @section('title') Data Kategori @endsection
 @section('content')
+@if (session()->has('dlt_ktgr'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-success">
+				{{ session('dlt_ktgr') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@endif	
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">

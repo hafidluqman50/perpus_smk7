@@ -22,25 +22,48 @@ class BukuController extends Controller
 
     public function TambahBuku(Request $request)
     {
-		$foto_buku = $request->foto_buku;
-		$fileName  = date('Y-m-d').'_'.$foto_buku->getClientOriginalName();
-		$foto_buku->move(public_path('/admin-assets/foto_buku/'),$fileName);
-    	$data_buku = [
-			'judul_buku'       => $request->judul_buku,
-			'penerbit'         => $request->penerbit,
-			'tahun_terbit'     => $request->tahun_terbit,
-			'id_kategori_buku' => $request->kategori_buku,
-			'stok_buku'        => $request->stok,
-			'foto_buku'        => $fileName,
-            'tanggal_upload'   => date('Y-m-d'),
-			'created_at'       => date('Y-m-d H:i:s')
-    	];
+        if ($request->foto_buku!='') {
+    		$foto_buku = $request->foto_buku;
+    		$fileName  = date('Y-m-d').'_'.$foto_buku->getClientOriginalName();
+    		$foto_buku->move(public_path('/admin-assets/foto_buku/'),$fileName);
+        	$data_buku = [
+    			'judul_buku'       => $request->judul_buku,
+                'judul_slug'       => str_slug($request->judul_buku,"-"),
+                'pengarang'        => $request->pengarang,
+                'sn_penulis'       => $request->sn_penulis,
+    			'penerbit'         => $request->penerbit,
+                'tempat_terbit'    => $request->tempat_terbit,
+    			'tahun_terbit'     => $request->tahun_terbit,
+    			'id_kategori_buku' => $request->kategori_buku,
+    			'stok_buku'        => $request->stok,
+    			'foto_buku'        => $fileName,
+                'keterangan'       => $request->keterangan,
+                'tanggal_upload'   => date('Y-m-d'),
+    			'created_at'       => date('Y-m-d H:i:s')
+        	];
+        }
+        else {
+            $data_buku = [
+                'judul_buku'       => $request->judul_buku,
+                'judul_slug'       => str_slug($request->judul_buku,"-"),
+                'pengarang'        => $request->pengarang,
+                'sn_penulis'       => $request->sn_penulis,
+                'penerbit'         => $request->penerbit,
+                'tempat_terbit'    => $request->tempat_terbit,
+                'tahun_terbit'     => $request->tahun_terbit,
+                'id_kategori_buku' => $request->kategori_buku,
+                'stok_buku'        => $request->stok,
+                'keterangan'       => $request->keterangan,
+                'tanggal_upload'   => date('Y-m-d'),
+                'created_at'       => date('Y-m-d H:i:s')
+            ];
+        }
     	$this->buku->create($data_buku);
     	if ($request->segment(2)=="petugas") {
-			return redirect('/petugas/data-buku')->with('success','Buku Telah Terinput');
+			return redirect('/petugas/data-buku')->with('tmbh_buku','Buku Telah Terinput');
     	}
     	else if ($request->segment(2)=="admin") {
-			return redirect('/admin/data-buku')->with('success','Buku Telah Terinput');
+			return redirect('/admin/data-buku')->with('tmbh_buku','Buku Telah Terinput');
     	}
     }
 
@@ -56,11 +79,16 @@ class BukuController extends Controller
             $foto->move(public_path('/admin-assets/foto_buku/'),$fileName);
             $data_buku = [
                 'judul_buku'       => $request->judul_buku,
+                'judul_slug'       => str_slug($request->judul_buku,"-"),
+                'pengarang'        => $request->pengarang,
+                'sn_penulis'       => $request->sn_penulis,
                 'penerbit'         => $request->penerbit,
+                'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
                 'stok_buku'        => $request->stok,
                 'foto_buku'        => $fileName,
+                'keterangan'       => $request->keterangan,
                 'created_at'       => date('Y-m-d H:i:s'),
                 'updated_at'       => date('Y-m-d H:i:s'),
             ];
@@ -68,20 +96,25 @@ class BukuController extends Controller
         else {
             $data_buku = [
                 'judul_buku'       => $request->judul_buku,
+                'judul_slug'       => str_slug($request->judul_buku,"-"),
+                'pengarang'        => $request->pengarang,
+                'sn_penulis'       => $request->sn_penulis,
                 'penerbit'         => $request->penerbit,
+                'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
                 'stok_buku'        => $request->stok,
+                'keterangan'       => $request->keterangan,
                 'created_at'       => date('Y-m-d H:i:s'),
                 'updated_at'       => date('Y-m-d H:i:s'),
             ];
         }
         $this->buku->where('id_buku',$id_buku)->update($data_buku);
     	if ($request->segment(2)=="petugas") {
-			return redirect('/petugas/data-buku')->with('success','Buku Telah Terupdate');
+			return redirect('/petugas/data-buku')->with('edt_buku','Buku Telah Terupdate');
     	}
     	else if ($request->segment(2)=="admin") {
-			return redirect('/admin/data-buku')->with('success','Buku Telah Terupdate');
+			return redirect('/admin/data-buku')->with('edt_buku','Buku Telah Terupdate');
     	}
     }
 
@@ -89,14 +122,14 @@ class BukuController extends Controller
     {
     	$this->buku->where('id_buku',$id_buku)->delete();
     	if ($request->segment(2)=="petugas") {
-    		return redirect('/petugas/data-buku');
+    		return redirect('/petugas/data-buku')->with('dlt_buku','Buku Telah Terhapus');
     	}
     	else if ($request->segment(2)=="admin") {
-    		return redirect('/admin/data-buku');
+    		return redirect('/admin/data-buku')->with('dlt_buku','Buku Telah Terhapus');
     	}
     }
 
-    public function TambahKategoriBuku(Request $request){
+    public function TambahKategori(Request $request){
     	$data_kategori_buku = [
 			'nama_kategori'      => $request->nama_kategori,
 			'deskripsi_kategori' => $request->deskripsi
@@ -110,7 +143,7 @@ class BukuController extends Controller
     	}
     }
 
-    public function UpdateKategoriBuku($id_kategori_buku,Request $request)
+    public function UpdateKategori($id_kategori_buku,Request $request)
     {
 		$data_kategori_buku = [
 			'nama_kategori'      => $request->nama_kategori,
@@ -125,14 +158,14 @@ class BukuController extends Controller
     	}
     }
 
-    public function DeleteKategoriBuku($id_kategori,Request $request)
+    public function DeleteKategori($id_kategori,Request $request)
     {
-    	$this->buku->where('id_kategori_buku',$id_kategori)->delete();
+    	$this->kategori_buku->where('id_kategori_buku',$id_kategori)->delete();
     	if ($request->segment(2)=="petugas") {
-    		return redirect('/petugas/data-kategori-buku');
+    		return redirect('/petugas/data-kategori')->with('dlt_ktgr','Berhasil Hapus Kategori');
     	}
     	else if ($request->segment(2)=="admin") {
-    		return redirect('/admin/data-kategori-buku');
+    		return redirect('/admin/data-kategori')->with('dlt_ktgr','Berhasil Hapus Kategori');
     	}
     }
 
@@ -148,13 +181,24 @@ class BukuController extends Controller
         ];
 
         $stok = $this->buku->where('id_buku',$request->buku)->firstOrFail()->stok_buku-1;
-        $this->transasksi->create($data_pinjam);
+        $this->transaksi->create($data_pinjam);
         $this->buku->where('id_buku',$request->buku)->update(['stok_buku'=>$stok]);
         if ($request->segment(2)=="petugas") {
             return redirect('/petugas/data-peminjaman');
         }
         else if ($request->segment(2)=="admin") {
             return redirect('/admin/data-peminjaman');
+        }
+    }
+
+    public function DeleteTransaksi($id_transaksi,Request $request)
+    {
+        $this->transaksi->where('id_transaksi',$id_transaksi)->delete();
+        if ($request->segment(2)=="petugas") {
+            return redirect('/petugas/data-peminjaman')->with('dlt_pnjm','Transaksi Buku Telah Terhapus');
+        }
+        elseif($request->segment(2)=="admin") {
+            return redirect('/admin/data-peminjaman')->with('dlt_pnjm','Transaksi Buku Telah Terhapus');
         }
     }
 
@@ -168,7 +212,7 @@ class BukuController extends Controller
         $stok_pinjam   = $get_transaksi->stok_pinjam;
         $stok_buku     = $get_buku->stok_buku;
         $stok_kembali  = $stok_pinjam+$stok_buku;
-        $tgl_kembali   = date('Y-m-d');
+        $tgl_kembali   = $request->tanggal_kembali;
         $denda         = $this->HitungDenda($tgl_wajib,$tgl_kembali);
         if ($request->status==1) {    
             $data_kembali = [

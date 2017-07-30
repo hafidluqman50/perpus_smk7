@@ -13,8 +13,9 @@
 					<table id="buku" class="table table-hover table-bordered dt-responsive">
 						<thead>
 							<th>No.</th>
-							<th>Judul Buku</th>
 							<th>Nama Siswa</th>
+							<th>NISN</th>
+							<th>Judul Buku</th>
 							<th>Tanggal Kembalikan Buku</th>
 							<th>Denda</th>
 							<th>Status</th>
@@ -24,8 +25,9 @@
 						@foreach ($transaksi as $no => $data)
 							<tr>
 								<td>{{ $no+1 }}</td>
-								<td>{{ $data->judul_buku }}</td>
 								<td>{{ $data->nama_siswa }}</td>
+								<td>{{ $data->nisn }}</td>
+								<td>{{ $data->judul_buku }}</td>
 							@if ($data->tanggal_kembalikan_buku==null)
 								<td>-</td>
 							@else

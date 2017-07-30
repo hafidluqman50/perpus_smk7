@@ -15,10 +15,17 @@
           </figure>
           @if (count($errors)>0)
             @foreach ($errors->all() as $error)
-            <div class="notification is-danger">
+            <div class="notification is-danger" id="show-notif">
+            <button class="delete" id="dismiss"></button>
               {{ $error }}
             </div>
             @endforeach
+          @endif
+          @if (session()->has('log'))
+            <div class="notification is-danger" id="show-notif">
+            <button class="delete" id="dismiss"></button>
+              {{ session('log') }}
+            </div>
           @endif
           <form action="{{ url('/login/auth') }}" method="POST">
           {{ csrf_field() }}
@@ -72,6 +79,9 @@ $(function(){
     else {
       $('#pass').attr('type','password');
     }
+  });
+  $('#dismiss').on('click',function(){
+    $('#show-notif').hide();
   });
 });
 </script>

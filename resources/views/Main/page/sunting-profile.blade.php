@@ -6,11 +6,11 @@
     <figure class="foto-siswa">
         <img src="{{ asset('/admin-assets/profile_siswa/'.$siswa->foto_profile) }}" alt="">
     </figure>
-    <form action="{{ url('/update/profile/',$siswa->id) }}" method="POST">
+    <form action="{{ url('/update/profile',$siswa->username) }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="field has-text-centered">
         <span class="button is-outlined is-primary btn-file">
-          Pilih Foto... <input name="foto" id="image" type="file">
+          Pilih Foto... <input name="foto_profile" id="image" type="file">
         </span>
         <img id="uploadPreview">
     </div>
@@ -33,7 +33,7 @@
                     <div class="field">
                         <p class="title is-6 label" for="kelas">kelas</p>
                         <li class="control has-icons-left subtitle is-4">
-                            <input type="text" name="kelas" class="input" disabled value="{{ $siswa->kelas }}">
+                            <input type="text" name="kelas" class="input" readonly value="{{ $siswa->kelas }}">
                         </li>
                     </div>
                 </ul>
@@ -43,7 +43,7 @@
                     <div class="field">
                         <p class="title is-6 label" for="nisn">nisn</p>
                         <li class="control has-icons-left subtitle is-4">
-                            <input class="input" name="nisn" type="text" disabled value="{{ $siswa->nisn }}">
+                            <input class="input" name="nisn" type="text" readonly value="{{ $siswa->nisn }}">
                         </li>
                     </div>
                     <div class="field">

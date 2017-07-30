@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class WishtlistBuku extends Migration
+class NamaSlug extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class WishtlistBuku extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('siswa', function($table) {
+            $table->string('nama_slug')->after('nama_siswa');
+        });
     }
 
     /**

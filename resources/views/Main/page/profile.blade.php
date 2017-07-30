@@ -3,9 +3,9 @@
 @section('content')
 <div class="banner2"></div>
 <section id="profil">
-			<figure class="foto-siswa">
-				<img src="{{ asset('/admin-assets/profile_siswa/'.$siswa->foto_profile) }}" alt="">
-			</figure>
+	<figure class="foto-siswa">
+		<img src="{{ asset('/admin-assets/profile_siswa/'.$siswa->foto_profile) }}" alt="">
+	</figure>
 	<div class="container">
 			<div class="columns is-multiline data-siswa">
 				<div class="column is-10-mobile is-offset-1-mobile is-5-tablet is-offset-1-tablet is-4 is-offset-2-desktop">
@@ -316,6 +316,7 @@
 				</div>
 			</div>
 	<br>
+			
 	<section id="wishlist">
 			<p class="title is-4 pinjaman">
 				Buku wishlist

@@ -19,6 +19,6 @@ class hasAdmin
         if (Auth::check() && Auth::user()->level==2) {
             return $next($request);
         }
-        return redirect('/');
+        return redirect('/login-form')->with('log','Silahkan Login Terlebih Dahulu');
     }
 }

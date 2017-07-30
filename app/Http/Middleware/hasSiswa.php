@@ -19,6 +19,6 @@ class hasSiswa
         if (Auth::check() && Auth::user()->level==0) {
             return $next($request);    
         }
-        return redirect('/');
+        return redirect('/login-form')->with('log','Silahkan Login Terlebih Dahulu');
     }
 }

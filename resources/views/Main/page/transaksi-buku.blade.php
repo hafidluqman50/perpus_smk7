@@ -11,7 +11,7 @@
 			</div>
 			<div class="column is-5-tablet is-4-desktop">
 				<figure>
-					<img src="../img/buku4.jpg" alt="">
+					<img src="{{ asset('/admin-assets/foto_buku/'.$buku->foto_buku) }}" alt="">
 				</figure>
 			</div>
 			<div class="column is-7-tablet">
@@ -20,16 +20,16 @@
 						<ul>
 							<div class="wrap-info">
 								<p class="title is-6">Judul buku</p>
-								<li class="subtitle is-4">The lorem and The ipsum
+								<li class="subtitle is-4">{{ $buku->judul_buku }}
 								</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Nama peminjam</p>
-								<li class="subtitle is-4">Muhammad Ilham</li>
+								<li class="subtitle is-4">{{ $siswa->nama_siswa }}</li>
 							</div>
 							<div class="wrap-info">	
 								<p class="title is-6">Nisn</p>
-								<li class="subtitle is-4">002342942</li>
+								<li class="subtitle is-4">{{ $siswa->nisn }}</li>
 							</div>
 						</ul>
 					</div>
@@ -37,7 +37,7 @@
 						<ul>
 							<div class="wrap-info">
 								<p class="title is-6">Kelas</p>
-								<li class="subtitle is-4">XII RPL 2
+								<li class="subtitle is-4">{{ $siswa->kelas }}
 								</li>
 							</div>
 							<div class="wrap-info">
@@ -60,17 +60,26 @@
 						<div class="field">
 						  <p class="control">
 						    <label class="checkbox">
-						      <input type="checkbox">
+						      <input type="checkbox" id="pinjam">
 						      saya setuju dengan peraturan yang ada
 						    </label>
 						  </p>
 						</div>
+						<form action="{{ url('/buku/pinjam',$buku->id_buku) }}" method="POST">
+						{{ csrf_field() }}
+						<input type="hidden" name="buku" value="{{ $buku->id_buku }}">
+						<input type="hidden" name="siswa" value="{{ $siswa->id_siswa }}">
+						<input type="hidden" name="tanggal_pinjam" value="2019-07-17">
+						<input type="hidden" name="tanggal_harus_kembali" value="2019-07-24">
 						<div class="field is-grouped">
 						  <p class="control">
-						    <button class="button is-primary">Pinjam</button>
+						    <button type="submit" class="button is-primary" disabled>Pinjam</button>
 						  </p>
+						</form>
 						  <p class="control">
-						    <button class="button is-default">Kembali</button>
+						  <a href="{{ url('/buku') }}">
+						    <button type="button" class="button is-default">Kembali</button>
+						  </a>
 						  </p>
 						</div>
 					</div>
@@ -83,8 +92,22 @@
 
 @section('script')
 <script>
+$(function(){
   $('#container').css({
   	'background-color':'#00d1b2'
 	});
+  if ($('#pinjam').is(':checked')) {
+  	$('button[type="submit"]').attr('disabled',false);
+  }
+  $('#pinjam').on('click',function(){
+  	if ($(this).is(':checked')) {
+  		$('button[type="submit"]').attr('disabled',false);
+  		// alert('test');
+  	}
+  	else {
+  		$('button[type="submit"]').attr('disabled',true);	
+  	}
+  });
+});
 </script>
 @endsection

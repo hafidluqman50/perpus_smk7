@@ -13,8 +13,20 @@
 						<p class="form-control">{{ $buku->judul_buku }}</p>
 					</div>
 					<div class="form-group">
+					<label for="">Pengarang :</label>
+						<p class="form-control">{{ $buku->pengarang }}</p>
+					</div>
+					<div class="form-group">
+					<label for="">Singkatan :</label>
+						<p class="form-control">{{ $buku->sn_penulis }}</p>
+					</div>
+					<div class="form-group">
 					<label for="">Penerbit :</label>
 						<p class="form-control">{{ $buku->penerbit }}</p>
+					</div>
+					<div class="form-group">
+					<label for="">Tempat Terbit :</label>
+						<p class="form-control">{{ $buku->tempat_terbit }}</p>
 					</div>
 					<div class="form-group">
 					<label for="">Tahun Terbit :</label>
@@ -36,6 +48,10 @@
 					<label for="">Foto Buku :</label>
 						<img class="img-responsive" src="{{ $buku->foto_buku ? asset('/admin-assets/foto_buku/'.$buku->foto_buku) : '' }}" alt="">
 					</div>
+					<div class="form-group">
+					<label for="">Keterangan :</label>
+						<textarea class="form-control" cols="30" rows="10" readonly>{{ $buku->keterangan }}</textarea>
+					</div>	
 				</div>
 			</div>
 		</div>

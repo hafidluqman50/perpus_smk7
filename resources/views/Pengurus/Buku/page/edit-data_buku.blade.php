@@ -19,8 +19,20 @@
                   <input type="text" name="judul_buku" class="form-control" id="exampleInputEmail1" placeholder="Judul Buku" value="{{ $buku->judul_buku }}">
                 </div>
                 <div class="form-group">
+                  <label for="">Pengarang</label>
+                  <input type="text" name="pengarang" class="form-control" value="{{ $buku->pengarang }}">
+                </div>
+                <div class="form-group">
+                  <label for="">Singkatan Penulis</label>
+                  <input type="text" name="sn_penulis" class="form-control" value="{{ $buku->sn_penulis }}">
+                </div>
+                <div class="form-group">
                   <label for="exampleInputPassword1">Penerbit</label>
-                  <input type="text" name="penerbit" class="form-control" id="exampleInputPassword1" placeholder="Penerbit" value="{{ $buku->penerbit }}">
+                  <input type="text" name="penerbit" class="form-control" id="exampleInputPassword1" value="{{ $buku->penerbit }}">
+                </div>
+                <div class="form-group">
+                  <label for="">Tempat Terbit</label>
+                  <input type="text" name="tempat_terbit" class="form-control" value="{{ $buku->tempat_terbit }}">
                 </div>
                 <div class="form-group">
                   <label for="">Tahun Terbit</label>
@@ -44,9 +56,15 @@
               		<input type="number" name="stok" class="form-control" placeholder="Stok Buku" value="{{ $buku->stok_buku }}">
               	</div>
               	<div class="form-group">
-              		<label for="">Foto Buku</label>
-              		<input type="file" name="foto_buku">
+                  <label for="">Foto Buku</label>
+              		<input type="file" name="foto_buku" id="image">
+                  <br>
+                  <img class="img-responsive" src="{{ asset('/admin-assets/foto_buku/'.$buku->foto_buku) }}" alt="" id="uploadPreview">
               	</div>
+                <div class="form-group">
+                  <label for="">Keterangan</label>
+                  <textarea class="form-control" name="keterangan" id="" cols="30" rows="10">{{ $buku->keterangan }}</textarea>
+                </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-warning">Edit Data</button>
               </div>
@@ -54,4 +72,19 @@
           </div>
          </div>
     </div>
+@endsection
+
+@section('javascript')
+<script>
+$(document).ready(function(){
+  $("#image").change(function(){
+    var file = document.getElementById("image").files[0];
+    var readImg = new FileReader();
+    readImg.readAsDataURL(file);
+    readImg.onload = function(e) {
+       $('#uploadPreview').attr('src',e.target.result).fadeIn();
+    }
+  })
+});
+</script>
 @endsection

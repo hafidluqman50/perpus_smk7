@@ -18,7 +18,7 @@ class isAuth
     {
         if (Auth::check()) {
             if ($request->segment(1)=="login-form" && Auth::user()->level==0) {
-                return redirect('/dashboard-siswa');
+                return redirect('/');
             }
             else if ($request->segment(1)=="login-form" && Auth::user()->level==1) {
                 return redirect('/dashboard-petugas');

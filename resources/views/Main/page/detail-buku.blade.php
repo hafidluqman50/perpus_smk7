@@ -9,30 +9,30 @@
 					<div class="kubik">
 						<figure>
 							<div class="left">
-								<p>inhumans Vs X-Men</p>
+								<p>{{ $buku->judul_buku }}</p>
 							</div>
 						</figure>
-						<img class="front" src="{{asset('/front-assets/img/buku5.jpg')}}" alt="">
+						<img class="front" src="{{ asset('/admin-assets/foto_buku/'.$buku->foto_buku) }}" alt="">
 					</div>
 				</figure>
 			</div>
 			<div class="column is-offset-1-mobile is-6-tablet is-10-mobile">
-				<h3 class="title is-3">inhumans vs x-men</h3>
-				<p class="subtitle is-6">Lorem ipsum dolor</p>
+				<h3 class="title is-3">{{ $buku->judul_buku }}</h3>
+				<p class="subtitle is-6">BUKU</p>
 				<div class="columns data-buku">
 					<div class="column">
 						<ul>
 							<div class="wrap-info">
 								<p class="title is-5">penerbit</p>
-								<li class="subtitle">gramedia</li>
+								<li class="subtitle">{{ $buku->penerbit }}</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-5">tahun terbit</p>
-								<li class="subtitle">2017</li>
+								<li class="subtitle">{{ $buku->tahun_terbit }}</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-5">stok</p>
-								<li class="subtitle">20</li>
+								<li class="subtitle">{{ $buku->stok_buku }}</li>
 							</div>
 						</ul>
 					</div>
@@ -40,7 +40,7 @@
 						<ul>
 							<div class="wrap-info">
 								<p class="title is-5">publish</p>
-								<li class="subtitle">30 juli 2017</li>
+								<li class="subtitle">{{ $buku->tanggal_upload }}</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-5">kategori</p>

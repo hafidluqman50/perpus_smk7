@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Siswa\SiswaModel as Siswa;
 use App\Models\BukuModel as Buku;
 use Auth;
+use DB;
 
 class SiswaPageController extends Controller
 {
@@ -42,7 +43,12 @@ class SiswaPageController extends Controller
 
     public function Buku()
     {
-        return view('Main.page.buku');
+        $bukus = DB::table('buku')
+                    ->leftJoin('transaksi_buku','buku.id_buku','=','transaksi_buku.id_buku')
+                    ->select('buku.judul_buku','buku.judul_slug','buku.foto_buku','transaksi_buku.status','transaksi_buku.id_transaksi')
+                    ->orderBy('buku.judul_buku','asc')
+                    ->get();
+        return view('Main.page.buku',compact('bukus'));
     }
 
     public function InfoKategori()
@@ -50,8 +56,27 @@ class SiswaPageController extends Controller
         return view('Main.page.detail-kategori');
     }
 
-    public function InfoBuku()
+    public function Pinjam($slug)
     {
-        return view('Main.page.info-buku');
+        $buku = Buku::where('judul_slug',$slug)->firstOrFail();
+        $siswa = Siswa::where('username',Auth::user()->username)->firstOrFail();
+        return view('Main.page.transaksi-buku',compact('buku','siswa'));
+    }
+
+    public function PinjamDetail($id_transaksi)
+    {
+        $transaksi = DB::table('transaksi_buku')
+                        ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+                        ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
+                        ->select('transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','buku.judul_buku','buku.foto_buku','siswa.nama_siswa','siswa.nisn','siswa.kelas')
+                        ->where('id_transaksi',$id_transaksi)
+                        ->first();
+        return view('Main.page.pinjam-buku',compact('transaksi'));
+    }
+
+    public function InfoBuku($slug)
+    {
+        $buku = Buku::where('judul_slug',$slug)->firstOrFail();
+        return view('Main.page.detail-buku',compact('buku'));
     }
 }

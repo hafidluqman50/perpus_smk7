@@ -19,8 +19,20 @@
                   <input type="text" name="judul_buku" class="form-control" id="exampleInputEmail1" placeholder="Judul Buku">
                 </div>
                 <div class="form-group">
+                  <label for="exampleInputEmail1">Pengarang</label>
+                  <input type="text" name="pengarang" class="form-control" id="exampleInputEmail1" placeholder="Pengarang">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Singkatan Penulis</label>
+                  <input type="text" name="sn_penulis" class="form-control" id="exampleInputEmail1" placeholder="Singkatan Penulis">
+                </div>
+                <div class="form-group">
                   <label for="exampleInputPassword1">Penerbit</label>
                   <input type="text" name="penerbit" class="form-control" id="exampleInputPassword1" placeholder="Penerbit">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Tempat Terbit</label>
+                  <input type="text" name="tempat_terbit" class="form-control" id="exampleInputPassword1" placeholder="Tempat Terbit">
                 </div>
                 <div class="form-group">
                   <label for="">Tahun Terbit</label>
@@ -46,8 +58,14 @@
               	</div>
               	<div class="form-group">
               		<label for="">Foto Buku</label>
-              		<input type="file" name="foto_buku">
+              		<input type="file" name="foto_buku" id="image">
+                  <br>
+                  <img class="img-responsive" id="uploadPreview">
               	</div>
+                <div class="form-group">
+                  <label for="">Keterangan</label>
+                  <textarea class="form-control" name="keterangan" id="" cols="30" rows="10"></textarea>
+                </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Tambah Data</button>
               </div>
@@ -55,4 +73,19 @@
           </div>
          </div>
     </div>
+@endsection
+
+@section('javascript')
+<script>
+$(document).ready(function(){
+  $("#image").change(function(){
+    var file = document.getElementById("image").files[0];
+    var readImg = new FileReader();
+    readImg.readAsDataURL(file);
+    readImg.onload = function(e) {
+       $('#uploadPreview').attr('src',e.target.result).fadeIn();
+    }
+  })
+});
+</script>
 @endsection

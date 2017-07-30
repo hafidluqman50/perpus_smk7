@@ -19,7 +19,7 @@ class PetugasController extends Controller
 		$this->users   = $users;
 	}
 
-    public function UpdateProfile(Request $request)
+    public function UpdateProfile($username,Request $request)
     {
     	//================================//
     	if($request->foto_profile!='') {
@@ -42,9 +42,9 @@ class PetugasController extends Controller
 			$foto->move(public_path('/admin-assets/petugas_profile/'),$fileName);
 	    	$data_petugas = [
 				'username'      => Auth::user()->username,
-				'nama_petugas'  => $request->get('nama_petugas'),
-				'nip'           => $request->get('nip'),
-				'jenis_kelamin' => $request->get('jenis_kelamin'),
+				'nama_petugas'  => $request->nama_petugas,
+				'nip'           => $request->nip,
+				'jenis_kelamin' => $request->jenis_kelamin,
 				'foto_profile'  => $fileName,
 				'created_at'    => date('Y-m-d H:i:s'),
 				'updated_at'    => date('Y-m-d H:i:s')
@@ -67,8 +67,8 @@ class PetugasController extends Controller
 				'updated_at' => date('Y-m-d H:i:s')
     		];
     	}
-    	$this->users->where('username',Auth::user()->username)->update($update_login);
-		$this->petugas->where('username',Auth::user()->username)->update($data_petugas);
+    	$this->users->where('username',$username)->update($update_login);
+		$this->petugas->where('username',$username)->update($data_petugas);
 		return redirect('/dashboard-petugas');	
     }
 

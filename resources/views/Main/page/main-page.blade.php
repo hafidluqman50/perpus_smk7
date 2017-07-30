@@ -185,7 +185,7 @@
 				 				<div class="content">
 				 					<div class="columns is-gapless is-multiline is-mobile">
 				 						<div class="column is-10-desktop is-half-mobile">
-				 							<button class="button is-primary pinjam">Pinjam</button>
+				 							<button class="button is-borrow pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2-desktop is-half-mobile">
 				 							<button class="button is-inverted is-dark pinjam">
@@ -584,6 +584,9 @@
 
 @section('script')
 <script type="text/javascript">
+$(function(){
+	
+});
         $('.center-slide').slick({
   infinite: false,
   slidesToShow: 2,
@@ -613,12 +616,24 @@
     });
   });
     </script>
+    @if (Auth::check())
+    <script>
+    $("button.floating").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#profil1").offset().top},
+        1000);
+	 });
+    </script>
+    @else
     <script>
     $("button.floating").click(function() {
     $('html,body').animate({
         scrollTop: $("#terpopuler").offset().top},
-        1300);
+        1000);
 	 });
+    </script>
+    @endif
+    <script>
     $("a.menu-1").click(function() {
     $('html,body').animate({
         scrollTop: $("#terpopuler").offset().top},

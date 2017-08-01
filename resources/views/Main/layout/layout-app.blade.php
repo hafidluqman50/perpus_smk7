@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="{{ asset('/front-assets/js/slick/slick-theme.css') }}">
 	<link rel="stylesheet" href="{{ asset('/front-assets/js/slick/slick.css') }}">
 	<link rel="stylesheet" href="{{ asset('/front-assets/font-awesome/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/front-assets/aos/aos.css') }}">
 </head>
 <body>
 @include('Main.layout.header')

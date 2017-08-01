@@ -157,7 +157,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -206,7 +206,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -255,7 +255,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -304,7 +304,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -363,7 +363,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -412,7 +412,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -461,7 +461,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -510,7 +510,7 @@
 			 							<button class="button is-primary pinjam">Pinjam</button>
 			 						</div>
 			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button is-inverted is-dark pinjam" id="notif-wishlist">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>

@@ -78,7 +78,74 @@
 @endif
 
 <main>
-	<div id="content">
+	<div id="content"><!-- 
+		<div id="notif">
+    		<div class="columns is-multiline notification is-primary is-mobile is-tablet">
+    			<button class="delete"></button>
+		        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+		          <span class="icon">
+		            <i class="fa fa-book"></i>
+		          </span>
+		        </div>
+		        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+		          Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+		        </div>
+      		</div>
+      	</div>
+		<div id="notif">
+    		<div class="columns is-multiline notification is-info is-mobile is-tablet">
+    			<button class="delete"></button>
+		        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+		          <span class="icon">
+		            <i class="fa fa-book"></i>
+		          </span>
+		        </div>
+		        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+		          Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+		        </div>
+      		</div>
+      	</div>
+		<div id="notif">
+    		<div class="columns is-multiline notification is-danger is-mobile is-tablet">
+    			<button class="delete"></button>
+		        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+		          <span class="icon">
+		            <i class="fa fa-book"></i>
+		          </span>
+		        </div>
+		        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+		          Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+		        </div>
+      		</div>
+      	</div>
+		<div id="notif">
+    		<div class="columns is-multiline notification is-warning is-mobile is-tablet">
+    			<button class="delete"></button>
+		        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+		          <span class="icon">
+		            <i class="fa fa-book"></i>
+		          </span>
+		        </div>
+		        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+		          Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+		        </div>
+      		</div>
+      	</div> -->
+      	<div id="wrap-notif">
+			<div id="wish">
+	    		<div class="wish-notif columns is-multiline notification is-default is-mobile is-tablet">
+	    			<button class="delete delete-notif"></button>
+			        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+			          <span class="icon">
+			            <i class="fa fa-heart"></i>
+			          </span>
+			        </div>
+			        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+			          Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+			        </div>
+	      		</div>
+	      	</div>
+      	</div>
 		@if (Auth::check())
 		<section id="profil1" class="hero is-medium is-primary is-bold">
 			    <div class="container">
@@ -149,7 +216,7 @@
 								Beberapa buku dengan rating tertinggi
 							</p>
 						</div>
-			    		<div data-aos="fade-right" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -188,7 +255,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2-desktop is-half-mobile">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -198,7 +265,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div data-aos="fade-right" data-aos-delay="400" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-down" data-aos-delay="400" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -237,7 +304,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2-desktop is-half-mobile">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -247,7 +314,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div data-aos="fade-right" data-aos-delay="600" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-left" data-aos-delay="600" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -286,7 +353,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2-desktop is-half-mobile">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -358,7 +425,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -405,7 +472,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -452,7 +519,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -583,7 +650,9 @@
 @endsection
 
 @section('script')
+
 <script type="text/javascript">
+    AOS.init();
         $('.center-slide').slick({
   infinite: false,
   slidesToShow: 2,

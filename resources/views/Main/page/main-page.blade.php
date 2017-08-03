@@ -79,6 +79,21 @@
 
 <main>
 	<div id="content">
+	<div id="wrap-notif">
+			<div id="wish">
+	    		<div class="wish-notif columns is-multiline notification is-default is-mobile is-tablet">
+	    			<button class="delete delete-notif"></button>
+			        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+			          <span class="icon">
+			            <i class="fa fa-heart"></i>
+			          </span>
+			        </div>
+			        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+			          Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+			        </div>
+	      		</div>
+	      	</div>
+      	</div>
 		@if (Auth::check())
 		<section id="profil1" class="hero is-medium is-primary is-bold">
 			    <div class="container">
@@ -140,7 +155,7 @@
 			<div class="hero-body">
 				<div class="container">
 					<div class="columns is-multiline is-tablet is-mobile">
-						<div class="column is-12-mobile is-12-tablet is-3-desktop">
+						<div data-aos="fade-right" data-aos-offset="200" class="column is-12-mobile is-12-tablet is-3-desktop">
 							<h1 class="title">
 								Buku Terpopuler
 							</h1>
@@ -149,56 +164,7 @@
 								Beberapa buku dengan rating tertinggi
 							</p>
 						</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
-							<div class="card">
-			    				<div class="card-image">
-			    					<figure class="image is-1by1">
-			    					<a href="#">
-			    						<img src="{{ asset('/front-assets/img/buku6.jpg') }}" draggable="false">
-			    					</a>
-			    					</figure>
-			    				</div>
-			    				<div class="card-content">
-				 					<p class="title is-5">Deadpool corps</p>
-									<div>
-										<span class="icon">
-											<i class="fa fa-star"></i>
-										</span>
-										<span class="icon">
-											<i class="fa fa-star"></i>
-										</span>
-										<span class="icon">
-											<i class="fa fa-star"></i>
-										</span>
-										<span class="icon">
-											<i class="fa fa-star-o"></i>
-										</span>
-										<span class="icon">
-											<i class="fa fa-star-o"></i>
-										</span>
-									</div>
-					 				<div>
-					 				<a href="{{ url('/kategori') }}" class="tag is-danger">blood</a>
-						 				<a class="tag is-success">comedy</a>
-					 				</div>
-				 				</div>
-				 				<div class="content">
-				 					<div class="columns is-gapless is-multiline is-mobile">
-				 						<div class="column is-10-desktop is-half-mobile">
-				 							<button class="button is-borrow pinjam">Pinjam</button>
-				 						</div>
-				 						<div class="column is-2-desktop is-half-mobile">
-				 							<button class="button is-inverted is-dark pinjam">
-				 								<span class="icon">
-				 									<i class="fa fa-heart-o animated pulse"></i>
-				 								</span>
-				 							</button>
-				 						</div>
-				 					</div>
-				 				</div>
-			 				</div>
-			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -237,7 +203,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2-desktop is-half-mobile">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -247,7 +213,56 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-down" data-aos-delay="400" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+							<div class="card">
+			    				<div class="card-image">
+			    					<figure class="image is-1by1">
+			    					<a href="#">
+			    						<img src="{{ asset('/front-assets/img/buku6.jpg') }}" draggable="false">
+			    					</a>
+			    					</figure>
+			    				</div>
+			    				<div class="card-content">
+				 					<p class="title is-5">Deadpool corps</p>
+									<div>
+										<span class="icon">
+											<i class="fa fa-star"></i>
+										</span>
+										<span class="icon">
+											<i class="fa fa-star"></i>
+										</span>
+										<span class="icon">
+											<i class="fa fa-star"></i>
+										</span>
+										<span class="icon">
+											<i class="fa fa-star-o"></i>
+										</span>
+										<span class="icon">
+											<i class="fa fa-star-o"></i>
+										</span>
+									</div>
+					 				<div>
+					 				<a href="{{ url('/kategori') }}" class="tag is-danger">blood</a>
+						 				<a class="tag is-success">comedy</a>
+					 				</div>
+				 				</div>
+				 				<div class="content">
+				 					<div class="columns is-gapless is-multiline is-mobile">
+				 						<div class="column is-10-desktop is-half-mobile">
+				 							<button class="button is-primary pinjam">Pinjam</button>
+				 						</div>
+				 						<div class="column is-2-desktop is-half-mobile">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
+				 								<span class="icon">
+				 									<i class="fa fa-heart-o animated pulse"></i>
+				 								</span>
+				 							</button>
+				 						</div>
+				 					</div>
+				 				</div>
+			 				</div>
+			    		</div>
+			    		<div data-aos="fade-left" data-aos-delay="600" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -286,7 +301,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2-desktop is-half-mobile">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -296,7 +311,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			 			<div class="column is-12">
+			 			<div data-aos="fade-left" data-aos-offset="-100" class="column is-12">
 			 				<p class="title is-4 has-text-centered">
 			 					<a href="{{ url('/buku') }}">Buku Lainnya</a>
 			 					<span class="icon">
@@ -312,7 +327,7 @@
 			<div class="hero-body">
 				<div class="container">
 					<div class="columns is-multiline is-tablet is-mobile">
-						<div class="column is-12-mobile is-12-tablet is-hidden-desktop">
+						<div data-aos="fade-right" data-aos-delay="100" data-aos-offset="200" class="column is-12-mobile is-12-tablet is-hidden-desktop">
 							<h1 class="title">
 								Buku Terbaru
 							</h1>
@@ -321,7 +336,7 @@
 								Beberapa buku dengan baru yg telah ditambah
 							</p>
 						</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 			    			<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -358,7 +373,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -368,7 +383,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-down" data-aos-delay="300" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 			    			<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -405,7 +420,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -415,7 +430,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-left" data-aos-delay="500" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
 			    			<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -452,7 +467,7 @@
 				 							<button class="button is-primary pinjam">Pinjam</button>
 				 						</div>
 				 						<div class="column is-2">
-				 							<button class="button is-inverted is-dark pinjam">
+				 							<button class="button is-inverted is-dark pinjam notif-wishlist">
 				 								<span class="icon">
 				 									<i class="fa fa-heart-o animated pulse"></i>
 				 								</span>
@@ -462,7 +477,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-						<div class="column is-hidden-mobile is-hidden-tablet-only is-block-desktop is-3-desktop">
+						<div data-aos="fade-up" data-aos-delay="700" data-aos-offset="200" class="column is-hidden-mobile is-hidden-tablet-only is-block-desktop is-3-desktop">
 							<h1 class="title">
 								Buku Terbaru
 							</h1>
@@ -471,7 +486,7 @@
 								Beberapa buku dengan baru yg telah ditambah
 							</p>
 						</div>
-			 			<div class="column is-12">
+			 			<div data-aos="fade-up" data-aos-offset="-100" class="column is-12">
 			 				<p class="title is-4 has-text-centered">
 			 					<a href="#">Buku Lainnya</a>
 			 					<span class="icon">
@@ -486,7 +501,7 @@
 		<section id="panduan" class="hero is-medium is-warning is-bold">
 		  <div class="hero-body">
 		    <div class="container">
-				<div class="has-text-centered">
+				<div data-aos="fade-down" data-aos-delay="100" data-aos-offset="200" class="has-text-centered">
 				      <h1 class="title">
 				      	Panduan Perpustakaan
 				      </h1>
@@ -494,7 +509,7 @@
 				       	Ikuti semua cara dengan langkah per langkah agar mudah dalam peminjaman
 				      </p>
 				</div>
-				<div class="center-slide">
+				<div data-aos="fade-up" data-aos-delay="400" data-aos-offset="200" class="center-slide">
           			<div>
           				<img src="{{ asset('/front-assets/img/buku.jpg') }}">
           				<h5 class="title is-5">Langkah 1</h5>
@@ -533,7 +548,7 @@
 		  <div class="hero-body">
 		    <div class="container">
 		    	<div class="columns is-multiline is-tablet is-mobile">
-		    		<div class="column is-hidden-desktop is-12-mobile is-12-tablet has-text-centered">
+		    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200"  class="column is-hidden-desktop is-12-mobile is-12-tablet has-text-centered">
 		    			<div>
 			    			  <h1 class="title">
 					      	  Petugas Perpustakaan
@@ -544,7 +559,7 @@
 						      </p>
 					     </div>
 		    		</div>
-		    		<div class="column is-12-mobile is-half-tablet is-4-desktop">
+		    		<div data-aos="fade-right" data-aos-delay="300" data-aos-offset="200" class="column is-12-mobile is-half-tablet is-4-desktop">
     					<figure class="image">
     						<img src="{{ asset('/front-assets/img/petugas.jpg') }}">
     						<figcaption>
@@ -553,7 +568,7 @@
     						</figcaption>
     					</figure>
 		    		</div>
-		    		<div class="column is-4-desktop is-hidden-mobile is-hidden-tablet-only has-text-centered">
+		    		<div data-aos="fade-down" data-aos-delay="200" data-aos-offset="200" class="column is-4-desktop is-hidden-mobile is-hidden-tablet-only has-text-centered">
 		    			<div>
 			    			  <h1 class="title">
 					      	  Petugas Perpustakaan
@@ -564,7 +579,7 @@
 						      </p>
 					     </div>
 		    		</div>
-		    		<div class="column is-12-mobile is-half-tablet is-4-desktop">
+		    		<div data-aos="fade-left" data-aos-delay="300" data-aos-offset="200" class="column is-12-mobile is-half-tablet is-4-desktop">
     					<figure class="image">
     						<img src="{{ asset('/front-assets/img/petugas2.jpg') }}">
     						<figcaption>
@@ -584,10 +599,8 @@
 
 @section('script')
 <script type="text/javascript">
-$(function(){
-	
-});
-        $('.center-slide').slick({
+AOS.init();
+$('.center-slide').slick({
   infinite: false,
   slidesToShow: 2,
   arrows: true,

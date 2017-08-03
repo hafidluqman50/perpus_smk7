@@ -24,6 +24,11 @@ class BukuPageController extends Controller
         return view('Pengurus.Buku.page.tambah-data_buku',compact('kategoris'));
     }
 
+    public function ImportBuku()
+    {
+        return view('Pengurus.Buku.page.import-buku');
+    }
+
     public function EditBuku($id_buku)
     {
     	$buku = Buku::with('kategori')->where('id_buku',$id_buku)->firstOrFail();

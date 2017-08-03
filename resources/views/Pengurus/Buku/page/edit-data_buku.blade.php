@@ -52,8 +52,8 @@
                 </select>
               	</div>
               	<div class="form-group">
-              		<label>Stok Buku</label>
-              		<input type="number" name="stok" class="form-control" placeholder="Stok Buku" value="{{ $buku->stok_buku }}">
+              		<label>Jumlah Eksemplar</label>
+              		<input type="number" name="jumlah_eksemplar" class="form-control" placeholder="Jumlah Eksemplar" value="{{ $buku->jumlah_eksemplar }}">
               	</div>
               	<div class="form-group">
                   <label for="">Foto Buku</label>

@@ -43,11 +43,16 @@ class SiswaPageController extends Controller
 
     public function Buku()
     {
-        $bukus = DB::table('buku')
+        if (Auth::check()) {
+            $bukus = DB::table('buku')
                     ->leftJoin('transaksi_buku','buku.id_buku','=','transaksi_buku.id_buku')
                     ->select('buku.judul_buku','buku.judul_slug','buku.foto_buku','transaksi_buku.status','transaksi_buku.id_transaksi')
                     ->orderBy('buku.judul_buku','asc')
                     ->get();
+        }
+        else {
+            $bukus = Buku::all();
+        }
         return view('Main.page.buku',compact('bukus'));
     }
 

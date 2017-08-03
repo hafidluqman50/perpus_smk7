@@ -47,10 +47,20 @@
 							Tambah Data Buku
 						</button>
 					</a>
+					<a href="{{ url('/petugas/import-buku') }}">
+						<button class="btn btn-success">
+							Import Data Buku
+						</button>
+					</a>
 					@elseif(Auth::user()->level==2)
 					<a href="{{ url('/admin/tambah-data-buku') }}">
 						<button class="btn btn-primary">
 							Tambah Data Buku
+						</button>
+					</a>
+					<a href="{{ url('/admin/import-buku') }}">
+						<button class="btn btn-success">
+							Import Data Buku
 						</button>
 					</a>
 					@endif

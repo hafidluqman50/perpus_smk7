@@ -91,6 +91,21 @@
           </a>
         </li>
         @endif
+        @if (Auth::user()->level==1)
+        <li>
+          <a href="{{ url('/petugas/data-siswa') }}">
+            <i class="fa fa-graduation-cap"></i>
+            <span>Siswa</span>
+          </a>
+        </li>
+        @elseif(Auth::user()->level==2)  
+        <li>
+          <a href="{{ url('/admin/data-siswa') }}">
+            <i class="fa fa-graduation-cap"></i>
+            <span>Siswa</span>
+          </a>
+        </li>
+        @endif
         <li>
           <a href="{{ url('/data-barcode') }}">
             <i class="fa fa-qrcode"></i> <span>Barcode</span>
@@ -98,8 +113,8 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Books</span>
+            <i class="fa fa-book"></i>
+            <span>Buku</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

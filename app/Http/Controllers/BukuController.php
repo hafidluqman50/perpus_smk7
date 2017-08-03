@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\BukuModel as Buku;
 use App\Models\KategoriBukuModel as KategoriBuku;
 use App\Models\TransaksiBukuModel as TransaksiBuku;
+use Excel;
 
 class BukuController extends Controller
 {
@@ -35,7 +36,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
     			'tahun_terbit'     => $request->tahun_terbit,
     			'id_kategori_buku' => $request->kategori_buku,
-    			'stok_buku'        => $request->stok,
+    			'jumlah_eksemplar' => $request->jumlah_eksemplar,
     			'foto_buku'        => $fileName,
                 'keterangan'       => $request->keterangan,
                 'tanggal_upload'   => date('Y-m-d'),
@@ -52,7 +53,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
-                'stok_buku'        => $request->stok,
+                'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'keterangan'       => $request->keterangan,
                 'tanggal_upload'   => date('Y-m-d'),
                 'created_at'       => date('Y-m-d H:i:s')
@@ -65,6 +66,21 @@ class BukuController extends Controller
     	else if ($request->segment(2)=="admin") {
 			return redirect('/admin/data-buku')->with('tmbh_buku','Buku Telah Terinput');
     	}
+    }
+
+    public function ImportPost(Request $request) 
+    {
+        $file = $request->import;
+        Excel::load($file,function($render){
+            $this->buku->insert($render->toArray());
+        });
+        if ($request->segment(2)=="petugas") {
+            $path = '/petugas/buku';
+        }
+        elseif($request->segment(2)=="admin") {
+            $path = '/admin/buku';
+        }
+        return redirect($path)->with('imprt','Berhasil Import Data');
     }
 
     public function UpdateBuku($id_buku,Request $request)
@@ -86,7 +102,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
-                'stok_buku'        => $request->stok,
+                'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'foto_buku'        => $fileName,
                 'keterangan'       => $request->keterangan,
                 'created_at'       => date('Y-m-d H:i:s'),
@@ -103,7 +119,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
-                'stok_buku'        => $request->stok,
+                'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'keterangan'       => $request->keterangan,
                 'created_at'       => date('Y-m-d H:i:s'),
                 'updated_at'       => date('Y-m-d H:i:s'),
@@ -180,9 +196,9 @@ class BukuController extends Controller
             'created_at'          => date('Y-m-d H:i:s')
         ];
 
-        $stok = $this->buku->where('id_buku',$request->buku)->firstOrFail()->stok_buku-1;
+        $stok = $this->buku->where('id_buku',$request->buku)->firstOrFail()->jumlah_eksemplar-1;
         $this->transaksi->create($data_pinjam);
-        $this->buku->where('id_buku',$request->buku)->update(['stok_buku'=>$stok]);
+        $this->buku->where('id_buku',$request->buku)->update(['jumlah_eksemplar'=>$stok]);
         if ($request->segment(2)=="petugas") {
             return redirect('/petugas/data-peminjaman');
         }
@@ -210,8 +226,8 @@ class BukuController extends Controller
         $tgl_wajib     = $get_transaksi->tanggal_jatuh_tempo;
         $buku          = $get_transaksi->id_buku;
         $stok_pinjam   = $get_transaksi->stok_pinjam;
-        $stok_buku     = $get_buku->stok_buku;
-        $stok_kembali  = $stok_pinjam+$stok_buku;
+        $jumlah_eksemplar     = $get_buku->jumlah_eksemplar;
+        $stok_kembali  = $stok_pinjam+$jumlah_eksemplar;
         $tgl_kembali   = $request->tanggal_kembali;
         $denda         = $this->HitungDenda($tgl_wajib,$tgl_kembali);
         if ($request->status==1) {    
@@ -229,7 +245,7 @@ class BukuController extends Controller
                 'updated_at'              => date('Y-m-d H:i:s')
             ];
         }
-        $this->buku->where('id_buku',$id_buku)->update(['stok_buku'=>$stok_kembali]);
+        $this->buku->where('id_buku',$id_buku)->update(['jumlah_eksemplar'=>$stok_kembali]);
         $this->transaksi->where('id_transaksi',$id_transaksi)->update($data_kembali);
         if ($request->segment(2)=="petugas") {
             return redirect('/petugas/data-pengembalian');

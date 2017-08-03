@@ -101,6 +101,8 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::get('/admin/data-buku',['uses'=>'BukuPageController@ShowBuku','as'=>'show-data-buku']);
 		Route::get('/admin/tambah-data-buku',['uses'=>'BukuPageController@SimpanBuku','as'=>'simpan-data-buku']);
 		Route::post('/insert/admin/data-buku',['uses'=>'BukuController@TambahBuku','as'=>'insert-data-buku']);
+		Route::get('/admin/import-buku',['uses'=>'BukuPageController@ImportBuku','as'=>'import-buku-page']);
+		Route::post('/import/admin/data-buku',['uses'=>'BukuController@ImportPost','as'=>'import-buku-post']);
 		Route::get('/admin/detail-buku/{id_buku}',['uses'=>'BukuPageController@DetailBuku','as'=>'detail-data-buku']);
 		Route::get('/admin/edit-buku/{id_buku}',['uses'=>'BukuPageController@EditBuku','as'=>'edit-data-buku']);
 		Route::post('/update/admin/data-buku/{id_buku}',['uses'=>'BukuController@UpdateBuku','as'=>'insert-data-buku']);

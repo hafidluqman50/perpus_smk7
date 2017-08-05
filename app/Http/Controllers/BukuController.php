@@ -7,6 +7,7 @@ use App\Models\BukuModel as Buku;
 use App\Models\KategoriBukuModel as KategoriBuku;
 use App\Models\TransaksiBukuModel as TransaksiBuku;
 use Excel;
+use PDO;
 
 class BukuController extends Controller
 {
@@ -71,14 +72,33 @@ class BukuController extends Controller
     public function ImportPost(Request $request) 
     {
         $file = $request->import;
-        Excel::load($file,function($render){
-            $this->buku->insert($render->toArray());
-        });
+        $xls = Excel::load($file,function($render){})->get();
+            if (!empty($file)) {
+                foreach ($xls as $data) {
+                        $buku[] = [
+                            'judul_buku'       => $data->judul_buku,
+                            'judul_slug'       => str_slug($data->judul_buku,"-"),
+                            'pengarang'        => $data->pengarang,
+                            'sn_penulis'       => $data->sn_penulis,
+                            'penerbit'         => $data->penerbit,
+                            'tempat_terbit'    => $data->tempat_terbit,
+                            'tahun_terbit'     => $data->tahun_terbit,
+                            'id_kategori_buku' => $data->id_kategori_buku,
+                            'jumlah_eksemplar' => $data->jumlah_eksemplar,
+                            'foto_buku'        => $data->foto_buku,
+                            'keterangan'       => $data->keterangan,
+                            'tanggal_upload'   => date('Y-m-d H:i:s'),
+                            'created_at'       => date('Y-m-d H:i:s')
+                        ];
+                    }
+                $this->buku->insert($buku);
+            }
+           
         if ($request->segment(2)=="petugas") {
-            $path = '/petugas/buku';
+            $path = '/petugas/data-buku';
         }
         elseif($request->segment(2)=="admin") {
-            $path = '/admin/buku';
+            $path = '/admin/data-buku';
         }
         return redirect($path)->with('imprt','Berhasil Import Data');
     }
@@ -105,8 +125,7 @@ class BukuController extends Controller
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'foto_buku'        => $fileName,
                 'keterangan'       => $request->keterangan,
-                'created_at'       => date('Y-m-d H:i:s'),
-                'updated_at'       => date('Y-m-d H:i:s'),
+                'updated_at'       => date('Y-m-d H:i:s')
             ];
         }
         else {
@@ -121,8 +140,7 @@ class BukuController extends Controller
                 'id_kategori_buku' => $request->kategori_buku,
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'keterangan'       => $request->keterangan,
-                'created_at'       => date('Y-m-d H:i:s'),
-                'updated_at'       => date('Y-m-d H:i:s'),
+                'updated_at'       => date('Y-m-d H:i:s')
             ];
         }
         $this->buku->where('id_buku',$id_buku)->update($data_buku);
@@ -220,16 +238,16 @@ class BukuController extends Controller
 
     public function KembalikanBuku($id_transaksi,Request $request)
     {
-        $get_transaksi = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
-        $id_buku       = $get_transaksi->id_buku;
-        $get_buku      = $this->buku->where('id_buku',$id_buku)->firstOrFail();
-        $tgl_wajib     = $get_transaksi->tanggal_jatuh_tempo;
-        $buku          = $get_transaksi->id_buku;
-        $stok_pinjam   = $get_transaksi->stok_pinjam;
-        $jumlah_eksemplar     = $get_buku->jumlah_eksemplar;
-        $stok_kembali  = $stok_pinjam+$jumlah_eksemplar;
-        $tgl_kembali   = $request->tanggal_kembali;
-        $denda         = $this->HitungDenda($tgl_wajib,$tgl_kembali);
+        $get_transaksi    = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
+        $id_buku          = $get_transaksi->id_buku;
+        $get_buku         = $this->buku->where('id_buku',$id_buku)->firstOrFail();
+        $tgl_wajib        = $get_transaksi->tanggal_jatuh_tempo;
+        $buku             = $get_transaksi->id_buku;
+        $stok_pinjam      = $get_transaksi->stok_pinjam;
+        $jumlah_eksemplar = $get_buku->jumlah_eksemplar;
+        $stok_kembali     = $stok_pinjam+$jumlah_eksemplar;
+        $tgl_kembali      = $request->tanggal_kembali;
+        $denda            = $this->HitungDenda($tgl_wajib,$tgl_kembali);
         if ($request->status==1) {    
             $data_kembali = [
                 'status'                  => $request->status,

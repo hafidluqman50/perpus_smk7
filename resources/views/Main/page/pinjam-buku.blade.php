@@ -64,8 +64,10 @@
 
 @section('script')
 <script>
-  $('#container').css({
-  	'background-color':'#00d1b2'
+$(function(){
+	$('#container').css({
+	  	'background-color':'#00d1b2'
+	});
 });
 </script>
 @endsection

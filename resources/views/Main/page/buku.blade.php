@@ -2,6 +2,34 @@
 @section('title') Buku @endsection
 @section('content')
 <section id="page-buku" class="container is-fluid">
+	<div id="wrap-notif">
+		<div id="borrow">
+			<div class="columns is-multiline notification is-default is-mobile is-tablet">
+				<button class="delete delete-notif"></button>
+		        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+		          <span class="icon">
+		            <i class="fa fa-ban"></i>
+		          </span>
+		        </div>
+		        <div class="column is-borrow is-10-tablet is-10-mobile is-10-mobile">
+		        	Tidak Bisa Meminjam Buku
+		        </div>
+			</div>
+		</div>
+		<div id="wish">
+			<div class="wish-notif columns is-multiline notification is-default is-mobile is-tablet">
+				<button class="delete delete-notif"></button>
+		        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+		          <span class="icon">
+		            <i class="fa fa-heart"></i>
+		          </span>
+		        </div>
+		        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+		        Buku Ditambahkan Ke wishlist 
+		        </div>
+	  		</div>
+	  	</div>
+	</div>
 		<button class="button icon is-medium open-menu is-hidden-desktop">
 			<i class="fa fa-bars"></i>
 		</button>
@@ -64,26 +92,30 @@
 			 				<div class="content">
 			 					<div class="columns is-gapless is-multiline is-mobile">
 			 						<div class="column is-10-desktop is-half-mobile">
-			 						@if ($buku->status == '0')
-			 						<a href="{{ url('/buku/detail-pinjam',$buku->id_transaksi) }}">
-			 							<button class="button is-danger pinjam">
-			 								Dipinjam
-			 							</button>
-			 						</a>
-			 						@elseif($buku->status =='1')
-			 						<a href="{{ url('/buku/detail-pinjam',$buku->id_transaksi) }}">
-			 						<button class="button is-warning pinjam">
-			 							Harap Kembali	
-			 						</button>	
-			 						</a>
-			 						@else
-			 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
-			 							<button class="button is-primary pinjam">Pinjam</button>
-			 						</a>
+			 						@if (Auth::check())
+				 						@if ($transaksi == null)
+				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
+				 							<button class="button is-primary pinjam">
+				 								Pinjam
+				 							</button>
+				 						</a>
+				 						@else
+				 						<a href="#">
+				 							<button class="button is-borrow pinjam">
+				 								<s>Pinjam</s>
+				 							</button>
+				 						</a>
+				 						@endif
+				 					@else
+				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
+				 							<button class="button is-primary pinjam">
+				 								Pinjam
+				 							</button>
+				 						</a>
 			 						@endif
 			 						</div>
 			 						<div class="column is-2-desktop is-half-mobile">
-			 							<button class="button is-inverted is-dark pinjam">
+			 							<button class="button notif-wishlist is-inverted is-dark pinjam">
 			 								<span class="icon">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
@@ -568,7 +600,7 @@ $(function(){
 </script>
 @endsection
 
-@section('script')
+{{-- @section('script')
 <script>
 	function wishtlist(id_buku) {
 		$.ajax({
@@ -578,4 +610,4 @@ $(function(){
 		});
 	}
 </script>
-@endsection
+@endsection --}}

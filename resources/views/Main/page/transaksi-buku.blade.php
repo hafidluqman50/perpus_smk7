@@ -93,21 +93,9 @@
 @section('script')
 <script>
 $(function(){
-  $('#container').css({
-  	'background-color':'#00d1b2'
+  	$('#container').css({
+  		'background-color':'#00d1b2'
 	});
-  if ($('#pinjam').is(':checked')) {
-  	$('button[type="submit"]').attr('disabled',false);
-  }
-  $('#pinjam').on('click',function(){
-  	if ($(this).is(':checked')) {
-  		$('button[type="submit"]').attr('disabled',false);
-  		// alert('test');
-  	}
-  	else {
-  		$('button[type="submit"]').attr('disabled',true);	
-  	}
-  });
 });
 </script>
 @endsection

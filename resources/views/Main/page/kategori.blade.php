@@ -248,7 +248,7 @@
 
 @section('script')
 <script>
-$(document).ready(function(){
+$(function(){
   	$('#container').css({
   		'background-color':'#f5f5f5'
 	});

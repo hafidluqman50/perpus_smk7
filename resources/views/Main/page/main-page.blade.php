@@ -598,37 +598,6 @@
 @endsection
 
 @section('script')
-<script type="text/javascript">
-AOS.init();
-$('.center-slide').slick({
-  infinite: false,
-  slidesToShow: 2,
-  arrows: true,
-  responsive: [
-    {
-      breakpoint: 768,
-      settings: {
-  		infinite: false,
-        arrows: true,
-        slidesToShow: 1
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-		infinite: false,
-        arrows: true,
-        slidesToShow: 1
-      }
-    }
-  ]
-});
-        $(function(){
-    $('.navbar-burger').on('click',function(){
-      $('#navMenuExample').slideToggle(200);
-    });
-  });
-    </script>
     @if (Auth::check())
     <script>
     $("button.floating").click(function() {

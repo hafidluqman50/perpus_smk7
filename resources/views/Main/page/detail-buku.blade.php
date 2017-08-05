@@ -1,7 +1,7 @@
 @extends('Main.layout.layout-app')
 @section('title') Info Buku @endsection
 @section('content')
-	<section id="info-buku">
+<section id="info-buku">
 	<div class="container">
 		<div class="columns is-multiline is-mobile">
 			<div class="column is-offset-1-mobile is-10-mobile is-6-tablet is-5-desktop">
@@ -31,8 +31,8 @@
 								<li class="subtitle">{{ $buku->tahun_terbit }}</li>
 							</div>
 							<div class="wrap-info">
-								<p class="title is-5">stok</p>
-								<li class="subtitle">{{ $buku->stok_buku }}</li>
+								<p class="title is-5">jumlah eksemplar</p>
+								<li class="subtitle">{{ $buku->jumlah_eksemplar }}</li>
 							</div>
 						</ul>
 					</div>

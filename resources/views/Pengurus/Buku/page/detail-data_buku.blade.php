@@ -37,8 +37,8 @@
 						<p class="form-control">{{ $buku->kategori->nama_kategori }}</p>
 					</div>
 					<div class="form-group">
-					<label for="">Stok Buku :</label>
-						<p class="form-control">{{ $buku->stok_buku }}</p>
+					<label for="">Jumlah Eksemplar :</label>
+						<p class="form-control">{{ $buku->jumlah_eksemplar }}</p>
 					</div>
 					<div class="form-group">
 					<label for="">Tanggal Upload :</label>

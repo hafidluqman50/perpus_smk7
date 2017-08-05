@@ -11,10 +11,20 @@
 			</div>
 		</div>
 	</div>
-@elseif(session()->has('edt_buku'))
+@elseif(session()->has('imprt'))
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="alert alert-success">
+				{{ session('imprt') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@elseif(session()->has('edt_buku'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-warning">
 				{{ session('edt_buku') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				  <span aria-hidden="true">&times;</span>
 				</button>
@@ -24,7 +34,7 @@
 @elseif(session()->has('dlt_buku'))
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="alert alert-success">
+			<div class="alert alert-danger">
 				{{ session('dlt_buku') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				  <span aria-hidden="true">&times;</span>
 				</button>
@@ -73,7 +83,7 @@
 							<th>Kategori</th>
 							<th>Penerbit</th>
 							<th>Tahun Terbit</th>
-							<th>Stok Buku</th>
+							<th>Jumlah Eksemplar</th>
 							<th>Action</th>
 						</thead>
 						<tbody>
@@ -84,13 +94,13 @@
 								<td>{{ $buku->kategori->nama_kategori }}</td>
 								<td>{{ $buku->penerbit }}</td>
 								<td>{{ $buku->tahun_terbit }}</td>
-								<td>@if ($buku->stok_buku==0)
+								<td>@if ($buku->jumlah_eksemplar==0)
 								<small class="label bg-red">
-								{{ $buku->stok_buku }}
+								{{ $buku->jumlah_eksemplar }}
 								</small>
 								@else
 								<small class="label bg-green">
-								{{ $buku->stok_buku }}
+								{{ $buku->jumlah_eksemplar }}
 								</small>
 								@endif</td>
 								<td>

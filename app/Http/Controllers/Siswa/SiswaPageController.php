@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Siswa\SiswaModel as Siswa;
 use App\Models\BukuModel as Buku;
+use App\Models\TransaksiBukuModel as Transaksi;
 use Auth;
 use DB;
 
@@ -43,22 +44,20 @@ class SiswaPageController extends Controller
 
     public function Buku()
     {
+        $bukus = Buku::all();
         if (Auth::check()) {
-            $bukus = DB::table('buku')
-                    ->leftJoin('transaksi_buku','buku.id_buku','=','transaksi_buku.id_buku')
-                    ->select('buku.judul_buku','buku.judul_slug','buku.foto_buku','transaksi_buku.status','transaksi_buku.id_transaksi')
-                    ->orderBy('buku.judul_buku','asc')
-                    ->get();
-        }
-        else {
-            $bukus = Buku::all();
+            $siswa     = Siswa::where('username',Auth::user()->username)->firstOrFail()->id_siswa;
+            $transaksi = Transaksi::where('id_siswa',$siswa)->value('id_siswa');
+            // dd($transaksi);
+            return view('Main.page.buku',compact('bukus','transaksi'));
         }
         return view('Main.page.buku',compact('bukus'));
     }
 
-    public function InfoKategori()
+    public function InfoKategori($kategori)
     {
-        return view('Main.page.detail-kategori');
+        $get_kategori = Kategori::with('kategori')->where('id_kategori_buku',$kategori)->get();
+        return view('Main.page.kategori',compact('get_kategori'));
     }
 
     public function Pinjam($slug)

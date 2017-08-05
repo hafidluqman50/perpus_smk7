@@ -39,6 +39,7 @@
 					<table id="buku" class="table table-hover table-bordered dt-responsive">
 						<thead>
 							<th>No.</th>
+							<th>ID Kategori</th>
 							<th>Nama Kategori</th>
 							<th>Deskripsi</th>
 							<th>Action</th>
@@ -47,6 +48,7 @@
 						@foreach ($kategoris as $no => $kategori)
 							<tr>
 								<td>{{ $no+1 }}</td>
+								<td>{{ $kategori->id_kategori_buku }}</td>
 								<td>{{ $kategori->nama_kategori }}</td>
 								<td>{{ str_limit($kategori->deskripsi_kategori,20) }}</td>
 								<td>

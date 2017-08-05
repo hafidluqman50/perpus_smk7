@@ -24,7 +24,7 @@ Route::group(['middleware'=>'hasSiswa'],function(){
 });
 
 Route::get('/buku/detail/{slug}',['uses'=>'Siswa\SiswaPageController@InfoBuku','as'=>'info-buku-page']);	
-Route::get('/kategori',['uses'=>'Siswa\SiswaPageController@InfoKategori','as'=>'info-kategori-page']);
+Route::get('/kategori/{kategori}',['uses'=>'Siswa\SiswaPageController@InfoKategori','as'=>'info-kategori-page']);
 Route::get('/info-buku',['uses'=>'Siswa\SiswaPageController@InfoBuku','as'=>'info-buku-page']);
 //----------Special Routing-----------//
 // Route::post('/wishtlist/')

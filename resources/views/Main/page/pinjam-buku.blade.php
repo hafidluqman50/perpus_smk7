@@ -2,6 +2,23 @@
 @section('title') Pinjam Buku @endsection
 @section('content')
 <section id="info-peminjaman">
+@if (session()->has('pending'))
+	<div id="wrap-notif">
+		<div id="danger">
+			<div class="columns is-danger is-multiline notification is-default is-mobile is-tablet">
+				<button class="delete delete-notif"></button>
+		        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+		          <span class="icon">
+		            <i class="fa fa-warning"></i>
+		          </span>
+		        </div>
+		        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+		        	{{ session('pending') }}
+		        </div>
+			</div>
+		</div>
+		</div>
+@endif
 	<div class="container">
 		<div class="columns is-multiline is-tablet is-mobile">
 			<div class="column is-12-desktop is-12-tablet is-12-mobile">
@@ -38,11 +55,23 @@
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Tanggal peminjaman</p>
-								<li class="subtitle is-4">{{ $transaksi->tanggal_pinjam_buku }}</li>
+								<li class="subtitle is-4">{{-- {{ $transaksi->tanggal_pinjam_buku }} --}}
+								17 Jan 2017
+								</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Tanggal Max pengembalian</p>
 								<li class="subtitle is-4">{{ $transaksi->tanggal_jatuh_tempo }}</li>
+							</div>
+							<div class="wrap-info">
+								<p class="title is-6">Status Peminjaman</p>
+								<li class="subtitle is-4">	
+									@if ($transaksi->status_pnjm==null)
+										<span class="tag is-danger">Belum Di Pinjamkan</span>
+									@else
+										<span class="tag is-primary">Di pinjamkan</span>
+									@endif
+								</li>
 							</div>
 						</ul>
 					</div>

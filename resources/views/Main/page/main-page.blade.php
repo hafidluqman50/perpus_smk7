@@ -108,21 +108,12 @@
 			    			<ul>
 			    			<p class="title is-5">Nama</p>
 			    				<li class="subtitle is-4">
-									<span class="icon is-small">
-										<i class="fa fa-chevron-up"></i>	
-									</span>
 			    				{{ $siswa->nama_siswa }}</li>
 			    			<p class="title is-5">Username</p>
 			    				<li class="subtitle is-4">
-									<span class="icon is-small">
-										<i class="fa fa-chevron-up"></i>	
-									</span>
 			    				{{ $siswa->username }}</li>
 			    			<p class="title is-5">Kelas</p>	
 			    				<li class="subtitle is-4">
-									<span class="icon is-small">
-										<i class="fa fa-chevron-up"></i>	
-									</span>
 			    				{{ $siswa->kelas }}</li>
 			    			</ul>
 			    		</div>
@@ -130,20 +121,14 @@
 			    			<ul>
 			    			<p class="title is-5">Nisn</p>
 			    				<li class="subtitle is-4">
-									<span class="icon is-small">
-										<i class="fa fa-chevron-up"></i>	
-									</span>
 			    				{{ $siswa->nisn }}</li>
 			    			<p class="title is-5">Email</p>
 			    				<li class="subtitle is-4">
-									<span class="icon is-small">
-										<i class="fa fa-chevron-up"></i>	
-									</span>
 			    				{{ $siswa->email }}</li>
 			    			</ul>
 			    		</div>
 				    	<div class="column is-4-mobile is-offset-6-tablet is-offset-7-desktop">
-				    		<a class="button hover is-medium is-primary is-outlined" href="{{ url('/logout') }}">
+				    		<a class="button hover is-medium is-danger is-outlined" href="{{ url('/logout') }}">
 								Logout
 				    		</a>
 			    		</div>

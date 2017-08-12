@@ -13,15 +13,13 @@
 					<table id="buku" class="table table-hover table-bordered dt-responsive">
 						<thead>
 							<th>No.</th>
-							<th>Judul Buku</th>
-							<th>Kategori</th>
-							<th>Penerbit</th>
-							<th>Tahun Terbit</th>
-							<th>Stok Buku</th>
+							<th>Nama Siswa</th>
+							<th>NISN</th>
+							<th>Kelas</th>
 							<th>Action</th>
 						</thead>
 						<tbody>
-						@foreach ($bukus as $no => $buku)
+						{{-- @foreach ($bukus as $no => $buku)
 							<tr>
 								<td>{{ $no+1 }}</td>
 								<td>{{ $buku->judul_buku }}</td>
@@ -59,7 +57,7 @@
 								@endif
 								</td>
 							</tr>
-						@endforeach
+						@endforeach --}}
 						</tbody>
 					</table>
 				</div>

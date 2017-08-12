@@ -53,6 +53,18 @@ class BukuPageController extends Controller
         return view('Pengurus.Buku.page.tambah-data_kategori');
     }
 
+    // public function AturTransaksi($username)
+    // {
+    //     $siswa = Siswa::where('username',$username)->firstOrFail()->id_siswa;
+    //     $get_transaksi = DB::table('transaksi_buku')
+    //                     ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+    //                     ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
+    //                     ->select('transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','buku.*','siswa.nama_siswa','siswa.nisn','siswa.email')
+    //                     ->where('id_siswa',$siswa)
+    //                     ->get(); 
+    //     return view('Pengurus.Buku.page.transaksi',compact('get_transaksi'));
+    // }
+
     public function DetailKategori($id_kategori_buku)
     {
         $kategori = Kategori::where('id_kategori_buku',$id_kategori_buku)->firstOrFail();

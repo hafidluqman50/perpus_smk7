@@ -69,8 +69,6 @@
 						{{ csrf_field() }}
 						<input type="hidden" name="buku" value="{{ $buku->id_buku }}">
 						<input type="hidden" name="siswa" value="{{ $siswa->id_siswa }}">
-						<input type="hidden" name="tanggal_pinjam" value="2019-07-17">
-						<input type="hidden" name="tanggal_harus_kembali" value="2019-07-24">
 						<div class="field is-grouped">
 						  <p class="control">
 						    <button type="submit" class="button is-primary" disabled>Pinjam</button>

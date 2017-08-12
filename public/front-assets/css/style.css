@@ -990,6 +990,50 @@ footer i {
   vertical-align: middle;
   padding: 20px 12px;
 }
+#success {
+  display: none;
+  position: relative !important;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border-radius: 0;
+}
+#success > div {
+  min-width: 250px;
+  width: 300px;
+  padding: 0;
+  color: #fff;
+  margin: 10px 0;
+}
+#success i {
+  color: #fff;
+}
+#success .column:nth-of-type(1) {
+  background-color: #14ad96;
+  vertical-align: middle;
+  padding: 20px 12px;
+}
+#danger {
+  display: none;
+  position: relative !important;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border-radius: 0;
+}
+#danger > div {
+  min-width: 250px;
+  width: 300px;
+  padding: 0;
+  color: #fff;
+  margin: 10px 0;
+}
+#danger i {
+  color: #fff;
+}
+#danger .column:nth-of-type(1) {
+  background-color: #c93452;
+  vertical-align: middle;
+  padding: 20px 12px;
+}
 #profil1 {
   padding: 20px 0;
 }
@@ -1021,6 +1065,10 @@ footer i {
   padding: 100px 10px 0;
   position: relative;
   top: -100px;
+}
+#profil a.button {
+  width: 100%;
+  height: 100%;
 }
 #profil img {
   -o-object-fit: cover;

@@ -5,7 +5,6 @@
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>@yield('title') | Perpus SMKN 7 Samarinda</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    
     <link rel="icon" type="image/x-icon" href="{{ asset('/front-assets/img/title.ico') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/font-awesome.min.css') }}">
@@ -17,16 +16,6 @@
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/custom.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    {{-- <style>
-    	img {
-    		border-radius:100px;
-    		width:100px;
-    		height:100px;
-    	}
-    	li {
-    		font-size:20px;
-    	}
-    </style> --}}
 </head>
 <body class="hold-transition skin-blue sidebar-mini fixed">
 @include('Pengurus.layout.header')

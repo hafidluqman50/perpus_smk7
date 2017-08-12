@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Siswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Siswa\SiswaModel as Siswa;
+use App\Models\BukuModel as Buku;
 use App\Models\TransaksiBukuModel as Transaksi;
+use App\Models\WishtlistBukuModel as Wishlist;
 use App\User;
 use Auth;
 use DB;
@@ -15,12 +17,14 @@ class SiswaController extends Controller
 	protected $users;
 	protected $siswa;
 	protected $transaksi;
+	protected $wishlist;
 
-	public function __construct(User $users,Siswa $siswa, Transaksi $transaksi)
+	public function __construct(User $users,Siswa $siswa, Transaksi $transaksi,Wishlist $wishlist)
 	{
 		$this->users = $users;
 		$this->siswa = $siswa;
 		$this->transaksi = $transaksi;
+		$this->wishlist = $wishlist;
 	}
 
 	// public function RegisterSiswa(Request $request)
@@ -127,14 +131,11 @@ class SiswaController extends Controller
 			$data_pinjam = [
 				'id_buku'             => $id_buku,
 				'id_siswa'            => $id_siswa,
-				'stok_pinjam'         => 1,
-				'tanggal_pinjam_buku' => $request->tanggal_pinjam,
-				'tanggal_jatuh_tempo' => $request->tanggal_harus_kembali,
-				'status'			  => 0,
 				'created_at'          => date('Y-m-d H:i:s')
 			];
 			$this->transaksi->create($data_pinjam);
-			return redirect('/buku')->with('success','Buku Berhasil Dipinjam');
+			$url = $this->transaksi->where('id_siswa',$id_siswa)->where('id_buku',$id_buku)->firstOrFail()->id_transaksi;
+			return redirect('/buku/detail-pinjam/'.$url.'/'.Auth::user()->username)->with('pending','Silahkan Verifikasi Peminjaman Ke Perpustakaan');
 		}
 		// elseif($check->firstOrFail()->status == '2') {
 		// 	$data_pinjam = [
@@ -151,9 +152,23 @@ class SiswaController extends Controller
 		// }
 	}
 
-	// public function WishtlistBuku($buku,Request $request) {
-	// 	if ($request->ajax()) {
-			
-	// 	}
-	// }
+	public function Wishlist($buku,Request $request) {
+		// dd($buku);
+		$get_buku  = Buku::where('id_buku',$buku)->firstOrFail();
+		$get_siswa = $this->siswa->where('username',Auth::user()->username)->firstOrFail();
+		$id_buku   = $get_buku->id_buku;
+		$id_siswa  = $get_siswa->id_siswa;
+		if ($request->ajax()) {
+			$data_wish = [
+				'id_siswa' => $id_siswa,
+				'id_buku'  => $id_buku
+			];
+			// dd($data_wish);
+			$this->wishlist->create($data_wish);
+			return response()->json(true);
+		}
+		// else {
+		// 	return redirect('/buku')->with('log','Maaf Gagal');
+		// }
+	}
 }

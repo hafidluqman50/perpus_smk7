@@ -2,6 +2,7 @@
 @section('title') Buku @endsection
 @section('content')
 <section id="page-buku" class="container is-fluid">
+<h1></h1>
 	<div id="wrap-notif">
 		<div id="borrow">
 			<div class="columns is-multiline notification is-default is-mobile is-tablet">
@@ -30,28 +31,45 @@
 	  		</div>
 	  	</div>
 	</div>
+	@if (session()->has('success'))
+		<div id="wrap-notif">
+			<div id="success">
+	    		<div class="columns is-primary is-multiline notification is-default is-mobile is-tablet">
+	    			<button class="delete delete-notif"></button>
+			        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+			          <span class="icon">
+			            <i class="fa fa-check"></i>
+			          </span>
+			        </div>
+			        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+			           Buku Berhasil Dipinjam 
+			        </div>
+	      		</div>
+	      	</div>
+      	</div>
+      	@elseif(session()->has('log'))
+      	<div id="wrap-notif">
+			<div id="success">
+	    		<div class="columns is-default is-multiline notification is-default is-mobile is-tablet">
+	    			<button class="delete delete-notif"></button>
+			        <div class="column is-2-mobile is-2-tablet is-2-desktop">
+			          <span class="icon">
+			            <i class="fa fa-ban"></i>
+			          </span>
+			        </div>
+			        <div class="column is-10-tablet is-10-mobile is-10-mobile">
+			           Gagal 
+			        </div>
+	      		</div>
+	      	</div>
+      	</div>
+		@endif
 		<button class="button icon is-medium open-menu is-hidden-desktop">
 			<i class="fa fa-bars"></i>
 		</button>
 	<div class="columns is-multiline is-mobile">
 		@include('Main.layout.sidebar')
 		<div class="column is-offset-2-desktop">
-		@if (session()->has('success'))
-		 <div class="notification is-primary" id="show">
-    		<button class="delete" id="remove"></button>
-	        <div class="column is-10-tablet is-10-mobile is-10-mobile">
-	        {{ session('success') }}
-	        </div>
-	      </div>
-	     @elseif(session()->has('log'))
-
-		 <div class="notification is-danger" id="show">
-    		<button class="delete" id="remove"></button>
-	        <div class="column is-10-tablet is-10-mobile is-10-mobile">
-	        {{ session('log') }}
-	        </div>
-	      </div>
-		@endif
 				<div class="columns is-multiline is-mobile">
 				@foreach ($bukus as $buku)
 					<div class="column is-10-mobile is-offset-1-mobile is-one-third-tablet is-one-quarter-desktop">
@@ -100,11 +118,9 @@
 				 							</button>
 				 						</a>
 				 						@else
-				 						<a href="#">
 				 							<button class="button is-borrow pinjam">
 				 								<s>Pinjam</s>
 				 							</button>
-				 						</a>
 				 						@endif
 				 					@else
 				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
@@ -116,7 +132,7 @@
 			 						</div>
 			 						<div class="column is-2-desktop is-half-mobile">
 			 							<button class="button notif-wishlist is-inverted is-dark pinjam">
-			 								<span class="icon">
+			 								<span class="icon wish-ajax" data-buku="{{ $buku->id_buku }}">
 			 									<i class="fa fa-heart-o animated pulse"></i>
 			 								</span>
 			 							</button>
@@ -596,18 +612,36 @@ $(function(){
     $('#remove').on('click',function(){
     	$('#show').hide();
     });
+
+    // $('.wish-ajax').click(function(){
+    // 	var token = $('meta[name=csrf-token]').attr('content');
+    // 	var data_buku = $(this).attr('data-buku');
+    // 	$.ajaxSetup({
+    // 		headers:{'X-CSRF-Token': token}
+    // 	})
+    // 	$.ajax({
+    // 		url: '/buku/wishlist/'+data_buku,
+    // 		type: 'POST',
+    // 		dataType:'JSON',
+    // 		data: {
+    // 			'id_buku':data_buku,
+    // 			'_token':token
+    // 		},
+    // 		beforeSend:function(xhr){
+    // 			$('.fa-heart-o').addClass('is-loading');
+    // 			$('.is-loading').removeClass('fa-heart-o');
+    // 			console.log(xhr);
+    // 		},
+    // 		complete:function(xhr){
+    // 			$('.is-loading').addClass('fa-heart');
+    // 			$('.fa-heart').removeClass('is-loading');
+    // 			console.log(xhr);
+    // 		},
+    // 		success:function(done){
+    // 			console.log(done);
+    // 		}
+    // 	})
+    // });
 });
 </script>
 @endsection
-
-{{-- @section('script')
-<script>
-	function wishtlist(id_buku) {
-		$.ajax({
-			type:"POST",
-			url:"/buku/pinjam/"+id_buku,
-			data:
-		});
-	}
-</script>
-@endsection --}}

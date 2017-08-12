@@ -32,8 +32,13 @@ class SiswaPageController extends Controller
 
     public function Profile($user)
     {
-    	$siswa = Siswa::where('username',$user)->firstOrFail();
-    	return view('Main.page.profile',compact('siswa'));
+        $siswa     = Siswa::where('username',$user)->firstOrFail();
+        $transaksi = DB::table('transaksi_buku')
+                        ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+                        ->select('transaksi_buku.id_transaksi','transaksi_buku.status_pnjm','buku.judul_buku','buku.judul_slug','buku.foto_buku')
+                        ->where('transaksi_buku.id_siswa',$siswa->id_siswa)
+                        ->first();
+    	return view('Main.page.profile',compact('siswa','transaksi'));
     }
 
     public function SuntingProfile($user)
@@ -67,13 +72,15 @@ class SiswaPageController extends Controller
         return view('Main.page.transaksi-buku',compact('buku','siswa'));
     }
 
-    public function PinjamDetail($id_transaksi)
+    public function PinjamDetail($id_transaksi,$username)
     {
+        $id_siswa = Siswa::where('username',$username)->firstOrFail()->id_siswa;
         $transaksi = DB::table('transaksi_buku')
                         ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
                         ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
-                        ->select('transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','buku.judul_buku','buku.foto_buku','siswa.nama_siswa','siswa.nisn','siswa.kelas')
+                        ->select('transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','transaksi_buku.status_pnjm','buku.judul_buku','buku.foto_buku','siswa.nama_siswa','siswa.nisn','siswa.kelas')
                         ->where('id_transaksi',$id_transaksi)
+                        ->where('transaksi_buku.id_siswa',$id_siswa)
                         ->first();
         return view('Main.page.pinjam-buku',compact('transaksi'));
     }

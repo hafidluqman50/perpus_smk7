@@ -29,4 +29,10 @@ class AdminPageController extends Controller
     	$data = Petugas::with('user')->where('id_petugas',$id_petugas)->firstOrFail();
     	return view('Pengurus.Admin.page.edit-data_petugas',compact('data'));
     }
+
+    // public function ShowSiswa()
+    // {
+    //     $siswa = DB::table('transaksi_buku')
+    //                 ->join
+    // }
 }

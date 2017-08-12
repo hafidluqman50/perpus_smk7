@@ -1,10 +1,10 @@
 $(function(){
     $("button.notif-wishlist").click(function(){
         $("#wrap-notif").each(function(){
-	        $(this).show().animate({
-	        	right:'10px'
-	        },300);
-	 		$("#wish").clone().appendTo("#wrap-notif").fadeIn('slow').delay(5000).fadeOut('slow');
+          $(this).show().animate({
+          	right:'10px'
+          },300);
+	 		  $("#wish").clone().appendTo("#wrap-notif").fadeIn('slow').delay(5000).fadeOut('slow');
         });
     });
     $('.is-borrow').click(function(){
@@ -14,5 +14,17 @@ $(function(){
         },300);
         $("#borrow").clone().appendTo("#wrap-notif").fadeIn('slow').delay(5000).fadeOut('slow');
       });
+    });
+    $('#wrap-notif').each(function(){
+      $(this).show().animate({
+        right:'10px'
+      },300);
+      $('#success').clone().appendTo('#wrap-notif').fadeIn('slow').delay(5000).fadeOut('slow');
+    });
+    $('#wrap-notif').each(function(){
+      $(this).show().animate({
+        right:'10px'
+      },300);
+      $('#danger').clone().appendTo('#wrap-notif').fadeIn('slow').delay(5000).fadeOut('slow');
     });
 });

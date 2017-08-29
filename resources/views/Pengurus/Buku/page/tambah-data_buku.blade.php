@@ -56,6 +56,10 @@
               		<label for="">Jumlah Eksemplar</label>
               		<input type="number" name="jumlah_eksemplar" class="form-control" placeholder="Jumlah Eksemplar">
               	</div>
+                <div class="form-group">
+                  <label for="">Stok Buku</label>
+                  <input type="number" name="stok_buku" class="form-control" placeholder="Stok Buku">
+                </div>
               	<div class="form-group">
               		<label for="">Foto Buku</label>
               		<input type="file" name="foto_buku" id="image">

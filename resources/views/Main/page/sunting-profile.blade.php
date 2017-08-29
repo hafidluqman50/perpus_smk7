@@ -80,7 +80,11 @@
             </div>
             <div class="column is-5-tablet is-offset-1-tablet is-10-mobile is-offset-1-mobile is-8 is-offset-2-desktop data-siswa">
                 <button type="submit" class="button is-primary">Submit</button>
-                <a class="button is-default" href="{{ url('/profile',$siswa->username) }}">Kembali</a>
+                <a href="{{ url('/profile',Auth::user()->username) }}">
+                <button class="button is-default">
+                    Kembali
+                </button>
+                </a>
             </div>
         </div>
     </div>

@@ -67,18 +67,16 @@
 						</div>
 						<form action="{{ url('/buku/pinjam',$buku->id_buku) }}" method="POST">
 						{{ csrf_field() }}
-						<input type="hidden" name="buku" value="{{ $buku->id_buku }}">
-						<input type="hidden" name="siswa" value="{{ $siswa->id_siswa }}">
 						<div class="field is-grouped">
 						  <p class="control">
 						    <button type="submit" class="button is-primary" disabled>Pinjam</button>
 						  </p>
 						</form>
-						  <p class="control">
+						 <p class="control">
 						  <a href="{{ url('/buku') }}">
 						    <button type="button" class="button is-default">Kembali</button>
 						  </a>
-						  </p>
+						 </p>
 						</div>
 					</div>
 				</div>

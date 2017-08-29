@@ -22,13 +22,13 @@
 					<br>
 					<br>
 					@if (Auth::user()->level==1)
-					<a href="{{ url('/petugas/tambah-data-peminjaman') }}">
+					<a href="{{ url('/petugas/pinjam-buku') }}">
 						<button class="btn btn-primary">
 							Tambah Data Peminjaman
 						</button>
 					</a>
 					@elseif(Auth::user()->level==2)
-					<a href="{{ url('/admin/tambah-data-peminjaman') }}">
+					<a href="{{ url('/admin/pinjam-buku') }}">
 						<button class="btn btn-primary">
 							Tambah Data Peminjaman
 						</button>

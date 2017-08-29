@@ -41,6 +41,10 @@
 						<p class="form-control">{{ $buku->jumlah_eksemplar }}</p>
 					</div>
 					<div class="form-group">
+					<label for="">Stok Buku :</label>
+						<p class="form-control">{{ $buku->stok_buku }}</p>
+					</div>
+					<div class="form-group">
 					<label for="">Tanggal Upload :</label>
 						<p class="form-control">{{ $buku->tanggal_upload }}</p>
 					</div>

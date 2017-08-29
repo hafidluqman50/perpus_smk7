@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 12, 2017 at 05:46 AM
+-- Generation Time: Aug 29, 2017 at 02:18 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -54,6 +54,7 @@ CREATE TABLE `buku` (
   `tahun_terbit` year(4) NOT NULL,
   `id_kategori_buku` int(11) UNSIGNED DEFAULT NULL,
   `jumlah_eksemplar` int(11) NOT NULL,
+  `stok_buku` int(11) NOT NULL,
   `foto_buku` text COLLATE utf8mb4_unicode_ci,
   `keterangan` text COLLATE utf8mb4_unicode_ci,
   `tanggal_upload` date NOT NULL,
@@ -65,10 +66,10 @@ CREATE TABLE `buku` (
 -- Dumping data for table `buku`
 --
 
-INSERT INTO `buku` (`id_buku`, `judul_buku`, `judul_slug`, `pengarang`, `sn_penulis`, `penerbit`, `tempat_terbit`, `tahun_terbit`, `id_kategori_buku`, `jumlah_eksemplar`, `foto_buku`, `keterangan`, `tanggal_upload`, `created_at`, `updated_at`) VALUES
-(3, 'Belajar PHP 7.1', 'belajar-php-71', 'Ilham Jagaw Ter', 'IJT', 'Gramedia', 'Samarinda', 2017, 1, 10, '39323034-programming-wallpapers.jpg', 'Jago', '2017-07-13', '2017-07-28 18:48:59', '2017-07-28 18:48:59'),
-(4, 'Jajaw', 'jajaw', '', '', 'Halallllll', '', 2018, 1, 120, '2017-07-29_apakah penulisan di dipisah atau disambung.jpg', '', '2017-07-29', '2017-07-28 17:38:16', '2017-07-28 17:38:16'),
-(5, 'Tes', 'tes', 'asdasd', 'asdadsa', 'asdasd', 'asdasda', 2011, 1, 123213, '2017-07-30_39323034-programming-wallpapers.jpg', '-', '2017-07-30', '2017-07-30 03:49:58', '2017-07-30 03:49:58');
+INSERT INTO `buku` (`id_buku`, `judul_buku`, `judul_slug`, `pengarang`, `sn_penulis`, `penerbit`, `tempat_terbit`, `tahun_terbit`, `id_kategori_buku`, `jumlah_eksemplar`, `stok_buku`, `foto_buku`, `keterangan`, `tanggal_upload`, `created_at`, `updated_at`) VALUES
+(3, 'Belajar PHP 7.1', 'belajar-php-71', 'Ilham Jagaw Ter', 'IJT', 'Gramedia', 'Samarinda', 2017, 1, 10, 0, '39323034-programming-wallpapers.jpg', 'Jago', '2017-07-13', '2017-07-28 18:48:59', '2017-08-25 19:31:29'),
+(4, 'Jajaw', 'jajaw', 'Ilham', 'IHM', 'Halallllll', 'Samarinda', 2018, 1, 120, 123123213, '2017-07-29_apakah penulisan di dipisah atau disambung.jpg', NULL, '2017-07-29', '2017-07-28 17:38:16', '2017-08-25 18:40:59'),
+(5, 'Tes', 'tes', 'asdasd', 'asdadsa', 'asdasd', 'asdasda', 2011, 1, 123213, 1264, '2017-07-30_39323034-programming-wallpapers.jpg', '-', '2017-07-30', '2017-07-30 03:49:58', '2017-08-25 18:41:12');
 
 -- --------------------------------------------------------
 
@@ -89,6 +90,17 @@ CREATE TABLE `kategori_buku` (
 
 INSERT INTO `kategori_buku` (`id_kategori_buku`, `nama_kategori`, `deskripsi_kategori`, `last_modified`) VALUES
 (1, 'Referensi', 'Bla bla bla bla bla', '2017-07-12 03:23:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kelas_siswa`
+--
+
+CREATE TABLE `kelas_siswa` (
+  `id_kelas` int(11) NOT NULL,
+  `nama_kelas` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -201,7 +213,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id_siswa`, `username`, `nama_siswa`, `nama_slug`, `nmr_hp`, `nisn`, `email`, `jenis_kelamin`, `kelas`, `foto_profile`, `created_at`, `updated_at`) VALUES
-(2, 'hafidlh', 'Hafiidh Luqmanul Hakim', 'hafiidh-luqmanul-hakim', '085391791228', '0002792083', 'hafidluqmanulhakim@gmail.com', 'Laki-Laki', 'XII RPL 1', '2017-07-06_laravel_red_1280x800.jpg', '2017-07-28 02:26:30', '2017-07-28 02:26:30'),
+(2, 'hafidlh', 'Hafiidh Luqmanul Hakim', 'hafiidh-luqmanul-hakim', '085391791228', '0002792083', 'hafidluqmanulhakim@gmail.com', 'Laki-Laki', 'XII RPL 2', '2017-07-06_laravel_red_1280x800.jpg', '2017-08-16 20:07:38', '2017-08-16 20:07:38'),
 (3, 'ilham', 'M. Ilham', 'm-ilham', '085250654125', '0001403865', 'muhilham0603@gmail.com', 'Laki-Laki', 'XII RPL 1', '2017-08-06 09:22:09_laravel-programming.jpg', '2017-08-06 01:22:09', '2017-08-06 01:22:09');
 
 -- --------------------------------------------------------
@@ -214,24 +226,17 @@ CREATE TABLE `transaksi_buku` (
   `id_transaksi` int(10) UNSIGNED NOT NULL,
   `id_buku` int(11) UNSIGNED NOT NULL,
   `id_siswa` int(11) UNSIGNED NOT NULL,
-  `stok_pinjam` int(11) DEFAULT NULL,
+  `stok_pinjam` int(11) NOT NULL,
   `nomor_induk` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_pinjam_buku` date DEFAULT NULL,
   `tanggal_jatuh_tempo` date DEFAULT NULL,
   `tanggal_kembalikan_buku` date DEFAULT NULL,
-  `status_pnjm` int(1) DEFAULT NULL,
+  `status_pnjm` int(1) NOT NULL,
   `status_kmbli` int(1) DEFAULT NULL,
   `denda` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `transaksi_buku`
---
-
-INSERT INTO `transaksi_buku` (`id_transaksi`, `id_buku`, `id_siswa`, `stok_pinjam`, `nomor_induk`, `tanggal_pinjam_buku`, `tanggal_jatuh_tempo`, `tanggal_kembalikan_buku`, `status_pnjm`, `status_kmbli`, `denda`, `created_at`, `updated_at`) VALUES
-(6, 3, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-08-09 21:48:14', '2017-08-09 21:48:14');
 
 -- --------------------------------------------------------
 
@@ -255,9 +260,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `remember_token`, `level`, `last_login`, `created_at`, `updated_at`) VALUES
-(2, 'hafidlh', '$2y$10$8m8xD9WKDRkerGd9E7zRqez31IdG7S4uTtwwjUFTcx8ZqeJSVL6Ce', '50rj1QwWR9dX2sAKnPS4tvUMutPB8KEbX0R3CMTPzToXKNFTokHA3pfLQcYw', 0, '2017-08-12 01:05:54', '2017-07-28 02:26:30', '2017-08-11 17:05:54'),
+(2, 'hafidlh', '$2y$10$8m8xD9WKDRkerGd9E7zRqez31IdG7S4uTtwwjUFTcx8ZqeJSVL6Ce', 'ewngHE5dbWSUMKfh1IRwREg2wskxUPd9NR2p5jEg5ANfF1MQP5udyNCLw5Ri', 0, '2017-08-27 23:45:51', '2017-08-16 20:07:38', '2017-08-27 15:45:51'),
 (3, 'petugas', '$2y$10$oBu6gkuKPmrbFk7M.kGEO..yzPV7bqpN0qHkenalYbY6gdbr/6LI6', 'fO8q4UOrrRmy1Emmjmb6S0SPNFPCiwcIQYFNOqvWc9YPpHdavZIz8VCUBDTP', 1, '2017-07-30 11:49:23', '2017-06-23 04:51:20', '2017-07-30 03:49:23'),
-(4, 'admin', '$2y$10$x44D0Pclz570dxhOqAsD6.VNr9aDy04CX7w.gZ1nDjhAKxG/4Vu8C', 'Lybqqvr1klIAiGnOEFFwBBlb8VkRqxtg28iHzYOFMCJ8cqO6Rk4p5kDUNfTB', 2, '2017-08-11 07:40:49', '2017-07-16 03:52:48', '2017-08-10 23:40:49'),
+(4, 'admin', '$2y$10$x44D0Pclz570dxhOqAsD6.VNr9aDy04CX7w.gZ1nDjhAKxG/4Vu8C', '7hzlagqh7c52xoqEXPBYRnHxccF83Oj4YFj1ntopwNblJ2vj2T9RS5A1iZu0', 2, '2017-08-29 11:08:00', '2017-07-16 03:52:48', '2017-08-29 03:08:00'),
 (5, 'ilham', '$2y$10$tD3vwSfLWgGAsBtLue/Dwuqs6sp1LsinmT4Z/B2frj6e7noh8BwXi', 'dkt6a1yRqUwe6KWip0P1PWfWsqQhlFZz8rEMK6egZF7qWSKQREG5ZwSGupmq', 0, '2017-08-06 09:20:33', '2017-08-06 01:22:09', '2017-08-06 01:22:09');
 
 -- --------------------------------------------------------
@@ -294,6 +299,12 @@ ALTER TABLE `buku`
 --
 ALTER TABLE `kategori_buku`
   ADD PRIMARY KEY (`id_kategori_buku`);
+
+--
+-- Indexes for table `kelas_siswa`
+--
+ALTER TABLE `kelas_siswa`
+  ADD PRIMARY KEY (`id_kelas`);
 
 --
 -- Indexes for table `migrations`
@@ -366,6 +377,11 @@ ALTER TABLE `buku`
 ALTER TABLE `kategori_buku`
   MODIFY `id_kategori_buku` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `kelas_siswa`
+--
+ALTER TABLE `kelas_siswa`
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -389,7 +405,7 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT for table `transaksi_buku`
 --
 ALTER TABLE `transaksi_buku`
-  MODIFY `id_transaksi` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_transaksi` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --

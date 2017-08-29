@@ -55,6 +55,10 @@
               		<label>Jumlah Eksemplar</label>
               		<input type="number" name="jumlah_eksemplar" class="form-control" placeholder="Jumlah Eksemplar" value="{{ $buku->jumlah_eksemplar }}">
               	</div>
+                <div class="form-group">
+                  <label for="">Stok Buku</label>
+                  <input type="number" name="stok_buku" class="form-control" placeholder="Stok Buku" value="{{ $buku->stok_buku }}">
+                </div>
               	<div class="form-group">
                   <label for="">Foto Buku</label>
               		<input type="file" name="foto_buku" id="image">

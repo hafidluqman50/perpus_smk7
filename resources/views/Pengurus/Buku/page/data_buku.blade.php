@@ -84,6 +84,7 @@
 							<th>Penerbit</th>
 							<th>Tahun Terbit</th>
 							<th>Jumlah Eksemplar</th>
+							<th>Stok Buku</th>
 							<th>Action</th>
 						</thead>
 						<tbody>
@@ -94,13 +95,14 @@
 								<td>{{ $buku->kategori->nama_kategori }}</td>
 								<td>{{ $buku->penerbit }}</td>
 								<td>{{ $buku->tahun_terbit }}</td>
-								<td>@if ($buku->jumlah_eksemplar==0)
-								<small class="label bg-red">
-								{{ $buku->jumlah_eksemplar }}
+								<td>{{ $buku->jumlah_eksemplar }}</td>
+								<td>@if ($buku->stok_buku == 0)
+								<small class="label label-danger">
+								0
 								</small>
 								@else
-								<small class="label bg-green">
-								{{ $buku->jumlah_eksemplar }}
+								<small class="label label-success">
+								{{ $buku->stok_buku }}
 								</small>
 								@endif</td>
 								<td>

@@ -66,16 +66,18 @@
 							<div class="wrap-info">
 								<p class="title is-6">Status Peminjaman</p>
 								<li class="subtitle is-4">	
-									@if ($transaksi->status_pnjm==null)
+									@if ($transaksi->status_pnjm==1)
 										<span class="tag is-danger">Belum Di Pinjamkan</span>
-									@else
+									@elseif($transaksi->status_pnjm==2)
 										<span class="tag is-primary">Di pinjamkan</span>
 									@endif
 								</li>
 							</div>
 						</ul>
 					</div>
-					<div class="column is-12">
+					@if ($transaksi->status_pnjm==0)
+				<div class="columns is-multiline is-desktop is-mobile is-tablet">
+					<div class="column is-12-mobile is-4-tablet is-4-desktop">
 						<div class="field">
 							<p class="control">
 							<a href="{{ url('/buku') }}">
@@ -84,6 +86,38 @@
 							</p>
 						</div>
 					</div>
+					<div class="column is-12-mobile is-4-tablet is-4-desktop">
+						<div class="field">
+							<p class="control">
+							<form action="{{ url('/buku/batal',$transaksi->id_transaksi) }}" method="POST">
+							{{ csrf_field() }}
+								<button class="button is-danger">Batal Pinjam</button>
+							</form>
+							</p>
+						</div>
+					</div>
+					<div class="column is-12-mobile is-4-tablet is-4-desktop">
+						<div class="field">
+							<p class="control">
+							<a href="{{ url('/profile/'.Auth::user()->username.'#list-transaksi') }}">
+								<button class="button is-primary">Lihat Transaksi</button>
+							</a>
+							</p>
+						</div>
+					</div>
+				</div>
+					@elseif($transaksi->status_pnjm==1)
+					<div class="column is-6-mobile is-6-tablet is-6-desktop">
+						<div class="field">
+							<p class="control">
+							<a href="{{ url('/buku') }}">
+								<button class="button is-default">Kembali</button>
+							</a>
+							</p>
+						</div>
+					</div>
+					@endif
+
 				</div>
 			</div>
 		</div>

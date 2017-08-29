@@ -18,13 +18,15 @@ class SiswaController extends Controller
 	protected $siswa;
 	protected $transaksi;
 	protected $wishlist;
+	protected $buku;
 
-	public function __construct(User $users,Siswa $siswa, Transaksi $transaksi,Wishlist $wishlist)
+	public function __construct(User $users,Siswa $siswa, Transaksi $transaksi,Wishlist $wishlist, Buku $buku)
 	{
 		$this->users = $users;
 		$this->siswa = $siswa;
 		$this->transaksi = $transaksi;
 		$this->wishlist = $wishlist;
+		$this->buku = $buku;
 	}
 
 	// public function RegisterSiswa(Request $request)
@@ -118,25 +120,38 @@ class SiswaController extends Controller
 
 	public function PinjamPost($id_buku,Request $request)
 	{
-		$id_siswa = $this->siswa
+			$id_siswa = $this->siswa
 						 ->where('username',Auth::user()->username)
 						 ->firstOrFail()
 						 ->id_siswa;
 
-		$check = $this->transaksi
-					  ->where('id_buku',$id_buku)
-					  ->where('id_siswa',$id_siswa);
-		// dd($check->firstOrFail()->status);
-		if (count($check->get()) == 0) {
+			$check = $this->buku->where('id_buku',$id_buku)->firstOrFail()->stok_buku;
+
+			if ($check != 0) {
+
+			$stok_buku = $this->buku->where('id_buku',$id_buku)->firstOrFail()->stok_buku;
+			$stok_pinjam = $stok_buku - 1;
+			// dd($stok_pinjam);
+
 			$data_pinjam = [
 				'id_buku'             => $id_buku,
 				'id_siswa'            => $id_siswa,
+				'stok_pinjam'		  => 1,
+				'status_pnjm'		  => 0,
 				'created_at'          => date('Y-m-d H:i:s')
 			];
+
 			$this->transaksi->create($data_pinjam);
+			 $this->buku->where('id_buku',$id_buku)->where('id_buku',$id_buku)->update(['stok_buku'=>$stok_pinjam]);
 			$url = $this->transaksi->where('id_siswa',$id_siswa)->where('id_buku',$id_buku)->firstOrFail()->id_transaksi;
 			return redirect('/buku/detail-pinjam/'.$url.'/'.Auth::user()->username)->with('pending','Silahkan Verifikasi Peminjaman Ke Perpustakaan');
-		}
+			}
+			else {
+				return redirect('/buku')->with('log','Maaf Stok Buku Kosong');				
+			}
+		// if () {
+		// 	
+		// }
 		// elseif($check->firstOrFail()->status == '2') {
 		// 	$data_pinjam = [
 		// 		'status'			  => 0,
@@ -150,6 +165,16 @@ class SiswaController extends Controller
 		// elseif($check->firstOrFail()->status == '1') {
 		// 	return redirect('/buku')->with('log','Harap Kembalikan Buku');
 		// }
+	}
+
+	public function BatalPinjam($id_transaksi,Request $request) {
+		$get_transaksi = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
+		$stok_pinjam = $get_transaksi->stok_pinjam;
+		$get_buku = $this->buku->where('id_buku',$get_transaksi->id_buku)->firstOrFail();
+		$stok_update = $stok_pinjam + $get_buku->stok_buku;
+		$this->buku->where('id_buku',$get_transaksi->id_buku)->update(['stok_buku'=>$stok_update]);
+		$this->transaksi->where('id_transaksi',$id_transaksi)->delete();
+		return redirect('/buku')->with('log','Buku Batal Pinjam');
 	}
 
 	public function Wishlist($buku,Request $request) {

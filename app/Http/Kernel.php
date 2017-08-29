@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'hasSiswa'=> \App\Http\Middleware\hasSiswa::class,
         'hasPetugas'=> \App\Http\Middleware\hasPetugas::class,
         'hasAdmin'=> \App\Http\Middleware\hasAdmin::class,
+        'ajaxData'=> \App\Http\Middleware\AjaxOption::class,
     ];
 }

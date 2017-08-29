@@ -12,6 +12,7 @@ use DB;
 
 class BukuPageController extends Controller
 {
+
     public function ShowBuku()
     {
         $bukus = Buku::with('kategori')->get();
@@ -90,15 +91,17 @@ class BukuPageController extends Controller
 
     public function Pinjam()
     {
-        $siswa = Siswa::select('id_siswa','nama_siswa')->get();
+        $siswa = Siswa::select('kelas')->get();
+        $get = $siswa->toArray();
+        $kelas = array_unique($get[0]);
         $buku = Buku::select('id_buku','judul_buku')->get();
-        return view('Pengurus.Buku.page.pinjam',compact('siswa','buku'));
+        return view('Pengurus.Buku.page.pinjam',compact('kelas','buku'));
     }
 
     public function EditPeminjaman($id_transaksi)
     {
         $buku = Buku::select('id_buku','judul_buku')->get();
-        $siswa = Siswa::select('nama_siswa')->get();
+        $siswa = Siswa::select('id_siswa')->get();
     	$transaksi = Transaksi::where('id_transaksi',$id_transaksi)->firstOrFail();
     	return view('Pengurus.Buku.page.data_pengembalian',compact('transaksi','buku','siswa'));
     }
@@ -112,6 +115,47 @@ class BukuPageController extends Controller
                      ->get();
     	return view('Pengurus.Buku.page.data_pengembalian',compact('transaksi'));
     }
+
+    public function TransaksiPage($id_transaksi)
+    {
+        $transaksi = DB::table('transaksi_buku')
+                        ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
+                        ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+                        ->join('kategori_buku','buku.id_kategori_buku','=','kategori_buku.id_kategori_buku')
+                        ->select('transaksi_buku.*','siswa.*','buku.*','kategori_buku.*')
+                        ->where('id_transaksi',$id_transaksi)
+                        ->first();
+        return view('Pengurus.Buku.page.transaksi',compact('transaksi'));
+    }
+
+    // public function DuaMinggu($tanggal) 
+    // {
+    //     //         
+    // }
+
+    public function GetSiswa(Request $request,$kelas)
+    {
+        if ($request->ajax()) {
+            $get_siswa = Siswa::where('kelas',$kelas)->get();
+            foreach ($get_siswa as $siswa) {
+                echo '<option value="'.$siswa->id_siswa.'">'.$siswa->nama_siswa.'</option>';
+            }   
+            //return response()->json(['error'],500);
+        }
+        else {
+            dd('Maaf Bukan Request Ajax');
+        }
+    }
+
+    // public function NomorInduk()
+    // {
+    //     $count = Transaksi::count();
+    //     $abjad = 'A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z';
+    //     $explode = explode('-',$abjad);
+    //     for ($i=0; $i < $count; $i++) { 
+            
+    //     }
+    // }
 
     public function Pengembalian($id_transaksi)
     {

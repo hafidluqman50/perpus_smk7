@@ -51,70 +51,6 @@
 				</div>
 			</div>
 	<br>
-	@if ($transaksi->status_pnjm==null)
-	<section id="list-transaksi">
-		<p class="title is-4 pinjaman">
-				Pending Transaksi
-			<span class="icon is-small">
-				<i class="fa fa-chevron-down"></i>
-			</span>
-		</p>	
-			<div class="columns is-multiline">
-				<div class="column is-offset-4-desktop is-offset-3-tablet is-6-tablet is-10-mobile is-offset-1-mobile is-4-desktop">
-					<div class="card">
-		    				<div class="card-image">
-		    					<figure class="image is-1by1">
-		    					<a href="{{ url('/buku/detail/'.$transaksi->judul_slug) }}">
-		    						<img src="{{ asset('/admin-assets/foto_buku/'.$transaksi->foto_buku) }}" draggable="false">
-		    					</a>
-		    					</figure>
-		    				</div>
-		    				<div class="card-content">
-			 					<p class="title is-4">{{ $transaksi->judul_buku }}</p>
-									<small>1 Jan 2016 -
-									<span class="icon is-small">
-										<i class="fa fa-star"></i>
-									</span>
-									<span class="icon is-small">
-										<i class="fa fa-star"></i>
-									</span>
-									<span class="icon is-small">
-										<i class="fa fa-star"></i>
-									</span>
-									<span class="icon is-small">
-										<i class="fa fa-star-o"></i>
-									</span>
-									<span class="icon is-small">
-										<i class="fa fa-star-o"></i>
-									</span>
-									</small>
-				 				<div>
-					 				<a class="tag is-danger">blood</a>
-					 				<a class="tag is-success">comedy</a>
-				 				</div>
-			 				</div>
-			 				<div class="content">
-			 					<div class="columns is-gapless">
-			 						<div class="column is-10">
-			 						<a href="{{ url('/buku/detail-pinjam/'.$transaksi->id_transaksi.'/'.Auth::user()->username) }}">
-			 							<button class="button is-danger pinjam">Pending</button>
-			 						</a>
-			 						</div>
-			 						<div class="column is-2">
-			 							<button class="button is-inverted is-dark pinjam">
-			 								<span class="icon">
-			 									<i class="fa fa-heart-o animated pulse"></i>
-			 								</span>
-			 							</button>
-			 						</div>
-			 					</div>
-			 				</div>
-		 				</div>
-				</div>
-			</div>
-	</section>
-	@endif
-	<br>
 	<section id="list-rating">
 			<p class="title is-4 pinjaman">
 				Rating buku
@@ -176,6 +112,71 @@
 					</div>
 				</div>
 	</section>
+	<br>
+	@if ($transaksi != null)
+		@if ($transaksi->status_pnjm == 0)
+		<section id="list-transaksi">
+			<p class="title is-4 pinjaman">
+					Pending Transaksi
+				<span class="icon is-small">
+					<i class="fa fa-chevron-down"></i>
+				</span>
+			</p>	
+				<div class="columns is-multiline">
+					<div class="column is-offset-4-desktop is-offset-3-tablet is-6-tablet is-10-mobile is-offset-1-mobile is-4-desktop">
+						<div class="card">
+			    				<div class="card-image">
+			    					<figure class="image is-1by1">
+			    					<a href="{{ url('/buku/detail/'.$transaksi->judul_slug) }}">
+			    						<img src="{{ asset('/admin-assets/foto_buku/'.$transaksi->foto_buku) }}" draggable="false">
+			    					</a>
+			    					</figure>
+			    				</div>
+			    				<div class="card-content">
+				 					<p class="title is-4">{{ $transaksi->judul_buku }}</p>
+										<small>1 Jan 2016 -
+										<span class="icon is-small">
+											<i class="fa fa-star"></i>
+										</span>
+										<span class="icon is-small">
+											<i class="fa fa-star"></i>
+										</span>
+										<span class="icon is-small">
+											<i class="fa fa-star"></i>
+										</span>
+										<span class="icon is-small">
+											<i class="fa fa-star-o"></i>
+										</span>
+										<span class="icon is-small">
+											<i class="fa fa-star-o"></i>
+										</span>
+										</small>
+					 				<div>
+						 				<a class="tag is-danger">blood</a>
+						 				<a class="tag is-success">comedy</a>
+					 				</div>
+				 				</div>
+				 				<div class="content">
+				 					<div class="columns is-gapless">
+				 						<div class="column is-10">
+					 						<a href="{{ url('/buku/detail-pinjam/'.$transaksi->id_transaksi.'/'.Auth::user()->username) }}">
+					 							<button class="button is-danger pinjam">Pending</button>
+					 						</a>
+				 						</div>
+				 						<div class="column is-2">
+				 							<button class="button is-inverted is-dark pinjam">
+				 								<span class="icon">
+				 									<i class="fa fa-heart-o animated pulse"></i>
+				 								</span>
+				 							</button>
+				 						</div>
+				 					</div>
+				 				</div>
+			 				</div>
+					</div>
+				</div>
+		</section>
+		@endif
 	<br>
 	<section id="list-pinjam">
 			<p class="title is-4 pinjaman">
@@ -243,6 +244,7 @@
 				</div>
 			</div>	
 	</section>
+	@endif
 	<br>		
 	<section id="wishlist">
 			<p class="title is-4 pinjaman">

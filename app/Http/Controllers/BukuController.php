@@ -38,6 +38,7 @@ class BukuController extends Controller
     			'tahun_terbit'     => $request->tahun_terbit,
     			'id_kategori_buku' => $request->kategori_buku,
     			'jumlah_eksemplar' => $request->jumlah_eksemplar,
+                'stok_buku'        => $request->stok_buku,
     			'foto_buku'        => $fileName,
                 'keterangan'       => $request->keterangan,
                 'tanggal_upload'   => date('Y-m-d'),
@@ -55,6 +56,7 @@ class BukuController extends Controller
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
+                'stok_buku'        => $request->stok_buku,
                 'keterangan'       => $request->keterangan,
                 'tanggal_upload'   => date('Y-m-d'),
                 'created_at'       => date('Y-m-d H:i:s')
@@ -85,6 +87,7 @@ class BukuController extends Controller
                             'tahun_terbit'     => $data->tahun_terbit,
                             'id_kategori_buku' => $data->id_kategori_buku,
                             'jumlah_eksemplar' => $data->jumlah_eksemplar,
+                            'stok_buku'        => $request->stok_buku,
                             'foto_buku'        => $data->foto_buku,
                             'keterangan'       => $data->keterangan,
                             'tanggal_upload'   => date('Y-m-d H:i:s'),
@@ -123,6 +126,7 @@ class BukuController extends Controller
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
+                'stok_buku'        => $request->stok_buku,
                 'foto_buku'        => $fileName,
                 'keterangan'       => $request->keterangan,
                 'updated_at'       => date('Y-m-d H:i:s')
@@ -139,6 +143,7 @@ class BukuController extends Controller
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
+                'stok_buku'        => $request->stok_buku,
                 'keterangan'       => $request->keterangan,
                 'updated_at'       => date('Y-m-d H:i:s')
             ];
@@ -208,15 +213,16 @@ class BukuController extends Controller
         $data_pinjam = [
             'id_buku'             => $request->buku,
             'id_siswa'            => $request->siswa,
-            'stok_pinjam'         => $request->stok,
+            'stok_pinjam'         => 1,
+            // ''
             'tanggal_pinjam_buku' => $request->tanggal_pinjam,
             'tanggal_jatuh_tempo' => $request->tanggal_jatuh_tempo,
             'created_at'          => date('Y-m-d H:i:s')
         ];
 
-        $stok = $this->buku->where('id_buku',$request->buku)->firstOrFail()->jumlah_eksemplar-1;
+        $stok = $this->buku->where('id_buku',$request->buku)->firstOrFail()->$data_pinjam['stok_pinjam']-1;
         $this->transaksi->create($data_pinjam);
-        $this->buku->where('id_buku',$request->buku)->update(['jumlah_eksemplar'=>$stok]);
+        $this->buku->where('id_buku',$request->buku)->update(['stok_buku'=>$stok]);
         if ($request->segment(2)=="petugas") {
             return redirect('/petugas/data-peminjaman');
         }

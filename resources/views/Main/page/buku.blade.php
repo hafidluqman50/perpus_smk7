@@ -2,8 +2,11 @@
 @section('title') Buku @endsection
 @section('content')
 <section id="page-buku" class="container is-fluid">
-<h1></h1>
+{{-- <h1></h1> --}}
 	<div id="wrap-notif">
+	{{-- @if () --}}
+		{{-- expr --}}
+	{{-- @endif --}}
 		<div id="borrow">
 			<div class="columns is-multiline notification is-default is-mobile is-tablet">
 				<button class="delete delete-notif"></button>
@@ -49,8 +52,8 @@
       	</div>
       	@elseif(session()->has('log'))
       	<div id="wrap-notif">
-			<div id="success">
-	    		<div class="columns is-default is-multiline notification is-default is-mobile is-tablet">
+			<div id="danger">
+	    		<div class="columns is-danger is-multiline notification is-default is-mobile is-tablet">
 	    			<button class="delete delete-notif"></button>
 			        <div class="column is-2-mobile is-2-tablet is-2-desktop">
 			          <span class="icon">
@@ -58,7 +61,7 @@
 			          </span>
 			        </div>
 			        <div class="column is-10-tablet is-10-mobile is-10-mobile">
-			           Gagal 
+			           {{ session('log') }} 
 			        </div>
 	      		</div>
 	      	</div>
@@ -111,23 +114,33 @@
 			 					<div class="columns is-gapless is-multiline is-mobile">
 			 						<div class="column is-10-desktop is-half-mobile">
 			 						@if (Auth::check())
-				 						@if ($transaksi == null)
+				 						@if ($transaksi == null && $buku->stok_buku != 0)
+				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
+				 							<button class="button is-primary pinjam">
+				 								Pinjam
+				 							</button>
+				 						</a>
+				 						@elseif($buku->stok_buku == 0)
+				 						<button class="button is-danger pinjam">
+				 							Stok Kosong
+				 						</button>
+				 						@else
+			 							<button class="button is-borrow pinjam">
+			 								<s>Pinjam</s>
+			 							</button>
+				 						@endif
+				 					@else
+				 						@if ($buku->stok_buku != 0)
 				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
 				 							<button class="button is-primary pinjam">
 				 								Pinjam
 				 							</button>
 				 						</a>
 				 						@else
-				 							<button class="button is-borrow pinjam">
-				 								<s>Pinjam</s>
-				 							</button>
+			 							<button class="button is-danger pinjam">
+			 								Stok Kosong
+			 							</button>
 				 						@endif
-				 					@else
-				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
-				 							<button class="button is-primary pinjam">
-				 								Pinjam
-				 							</button>
-				 						</a>
 			 						@endif
 			 						</div>
 			 						<div class="column is-2-desktop is-half-mobile">

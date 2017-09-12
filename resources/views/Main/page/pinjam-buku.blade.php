@@ -51,7 +51,7 @@
 						<ul>
 							<div class="wrap-info">
 								<p class="title is-6">Kelas</p>
-								<li class="subtitle is-4">{{ $transaksi->kelas }}</li>
+								<li class="subtitle is-4">{{ $transaksi->nama_kelas }}</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Tanggal peminjaman</p>

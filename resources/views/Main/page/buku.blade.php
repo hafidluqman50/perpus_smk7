@@ -2,11 +2,7 @@
 @section('title') Buku @endsection
 @section('content')
 <section id="page-buku" class="container is-fluid">
-{{-- <h1></h1> --}}
 	<div id="wrap-notif">
-	{{-- @if () --}}
-		{{-- expr --}}
-	{{-- @endif --}}
 		<div id="borrow">
 			<div class="columns is-multiline notification is-default is-mobile is-tablet">
 				<button class="delete delete-notif"></button>
@@ -114,7 +110,7 @@
 			 					<div class="columns is-gapless is-multiline is-mobile">
 			 						<div class="column is-10-desktop is-half-mobile">
 			 						@if (Auth::check())
-				 						@if ($transaksi == null && $buku->stok_buku != 0)
+				 						{{-- @if ($transaksi == null && $buku->stok_buku != 0)
 				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
 				 							<button class="button is-primary pinjam">
 				 								Pinjam
@@ -128,6 +124,21 @@
 			 							<button class="button is-borrow pinjam">
 			 								<s>Pinjam</s>
 			 							</button>
+				 						@endif --}}
+				 						@if (count($transaksi) > 0 && $transaksi[0]['tanggal_pinjam_buku'] != NULL)
+			 							<button class="button is-borrow pinjam">
+			 								<s>Pinjam</s>
+			 							</button>
+			 							@elseif(count($transaksi) == 0 && $buku->stok_buku != '0')
+				 						<a href="{{ url('/buku/pinjam',$buku->judul_slug) }}">
+				 							<button class="button is-primary pinjam">
+				 								Pinjam
+				 							</button>
+				 						</a>
+				 						@elseif(count($transaksi) > 0 || count($transaksi) == 0 && $buku->stok_buku == 0)
+				 						<button class="button is-danger pinjam">
+				 							Stok Kosong
+				 						</button>
 				 						@endif
 				 					@else
 				 						@if ($buku->stok_buku != 0)

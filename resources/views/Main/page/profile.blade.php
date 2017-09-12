@@ -18,7 +18,7 @@
 						{{ $siswa->username }}</li>
 						<p class="title is-6">kelas </p>
 						<li class="subtitle is-4">
-						{{ $siswa->kelas }}</li>
+						{{ $siswa->kelas->nama_kelas }}</li>
 					</ul>
 				</div>
 				<div class="column is-10-mobile is-offset-1-mobile is-5-tablet is-4">

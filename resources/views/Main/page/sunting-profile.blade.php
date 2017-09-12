@@ -33,7 +33,7 @@
                     <div class="field">
                         <p class="title is-6 label" for="kelas">kelas</p>
                         <li class="control has-icons-left subtitle is-4">
-                            <input type="text" name="kelas" class="input" readonly value="{{ $siswa->kelas }}">
+                            <input type="text" name="kelas" class="input" readonly value="{{ $siswa->kelas->nama_kelas }}">
                         </li>
                     </div>
                 </ul>
@@ -81,7 +81,7 @@
             <div class="column is-5-tablet is-offset-1-tablet is-10-mobile is-offset-1-mobile is-8 is-offset-2-desktop data-siswa">
                 <button type="submit" class="button is-primary">Submit</button>
                 <a href="{{ url('/profile',Auth::user()->username) }}">
-                <button class="button is-default">
+                <button class="button is-default" type="button">
                     Kembali
                 </button>
                 </a>

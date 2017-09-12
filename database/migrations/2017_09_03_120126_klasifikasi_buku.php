@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class JumlahEksemplar extends Migration
+class KlasifikasiBuku extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class JumlahEksemplar extends Migration
      */
     public function up()
     {
-        Schema::table('buku', function($table) {
-            $table->renameColumn('stok_buku','jumlah_eksemplar');
+        Schema::create('klasifikasi', function (Blueprint $table) {
+            $table->integer('nomor_klasifikasi')->primary();
+            $table->string('nama_klasifikasi');
         });
     }
 
@@ -25,6 +26,6 @@ class JumlahEksemplar extends Migration
      */
     public function down()
     {
-        
+        //
     }
 }

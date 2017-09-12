@@ -37,7 +37,7 @@
 						<ul>
 							<div class="wrap-info">
 								<p class="title is-6">Kelas</p>
-								<li class="subtitle is-4">{{ $siswa->kelas }}
+								<li class="subtitle is-4">{{ $siswa->kelas->nama_kelas }}
 								</li>
 							</div>
 							<div class="wrap-info">
@@ -67,6 +67,8 @@
 						</div>
 						<form action="{{ url('/buku/pinjam',$buku->id_buku) }}" method="POST">
 						{{ csrf_field() }}
+						<input type="hidden" name="tgl_pnjm" value="2017-09-20">
+						<input type="hidden" name="tgl_jth_tmpo" value="2017-10-10">
 						<div class="field is-grouped">
 						  <p class="control">
 						    <button type="submit" class="button is-primary" disabled>Pinjam</button>

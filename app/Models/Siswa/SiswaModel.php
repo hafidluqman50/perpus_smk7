@@ -12,6 +12,11 @@ class SiswaModel extends Model
 
   	public function users()
   	{
-  		$this->belongsTo('App\User','username');
+  		return $this->belongsTo('App\User','username');
   	}
+
+    public function kelas()
+    {
+        return $this->belongsTo('App\Models\Siswa\KelasSiswa','id_kelas');
+    }
 }

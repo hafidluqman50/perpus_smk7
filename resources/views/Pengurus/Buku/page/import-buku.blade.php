@@ -18,10 +18,10 @@
               		<label for="">Import Buku</label>
               		<input type="file" class="form-control" name="import">
               	</div>
-              	{{-- <div class="form-group">
+              	<div class="form-group">
               		<label for="">Import Foto Buku</label>
-              		<input type="file" class="form-control" name="foto_import">
-              	</div> --}}
+              		<input type="file" class="form-control" name="zip">
+              	</div>
               </div>
               <div class="box-footer">
               	<button class="btn btn-primary">

@@ -15,14 +15,10 @@ class AjaxOption
      */
     public function handle($request,Closure $next)
     {
-        // if ($request->ajax()) {
-        //     return $next($request)
-        //         ->header('Access-Control-Allow-Origin','*')
-        //         ->header('Access-Control-Allow-Methods','GET,POST,OPTIONS');
-        // }
-        // dd('Maaf Request Gagal');
-        if ($request->getMethod() === "OPTIONS") {
-            
+        if ($request->ajax()) 
+        {
+            return $next($request);
         }
+        dd('Maaf Gagal Request');
     }
 }

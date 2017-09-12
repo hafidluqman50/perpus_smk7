@@ -9,18 +9,13 @@ use App\Models\BukuModel as Buku;
 use App\Models\TransaksiBukuModel as Transaksi;
 use Auth;
 use DB;
-use App;
-use StdClass;
-// use PDO;
 
 class SiswaPageController extends Controller
 {
     public function Page()
     {
-        // $bulan = date('m');
-        // $buku = Buku::limit(4)->whereIn('tanggal_upload',)->get();
     	if (Auth::check()) {
-	    	$siswa = Siswa::where('username',Auth::user()->username)->firstOrFail();
+	    	$siswa = Siswa::with('kelas')->where('username',Auth::user()->username)->firstOrFail();
 	    	$explode = explode(" ",$siswa->nama_siswa);
 	    	if ($explode[0]=="M.") {
 	    		$nama_siswa = $explode[1];
@@ -35,18 +30,12 @@ class SiswaPageController extends Controller
 
     public function Profile($user)
     {
-        $siswa     = Siswa::where('username',$user)->firstOrFail();
+        $siswa     = Siswa::with('kelas')->where('username',$user)->firstOrFail();
         $transaksi = DB::table('transaksi_buku')
                         ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
                         ->select('transaksi_buku.*','buku.judul_buku','buku.judul_slug','buku.foto_buku')
                         ->where('transaksi_buku.id_siswa',$siswa->id_siswa)
-                        ->first(); 
-        // if (is_null($transaksi->get())) {
-        //      dd($transaksi->get());
-        // }
-        // else {
-        //     $transaksi->first();
-        // }
+                        ->first();
     	return view('Main.page.profile',compact('siswa','transaksi'));
     }
 
@@ -61,11 +50,21 @@ class SiswaPageController extends Controller
         $bukus = Buku::all();
         if (Auth::check()) {
             $siswa     = Siswa::where('username',Auth::user()->username)->firstOrFail()->id_siswa;
-            $transaksi = Transaksi::where('id_siswa',$siswa)->value('id_siswa');
+            $get_transaksi = Transaksi::where('id_siswa',$siswa)->get();
+            if (count($get_transaksi) == 0) {
+                $transaksi = [
+                    'tanggal_pinjam_buku' => NULL
+                ];
+            }
+            else {
+                $transaksi = $get_transaksi->toArray();
+            }
             // dd($transaksi);
-            return view('Main.page.buku',compact('bukus','transaksi'));
+            return view('Main.page.buku',compact('bukus','transaksi','get_transaksi'));
         }
-        return view('Main.page.buku',compact('bukus'));
+        else {
+            return view('Main.page.buku',compact('bukus'));
+        }
     }
 
     public function InfoKategori($kategori)
@@ -77,7 +76,7 @@ class SiswaPageController extends Controller
     public function Pinjam($slug)
     {
         $buku = Buku::where('judul_slug',$slug)->firstOrFail();
-        $siswa = Siswa::where('username',Auth::user()->username)->firstOrFail();
+        $siswa = Siswa::with('kelas')->where('username',Auth::user()->username)->firstOrFail();
         return view('Main.page.transaksi-buku',compact('buku','siswa'));
     }
 
@@ -87,7 +86,8 @@ class SiswaPageController extends Controller
         $transaksi = DB::table('transaksi_buku')
                         ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
                         ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
-                        ->select('transaksi_buku.id_transaksi','transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','transaksi_buku.id_buku','transaksi_buku.status_pnjm','buku.judul_buku','buku.foto_buku','siswa.nama_siswa','siswa.nisn','siswa.kelas')
+                        ->join('kelas_siswa','siswa.id_kelas','=','kelas_siswa.id_kelas')
+                        ->select('transaksi_buku.id_transaksi','transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','transaksi_buku.id_buku','transaksi_buku.status_pnjm','buku.judul_buku','buku.foto_buku','siswa.nama_siswa','siswa.nisn','kelas_siswa.nama_kelas')
                         ->where('id_transaksi',$id_transaksi)
                         ->where('transaksi_buku.id_siswa',$id_siswa)
                         ->first();

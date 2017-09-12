@@ -7,6 +7,7 @@ use App\Models\BukuModel as Buku;
 use App\Models\TransaksiBukuModel as Transaksi;
 use App\Models\KategoriBukuModel as Kategori;
 use App\Models\Siswa\SiswaModel as Siswa;
+use App\Models\Siswa\KelasSiswa as Kelas;
 use Auth;
 use DB;
 
@@ -54,18 +55,6 @@ class BukuPageController extends Controller
         return view('Pengurus.Buku.page.tambah-data_kategori');
     }
 
-    // public function AturTransaksi($username)
-    // {
-    //     $siswa = Siswa::where('username',$username)->firstOrFail()->id_siswa;
-    //     $get_transaksi = DB::table('transaksi_buku')
-    //                     ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
-    //                     ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
-    //                     ->select('transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','buku.*','siswa.nama_siswa','siswa.nisn','siswa.email')
-    //                     ->where('id_siswa',$siswa)
-    //                     ->get(); 
-    //     return view('Pengurus.Buku.page.transaksi',compact('get_transaksi'));
-    // }
-
     public function DetailKategori($id_kategori_buku)
     {
         $kategori = Kategori::where('id_kategori_buku',$id_kategori_buku)->firstOrFail();
@@ -83,17 +72,14 @@ class BukuPageController extends Controller
     	$transaksi = DB::table('transaksi_buku')
                      ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
                      ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
-                     ->select('transaksi_buku.*','siswa.nisn','siswa.nama_siswa','buku.judul_buku')
+                     ->select('transaksi_buku.*','siswa.*','buku.*')
                      ->get();
-        // dd($transaksi);
     	return view('Pengurus.Buku.page.data_peminjaman',compact('transaksi'));
     }
 
-    public function Pinjam()
+    public function PinjamMultiForm()
     {
-        $siswa = Siswa::select('kelas')->get();
-        $get = $siswa->toArray();
-        $kelas = array_unique($get[0]);
+        $kelas = Kelas::all();
         $buku = Buku::select('id_buku','judul_buku')->get();
         return view('Pengurus.Buku.page.pinjam',compact('kelas','buku'));
     }
@@ -112,61 +98,48 @@ class BukuPageController extends Controller
                      ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
                      ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
                      ->select('transaksi_buku.*','siswa.nisn','siswa.nama_siswa','buku.judul_buku')
+                     ->where('status_pnjm',1)
                      ->get();
-    	return view('Pengurus.Buku.page.data_pengembalian',compact('transaksi'));
+        return view('Pengurus.Buku.page.data_pengembalian',compact('transaksi'));
     }
 
-    public function TransaksiPage($id_transaksi)
+    public function DuaMinggu($tanggal) 
+    {
+        $dua_minggu = date('Y-m-d', strtotime('+2 week', strtotime($tanggal)));
+        return $dua_minggu;
+    }
+
+    public function PinjamSingleForm($id_transaksi)
     {
         $transaksi = DB::table('transaksi_buku')
                         ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
+                        ->join('kelas_siswa','siswa.id_kelas','=','kelas_siswa.id_kelas')
                         ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
                         ->join('kategori_buku','buku.id_kategori_buku','=','kategori_buku.id_kategori_buku')
-                        ->select('transaksi_buku.*','siswa.*','buku.*','kategori_buku.*')
+                        ->select('transaksi_buku.*','siswa.*','kelas_siswa.nama_kelas','buku.*','kategori_buku.*')
                         ->where('id_transaksi',$id_transaksi)
                         ->first();
-        return view('Pengurus.Buku.page.transaksi',compact('transaksi'));
+        $minggu = $this->DuaMinggu(date('Y-m-d'));
+        return view('Pengurus.Buku.page.transaksi',compact('transaksi','minggu'));
     }
 
-    // public function DuaMinggu($tanggal) 
-    // {
-    //     //         
-    // }
-
-    public function GetSiswa(Request $request,$kelas)
+    public function PengembalianMultiForm()
     {
-        if ($request->ajax()) {
-            $get_siswa = Siswa::where('kelas',$kelas)->get();
-            foreach ($get_siswa as $siswa) {
-                echo '<option value="'.$siswa->id_siswa.'">'.$siswa->nama_siswa.'</option>';
-            }   
-            //return response()->json(['error'],500);
-        }
-        else {
-            dd('Maaf Bukan Request Ajax');
-        }
+        $kelas = Kelas::select('id_kelas','nama_kelas')->get();
+        return view('Pengurus.Buku.page.multi-form-kembali',compact('kelas'));
     }
 
-    // public function NomorInduk()
-    // {
-    //     $count = Transaksi::count();
-    //     $abjad = 'A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z';
-    //     $explode = explode('-',$abjad);
-    //     for ($i=0; $i < $count; $i++) { 
-            
-    //     }
-    // }
-
-    public function Pengembalian($id_transaksi)
+    public function PengembalianSingleForm($id_transaksi)
     {
-        // $transaksi = Transaksi::with('transaksi')->where('id_transaksi',$id_transaksi)->get();
-        $transaksi = DB::table('transaksi_buku')
-                     ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
-                     ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
-                     ->select('transaksi_buku.*','siswa.nisn','siswa.nama_siswa','buku.judul_buku')
-                     ->where('id_transaksi',$id_transaksi)
-                     ->first();
-        return view('Pengurus.Buku.page.kembalikan',compact('transaksi'));
+            $transaksi = DB::table('transaksi_buku')
+                         ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
+                         ->join('kelas_siswa','siswa.id_kelas','=','kelas_siswa.id_kelas')
+                         ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+                         ->join('kategori_buku','buku.id_kategori_buku','=','kategori_buku.id_kategori_buku')
+                         ->select('transaksi_buku.*','siswa.*','buku.*','kelas_siswa.nama_kelas','kategori_buku.*')
+                         ->where('id_transaksi',$id_transaksi)
+                         ->first();
+            return view('Pengurus.Buku.page.single-form-kembali',compact('transaksi'));
     }
 
     public function DetailPengembalian($id_transaksi) 
@@ -178,14 +151,26 @@ class BukuPageController extends Controller
                      ->where('id_transaksi',$id_transaksi)
                      ->first();
     }
-    // public function DetailKembali($id_transaksi)
-    // {
-    //     $transaksi = DB::table('transaksi_buku')
-    //                  ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
-    //                  ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
-    //                  ->select('transaksi_buku.*','siswa.nisn','siswa.nama_siswa','siswa.kelas','buku.judul_buku','buku.penerbit','buku.tahun_terbit')
-    //                  ->where('id_transaksi',$id_transaksi)
-    //                  ->first();
-    //     return view('Pengurus.Buku.page.detail-data_pengembalian',compact('transaksi'));  
-    // }
-}
+
+    // AJAX FUNCTION GET //
+    public function GetSiswa($kelas)
+    {
+        $get_siswa = Siswa::where('id_kelas',$kelas)->get();
+        foreach ($get_siswa as $siswa) {
+            echo '<option value="'.$siswa->id_siswa.'">'.$siswa->nama_siswa.'</option>';
+        }
+    }
+
+    public function GetBuku($id_siswa) {
+        $get_transaksi = DB::table('transaksi_buku')
+                            ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+                            ->select('buku.id_buku','buku.judul_buku')
+                            ->where('id_siswa',$id_siswa)
+                            ->get();
+        foreach ($get_transaksi as $transaksi) {
+            echo '<option value="'.$transaksi->id_buku.'">'.$transaksi->judul_buku.'</option>';
+        }
+    }
+    // END AJAX FUNCTION GET //
+} 
+

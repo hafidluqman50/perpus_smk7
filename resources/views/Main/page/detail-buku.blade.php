@@ -31,8 +31,8 @@
 								<li class="subtitle">{{ $buku->tahun_terbit }}</li>
 							</div>
 							<div class="wrap-info">
-								<p class="title is-5">jumlah eksemplar</p>
-								<li class="subtitle">{{ $buku->jumlah_eksemplar }}</li>
+								<p class="title is-5">stok buku</p>
+								<li class="subtitle"><span class="tag {{ ($buku->stok_buku !='0' ? 'is-success' : 'is-danger') }}">{{ $buku->stok_buku }}</span></li>
 							</div>
 						</ul>
 					</div>

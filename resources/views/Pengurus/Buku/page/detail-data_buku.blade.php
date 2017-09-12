@@ -13,6 +13,10 @@
 						<p class="form-control">{{ $buku->judul_buku }}</p>
 					</div>
 					<div class="form-group">
+					<label for="">Nomor Induk :</label>
+						<p class="form-control">{{ $buku->nomor_induk }}</p>
+					</div>
+					<div class="form-group">
 					<label for="">Pengarang :</label>
 						<p class="form-control">{{ $buku->pengarang }}</p>
 					</div>
@@ -35,6 +39,10 @@
 					<div class="form-group">
 					<label for="">Kategori Buku :</label>
 						<p class="form-control">{{ $buku->kategori->nama_kategori }}</p>
+					</div>
+					<div class="form-group">
+					<label for="">Klasifikasi :</label>
+						<p class="form-control">{{ $buku->klasifikasi }}</p>
 					</div>
 					<div class="form-group">
 					<label for="">Jumlah Eksemplar :</label>

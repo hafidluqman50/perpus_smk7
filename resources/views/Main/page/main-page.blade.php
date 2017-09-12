@@ -114,7 +114,7 @@
 			    				{{ $siswa->username }}</li>
 			    			<p class="title is-5">Kelas</p>	
 			    				<li class="subtitle is-4">
-			    				{{ $siswa->kelas }}</li>
+			    				{{ $siswa->kelas->nama_kelas }}</li>
 			    			</ul>
 			    		</div>
 			    		<div class="column is-12-mobile is-one-third-tablet is-one-third-desktop data-siswa">

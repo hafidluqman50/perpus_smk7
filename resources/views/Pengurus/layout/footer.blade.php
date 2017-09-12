@@ -18,15 +18,18 @@
 {{--   <script src="{{ asset('/admin-assets/js/tinymce/jquery.tinymce.min.js') }}"></script>
   <script src="{{ asset('/admin-assets/js/tinymce/tinymce.min.js') }}"></script> --}}
   <script>
-    $('#buku').dataTable({autoWidth:true, scrollX:true});
-    $('#datepicker').datepicker({
-      autoclose:true,
-      format:"yyyy",
-      viewMode:"years",
-      minViewMode:"years"
+  $(function(){
+      $('.buku').dataTable({autoWidth:true, scrollX:true});
+      $('#datepicker').datepicker({
+        autoclose:true,
+        format:"yyyy",
+        viewMode:"years",
+        minViewMode:"years"
+      });
+    $('.date2').datepicker({
+      format:"yyyy-mm-dd",
+      startDate:new Date(),
     });
-  $('.date2').datepicker({
-    format:"yyyy-mm-dd"
+    $('.select2').select2();
   });
-  $('.select2').select2();
 </script>

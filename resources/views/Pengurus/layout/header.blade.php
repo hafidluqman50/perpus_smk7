@@ -63,49 +63,25 @@
           <img src="{{ asset('/admin-assets/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
+        {{-- Petugas --}}
         @if (Auth::user()->level==1)
           <p>Petugas Perpustakaan</p>
-        @elseif(Auth::user()->level==2)
-          <p>Admin Perpustakaan</p>
-        @endif
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        @if (Auth::user()->level==1)
         <li>
           <a href="{{ url('/dashboard-petugas') }}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
           </li>
-        @elseif(Auth::user()->level==2)
-        <li>
-          <a href="{{ url('/dashboard-admin') }}">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ url('/admin/data-petugas') }}">
-            <i class="fa fa-users"></i> <span>Petugas</span>
-          </a>
-        </li>
-        @endif
-        @if (Auth::user()->level==1)
         <li>
           <a href="{{ url('/petugas/data-siswa') }}">
             <i class="fa fa-graduation-cap"></i>
             <span>Siswa</span>
           </a>
         </li>
-        @elseif(Auth::user()->level==2)  
-        <li>
-          <a href="{{ url('/admin/data-siswa') }}">
-            <i class="fa fa-graduation-cap"></i>
-            <span>Siswa</span>
-          </a>
-        </li>
-        @endif
         <li>
           <a href="{{ url('/data-barcode') }}">
             <i class="fa fa-qrcode"></i> <span>Barcode</span>
@@ -120,21 +96,63 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          @if (Auth::user()->level==2)
+            <li><a href="{{ url('/petugas/data-buku') }}"><i class="fa fa-circle-o"></i> 
+            Data Buku</a></li>
+            <li><a href="{{ url('/petugas/data-peminjaman') }}"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
+            <li><a href="{{ url('/petugas/data-pengembalian') }}"><i class="fa fa-circle-o"></i> Data Pengembalian</a></li>
+          </ul>
+        </li>
+      </ul>
+      {{-- End Petugas --}}
+
+      {{-- Admin --}}
+      @elseif (Auth::user()->level==2)
+          <p>Admin Perpustakaan</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li>
+          <a href="{{ url('/dashboard-admin') }}">
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+          </a>
+          </li>
+        <li>
+          <a href="{{ url('/admin/data-petugas') }}">
+            <i class="fa fa-users"></i> <span>Petugas</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/admin/data-siswa') }}">
+            <i class="fa fa-graduation-cap"></i>
+            <span>Siswa</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/data-barcode') }}">
+            <i class="fa fa-qrcode"></i> <span>Barcode</span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-book"></i>
+            <span>Buku</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
             <li><a href="{{ url('/admin/data-buku') }}"><i class="fa fa-circle-o"></i> 
             Data Buku</a></li>
             <li><a href="{{ url('/admin/data-kategori') }}"><i class="fa fa-circle-o"></i> Data Kategori Buku</a></li>
             <li><a href="{{ url('/admin/data-peminjaman') }}"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
             <li><a href="{{ url('/admin/data-pengembalian') }}"><i class="fa fa-circle-o"></i> Data Pengembalian</a></li>
-          @elseif(Auth::user()->level==1)
-            <li><a href="{{ url('/petugas/data-buku') }}"><i class="fa fa-circle-o"></i> 
-            Data Buku</a></li>
-            <li><a href="{{ url('/petugas/data-peminjaman') }}"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
-            <li><a href="{{ url('/petugas/data-pengembalian') }}"><i class="fa fa-circle-o"></i> Data Pengembalian</a></li>
-          @endif
           </ul>
         </li>
       </ul>
+      {{-- End Admin --}}
+          @endif
     </section>
   </aside>
   <div class="content-wrapper">

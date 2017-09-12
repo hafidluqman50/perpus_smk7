@@ -13,18 +13,10 @@
               <h3 class="title is-3">Login</h3>
             </figcaption>
           </figure>
-          @if (count($errors)>0)
-            @foreach ($errors->all() as $error)
+          @if (session()->has('fail') || session()->has('log'))
             <div class="notification is-danger" id="show-notif">
             <button class="delete" id="dismiss"></button>
-              {{ $error }}
-            </div>
-            @endforeach
-          @endif
-          @if (session()->has('log'))
-            <div class="notification is-danger" id="show-notif">
-            <button class="delete" id="dismiss"></button>
-              {{ session('log') }}
+              {{ (session('fail') ? session('fail') : session('log')) }}
             </div>
           @endif
           <form action="{{ url('/login/auth') }}" method="POST">

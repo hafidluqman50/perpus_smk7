@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/admin-assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/_all-skins.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/bootstrap-datepicker.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/admin-assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/css/custom.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>

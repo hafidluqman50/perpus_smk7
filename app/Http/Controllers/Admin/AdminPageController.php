@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Petugas\PetugasModel as Petugas;
+use DB;
 
 class AdminPageController extends Controller
 {
@@ -15,8 +16,8 @@ class AdminPageController extends Controller
 
     public function ShowPetugas()
     {
-    	$data = Petugas::with('user')->get();
-    	return view('Pengurus.Admin.page.data_petugas',compact('data'));
+    	$data_petugas = Petugas::select('nama_petugas','nip');
+    	return view('Pengurus.Admin.page.data_petugas',compact('data_petugas'));
     }
 
     public function SimpanPetugas()
@@ -30,9 +31,14 @@ class AdminPageController extends Controller
     	return view('Pengurus.Admin.page.edit-data_petugas',compact('data'));
     }
 
-    // public function ShowSiswa()
-    // {
-    //     $siswa = DB::table('transaksi_buku')
-    //                 ->join
-    // }
+    public function ShowSiswa()
+    {
+        $siswa = DB::table('siswa')
+                    ->join('kelas_siswa','siswa.id_kelas','=','kelas_siswa.id_kelas')
+                    ->join('users','siswa.username','=','users.username')
+                    ->select('siswa.*','kelas_siswa.nama_kelas','users.status')
+                    ->get();
+                    
+        return view('Pengurus.Siswa.page.data_siswa',compact('siswa'));
+    }
 }

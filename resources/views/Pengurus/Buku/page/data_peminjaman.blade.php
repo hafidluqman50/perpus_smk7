@@ -4,7 +4,7 @@
 @if (session()->has('dlt_pnjm'))
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="alert alert-success">
+			<div class="alert alert-danger">
 				{{ session('dlt_pnjm') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				  <span aria-hidden="true">&times;</span>
 				</button>
@@ -24,26 +24,25 @@
 					@if (Auth::user()->level==1)
 					<a href="{{ url('/petugas/pinjam-buku') }}">
 						<button class="btn btn-primary">
-							Tambah Data Peminjaman
+							Pinjam Buku
 						</button>
 					</a>
 					@elseif(Auth::user()->level==2)
 					<a href="{{ url('/admin/pinjam-buku') }}">
 						<button class="btn btn-primary">
-							Tambah Data Peminjaman
+							Pinjam Buku
 						</button>
 					</a>
 					@endif
 				</div>
 				<div class="box-body">
-					<table id="buku" class="table table-hover table-bordered dt-responsive">
+					<table class="table table-hover table-bordered dt-responsive buku">
 						<thead>
 							<th>No.</th>
-							<th>Judul Buku</th>
-							<th>NISN</th>
 							<th>Nama Siswa</th>
+							<th>NISN</th>
+							<th>Judul Buku</th>
 							<th>Tanggal Pinjam Buku</th>
-							<th>Tanggal Harus Kembalikan</th>
 							<th>Ket.</th>
 							<th>Action</th>
 						</thead>
@@ -51,35 +50,52 @@
 						@foreach ($transaksi as $no => $data)
 							<tr>
 								<td>{{ $no+1 }}</td>
-								<td>{{ $data->judul_buku }}</td>
-								<td>{{ $data->nisn }}</td>
 								<td>{{ $data->nama_siswa }}</td>
-								@if ($data->tanggal_pinjam_buku==null)
+								<td>{{ $data->nisn }}</td>
+								<td>{{ $data->judul_buku }}</td>
+								@if ($data->tanggal_pinjam_buku==NULL)
 								<td>-</td>
 								@else
 								<td>{{ $data->tanggal_pinjam_buku }}</td>
 								@endif
-								@if ($data->tanggal_jatuh_tempo==null)
-								<td>-</td>
-								@else
-								<td>{{ $data->tanggal_jatuh_tempo }}</td>
-								@endif
-								@if ($data->status_pnjm==0)
-								<td><span class="label label-danger">Belum Dipinjamkan</span></td>
+								@if ($data->status_pnjm=='0')
+								<td><span class="label label-warning">Belum Dipinjamkan</span></td>
+								@elseif ($data->status_pnjm==NULL)
+								<td><span class="label label-danger">Batal Pinjam</span></td>
 								@else
 								<td><span class="label label-success">Dipinjamkan</span></td>
 								@endif
 								<td>
 								@if (Auth::user()->level==1)
+									<a href="{{ url('/petugas/detail-data-peminjaman',$data->id_transaksi) }}">
+										<button class="btn btn-info">
+											Info Pinjam
+										</button>
+									</a>
 									<a href="{{ url('/petugas/atur-transaksi',$data->id_transaksi) }}">
 										<button class="btn btn-success">
 											Atur Transaksi
 										</button>
 									</a>
+									<a href="{{ url('/delete/petugas/data-peminjaman',$data->id_transaksi) }}">
+										<button class="btn btn-danger">
+											Hapus
+										</button>
+									</a>
 								@elseif(Auth::user()->level==2)
+									<a href="{{ url('/admin/detail-data-peminjaman',$data->id_transaksi) }}">
+										<button class="btn btn-info">
+											Info Pinjam
+										</button>
+									</a>
 									<a href="{{ url('/admin/atur-transaksi',$data->id_transaksi) }}">
 										<button class="btn btn-success">
 											Atur Transaksi
+										</button>
+									</a>
+									<a href="{{ url('/delete/admin/data-peminjaman',$data->id_transaksi) }}">
+										<button class="btn btn-danger" onclick="return confirm('Yakin Hapus ?');">
+											Hapus
 										</button>
 									</a>
 								@endif

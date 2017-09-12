@@ -1,6 +1,27 @@
 @extends('Pengurus.layout.layout-app')
 @section('title') Data Siswa @endsection
 @section('content')
+@if (session()->has('log'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-danger">
+				{{ session('log') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@elseif(session()->has('success'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-success">
+			{{ session('success') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@endif
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
@@ -16,48 +37,43 @@
 							<th>Nama Siswa</th>
 							<th>NISN</th>
 							<th>Kelas</th>
+							<th>Status</th>
 							<th>Action</th>
 						</thead>
 						<tbody>
-						{{-- @foreach ($bukus as $no => $buku)
+						@foreach ($siswa as $no => $siswa)
 							<tr>
 								<td>{{ $no+1 }}</td>
-								<td>{{ $buku->judul_buku }}</td>
-								<td>{{ $buku->kategori->nama_kategori }}</td>
-								<td>{{ $buku->penerbit }}</td>
-								<td>{{ $buku->tahun_terbit }}</td>
-								<td>@if ($buku->stok_buku==0)
-								<small class="label bg-red">
-								{{ $buku->stok_buku }}
-								</small>
-								@else
-								<small class="label bg-green">
-								{{ $buku->stok_buku }}
-								</small>
+								<td>{{ $siswa->nama_siswa }}</td>
+								<td>{{ $siswa->nisn }}</td>
+								<td>{{ $siswa->nama_kelas }}</td>
+								<td>@if ($siswa->status==1)
+									<small class="label label-success">Akun Aktif</small>
+									@else
+									<small class="label label-danger">Akun Non-Aktif</small>
 								@endif</td>
 								<td>
-								@if (Auth::user()->level==1)
-									<button class="btn btn-danger user">
-										Non-Aktif
-									</button>
-									<a href="{{ url('/petugas/detail-buku',$buku->id_buku) }}">
-										<button class="btn btn-success">
-											Detail
+									<a href="{{ url('/admin/siswa-detail',$siswa->id_siswa) }}">
+										<button class="btn btn-info">
+											Info Siswa
 										</button>
 									</a>
-								@elseif(Auth::user()->level==2)
-									<button class="btn btn-danger user">
-										Non-Aktif
-									</button>
-									<a href="{{ url('/admin/detail-buku',$buku->id_buku) }}">
-										<button class="btn btn-success">
-											Detail Siswa
-										</button>
-									</a>
-								@endif
+									@if ($siswa->status==1)
+										<a href="{{ url('/admin/siswa/akun/nonaktif',$siswa->username) }}">
+											<button class="btn btn-danger">
+												Non-Aktifkan Akun
+											</button>
+										</a>
+									@else
+										<a href="{{ url('/admin/siswa/akun/aktif',$siswa->username) }}">
+											<button class="btn btn-success">
+												Aktifkan Akun
+											</button>
+										</a>
+									@endif
 								</td>
 							</tr>
-						@endforeach --}}
+						@endforeach
 						</tbody>
 					</table>
 				</div>

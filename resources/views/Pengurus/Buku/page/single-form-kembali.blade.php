@@ -1,7 +1,7 @@
 @extends('Pengurus.layout.layout-app')
-@section('title') Atur Transaksi @endsection
+@section('title') Kembalikan Buku @endsection
 @section('content')
-<div class="row">
+	<div class="row">
 	<div class="col-md-6 col-xs-12">
 		<div class="box box-danger">
 			<div class="box-header with-border">
@@ -81,36 +81,40 @@
 	<div class="col-xs-12">
 		<div class="box box-danger">
 			<div class="box-header">
-				<h3 class="box-title">Transaksi</h3>
+				<h3 class="box-title">Pengembalian</h3>
 			</div>
-			@if (Auth::user()->level==1)
-			<form action="{{ url('/pinjam/petugas/atur',$transaksi->id_transaksi) }}" method="POST">
-			@elseif(Auth::user()->level==2)
-			<form action="{{ url('/pinjam/admin/atur',$transaksi->id_transaksi) }}" method="POST">
-			@endif
-			{{ csrf_field() }}
 			<div class="box-body">
 				<div class="form-group">
 					<label for="">Tanggal Pinjam</label>
-					<input type="text" name="tanggal_pinjam" class="form-control" placeholder="Tanggal Pinjam" value="{{ date('Y-m-d') }}" readonly>
+					<input type="text" name="tanggal_pinjam" class="form-control" placeholder="Tanggal Pinjam" value="{{ $transaksi->tanggal_pinjam_buku }}" readonly>
 				</div>
 				<div class="form-group">
 					<label for="">Tanggal Harus Kembalikan</label>
-					<input type="text" name="tanggal_jth_tmpo" class="form-control" placeholder="Tanggal Harus Kembalikan" value="{{ $minggu }}" readonly>
-				</div>	
+					<input type="text" name="tanggal_jth_tmpo" class="form-control" placeholder="Tanggal Harus Kembalikan" value="{{ $transaksi->tanggal_jatuh_tempo }}" readonly>
+				</div>
+				@if (Auth::user()->level==1)
+				<form action="{{ url('/kembali/petugas/buku',$transaksi->id_transaksi) }}" method="POST">
+				@elseif(Auth::user()->level==2)
+				<form action="{{ url('/kembali/admin/buku',$transaksi->id_transaksi) }}" method="POST">
+				@endif	
+				{{ csrf_field() }}
 				<div class="form-group">
-					<label for="">Atur Peminjaman</label>
-					<select name="status_pnjm" id="" class="form-control">
-						<option value="" selected disabled>Atur Peminjaman</option>
-						<option value="1">Pinjamkan Buku</option>
-						<option value="NULL">Batalkan Peminjaman</option>
+					<label for="">Tanggal Kembali</label>
+					<input type="text" class="form-control date2" placeholder="Tanggal Kembali" name="tgl_kmbli">
+				</div>
+				<div class="form-group">
+					<label for="">Atur Pengembalian</label>
+					<select name="status_kmbli" id="" class="form-control">
+						<option value="" selected disabled>Atur Pengembalian</option>
+						<option value="1">Kembalikan Buku</option>
+						<option value="0">Belum Kembali</option>
 					</select>
 				</div>
-			<div class="box-footer">
-				<div align="center">
-					<button class="btn btn-primary">Simpan</button>
+				<div class="box-footer">
+					<div align="center">
+						<button class="btn btn-primary" onclick="return confirm('Yakin Kembalikan Buku ?');">Simpan</button>
+					</div>
 				</div>
-			</div>
 			</form>
 			</div>	
 		</div>

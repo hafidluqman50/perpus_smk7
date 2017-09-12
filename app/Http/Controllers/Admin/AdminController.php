@@ -35,17 +35,34 @@ class AdminController extends Controller
     public function TambahPetugas(Request $request)
     {
        $data_login = [
-        'username' = $request->username,
-        'password' = bcrypt($request->password),
-        'level'    = 1
+        'username' => $request->username,
+        'password' => bcrypt($request->password),
+        'level'    => 1,
+        'status'   => 1,
        ];
 
        $data_petugas = [
-        'username' = $request->username,
+        'username' => $request->username,
        ];
 
        $this->users->create($data_login);
        $this->petugas->create($data_petugas);
        return redirect('/admin/data-petugas')->with('data_petugas','Sukses Menambahkan Data petugas');
     } 
+
+    public function PengaturanAkun($username,Request $request)
+    {
+      $get_data = $this->users->where('username',$username)->firstOrFail();
+      // dd($get_data);
+      if ($get_data->status==1) {
+        $get_data->update(['status' => 0]);
+        $path = $request->segment(1);
+        return redirect('/'.$path.'/data-siswa')->with('log','Berhasil Non Aktifkan');
+      }
+      elseif ($get_data->status==0) {
+        $get_data->update(['status' => 1]);
+        $path = $request->segment(1);
+        return redirect('/'.$path.'/data-siswa')->with('success','Berhasil Aktifkan Akun');
+      }
+    }
 }

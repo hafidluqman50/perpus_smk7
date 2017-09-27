@@ -16,7 +16,7 @@ class AdminPageController extends Controller
 
     public function ShowPetugas()
     {
-    	$data_petugas = Petugas::select('nama_petugas','nip');
+    	$data_petugas = Petugas::all();
     	return view('Pengurus.Admin.page.data_petugas',compact('data_petugas'));
     }
 

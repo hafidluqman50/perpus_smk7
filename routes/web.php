@@ -19,6 +19,7 @@ Route::group(['middleware'=>'AjaxRequest'],function(){
 	Route::get('/siswa/{kelas}',['uses'=>'BukuPageController@GetSiswa','as'=>'get-siswa-name']);
 	Route::get('/dua-minggu/{tanggal}',['uses'=>'BukuPageController@DuaMinggu','as'=>'get-dua-minggu']);
 	Route::get('/siswa/buku/pinjam/{id_siswa}',['uses'=>'BukuPageController@GetBuku','as'=>'get-buku-siswa']);
+	Route::get('/barcode/buku/{barcode}',['uses'=>'BukuPageController@GetBarcode','as'=>'get-barcode-buku']);
 });
 // End Ajax Request //
 
@@ -151,6 +152,15 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::post('/kembali/admin/buku/{id_transaksi}',['uses'=>'BukuController@KembalikanBuku','as'=>'post-kembali-buku']);
 		Route::post('/kembali/admin/buku',['uses'=>'BukuController@KembalikanBukuMulti','as'=>'post-kembali-banyak']);
 		// END CRUD KEMBALIKAN BUKU //
+
+		// CRUD BARCODE BUKU //
+		Route::get('/admin/data-barcode',['uses'=>'BukuPageController@Barcode','as'=>'data-barcode-page']);
+		Route::get('/admin/tambah-data-barcode',['uses'=>'BukuPageController@AddFormBarcode','as'=>'form-barcode-page']);
+		Route::post('/insert/admin/data-barcode',['uses'=>'BukuController@InsertBarcode','as'=>'post-barcode-data']);
+		Route::get('/admin/edit-data-barcode/{id_barcode}',['uses'=>'BukuPageController@EditFormBarcode','as'=>'form-barcode-page']);
+		Route::post('/update/admin/data-barcode/{id_barcode}',['uses'=>'BukuController@UpdateBarcode','as'=>'post-barcode-data']);
+		Route::get('/delete/admin/data-barcode/{id_barcode}',['uses'=>'BukuController@DeleteBarcode','as'=>'delete-barcode-data']);
+		// END CRUD BARCODE BUKU //
 
 		// Route::post('/kembali/admin/data-transaksi/{id_transaksi}',['uses'=>'BukuController@KembalikanBuku','as'=>'post-kembali-buku']);
 	});

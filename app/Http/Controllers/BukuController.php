@@ -7,6 +7,7 @@ use App\Models\BukuModel as Buku;
 use App\Models\KategoriBukuModel as KategoriBuku;
 use App\Models\TransaksiBukuModel as TransaksiBuku;
 use App\Models\Siswa\SiswaModel as Siswa;
+use App\Barcode;
 use Auth;
 use Excel;
 use PDO;
@@ -18,13 +19,15 @@ class BukuController extends Controller
 	public $kategori_buku;
     public $transaksi;
     public $siswa;
+    public $barcode;
 
-    public function __construct(Buku $buku,KategoriBuku $kategori_buku,TransaksiBuku $transaksi,Siswa $siswa)
+    public function __construct(Buku $buku,KategoriBuku $kategori_buku,TransaksiBuku $transaksi,Siswa $siswa,Barcode $barcode)
     {
     	$this->buku = $buku;
     	$this->kategori_buku = $kategori_buku;
         $this->transaksi = $transaksi;
         $this->siswa = $siswa;
+        $this->barcode = $barcode;
     }
 
     public function TambahBuku(Request $request)
@@ -306,9 +309,58 @@ class BukuController extends Controller
         return redirect('/'.$path.'/data-pengembalian')->with('success','Berhasil Mengembalikan Buku');
     }
 
-    public function KodePinjam()
+    public function InsertBarcode(Request $request) {
+        $data_barcode = [
+            'code_scanner'=>$request->barcode,
+            'kode_buku'=>$this->KodePinjam(100),
+            'id_buku'=>$request->buku
+        ];
+        $this->barcode->create($data_barcode);
+        $path = $request->segment(2);
+        return redirect('/'.$path.'/data-barcode')->with('success','Berhasil Menambahkan Barcode');
+    }
+
+    public function UpdateBarcode($id_barcode,Request $request) {
+        //
+    }
+
+    public function DeleteBarcode($id_barcode,Request $request) {
+        $this->barcode->where('id_barcode',$id_barcode)->firstOrFail()->delete();
+        $path = $request->segment(2);
+        return redirect('/'.$path.'/data-barcode')->with('delete','Berhasil Hapus');
+    }
+
+    public function KodePinjam($kode)
     {
-        // To Do List
+         $min_length= 0;
+         $max_length = 100;
+         $bigL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+         $smallL = "abcdefghijklmnopqrstuvwxyz";
+         $number = "0123456789";
+         $bigB = str_shuffle($bigL);
+         $smallS = str_shuffle($smallL);
+         $numberS = str_shuffle($number);
+         $subA = substr($bigB,0,5);
+         $subB = substr($bigB,6,5);
+         $subC = substr($bigB,10,5);
+         $subD = substr($smallS,0,5);
+         $subE = substr($smallS,6,5);
+         $subF = substr($smallS,10,5);
+         $subG = substr($numberS,0,5);
+         $subH = substr($numberS,6,5);
+         $subI = substr($numberS,10,5);
+         $RandCode1 = str_shuffle($subA.$subD.$subB.$subF.$subC.$subE);
+         $RandCode2 = str_shuffle($RandCode1);
+         $RandCode = $RandCode1.$RandCode2;
+         if ($kode>$min_length && $kode<$max_length)
+         {
+         $CodeEX = substr($RandCode,0,$kode);
+         }
+         else
+         {
+         $CodeEX = $RandCode;
+         }
+         return $CodeEX;
     }
 
     public function HitungDenda($tgl1,$tgl2)

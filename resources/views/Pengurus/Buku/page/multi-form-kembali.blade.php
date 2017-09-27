@@ -58,7 +58,7 @@
 			$('#siswa').attr('disabled',false);
 			$('#siswa').append('<option disabled selected>Pilih Siswa</option>');
 			$('#siswa').each(function(){
-				$(this).append(param);
+				$(this).html(param);
 			});
 		})
 		.fail(function(error) {
@@ -78,7 +78,7 @@
 			$('.tanggal').attr('disabled',false);
 			$('#buku').attr('data-placeholder','Pilih Buku');
 			$('#buku').each(function(){
-				$(this).append(param);
+				$(this).html(param);
 			});;
 		})
 		.fail(function(error) {

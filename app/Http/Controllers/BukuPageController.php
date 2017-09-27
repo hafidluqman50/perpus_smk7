@@ -8,6 +8,7 @@ use App\Models\TransaksiBukuModel as Transaksi;
 use App\Models\KategoriBukuModel as Kategori;
 use App\Models\Siswa\SiswaModel as Siswa;
 use App\Models\Siswa\KelasSiswa as Kelas;
+use App\Barcode;
 use Auth;
 use DB;
 
@@ -152,6 +153,16 @@ class BukuPageController extends Controller
                      ->first();
     }
 
+    public function Barcode() {
+        $data_barcode = Barcode::with('buku')->get();
+        return view('Pengurus.Buku.page.barcode-page',compact('data_barcode'));
+    }
+
+    public function AddFormBarcode() {
+        $bukus = Buku::all();
+        return view('Pengurus.Buku.page.tambah-data_barcode',compact('bukus'));
+    }
+
     // AJAX FUNCTION GET //
     public function GetSiswa($kelas)
     {
@@ -169,6 +180,13 @@ class BukuPageController extends Controller
                             ->get();
         foreach ($get_transaksi as $transaksi) {
             echo '<option value="'.$transaksi->id_buku.'">'.$transaksi->judul_buku.'</option>';
+        }
+    }
+
+    public function GetBarcode($barcode) {
+        $get_buku = Barcode::with('buku')->where('code_scanner',$barcode)->get();
+        foreach ($get_buku as $buku) {
+            echo '<option value="'.$buku->id_buku.'" selected>'.$buku->buku->judul_buku.'</option>';
         }
     }
     // END AJAX FUNCTION GET //

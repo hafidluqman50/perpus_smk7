@@ -2,8 +2,8 @@
 -- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 12, 2017 at 05:30 AM
+-- Host: 127.0.0.1
+-- Generation Time: Sep 27, 2017 at 09:14 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -29,13 +29,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `barcode_scan` (
-  `id_scanner` int(10) UNSIGNED NOT NULL,
+  `id_barcode` int(10) UNSIGNED NOT NULL,
   `code_scanner` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `kode_buku` varchar(75) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `judul_buku` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_buku` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `barcode_scan`
+--
+
+INSERT INTO `barcode_scan` (`id_barcode`, `code_scanner`, `kode_buku`, `id_buku`, `created_at`, `updated_at`) VALUES
+(7, '110919000069733', 'NRwbBvpbZdODAGyishLFWfgNcKPmrQpyONwQcDRdhvmfWFrBbAPNKibLZgGs', 4, '2017-09-25 13:28:58', '2017-09-25 13:28:58'),
+(8, 'HS611032', 'RXGUriTDznEpadQxjOAeyokWdLRwPNREROUXAaywWjkdQdeTxNrpoGzDiPnL', 5, '2017-09-25 13:29:38', '2017-09-25 13:29:38');
 
 -- --------------------------------------------------------
 
@@ -182,7 +190,8 @@ CREATE TABLE `petugas` (
 
 INSERT INTO `petugas` (`id_petugas`, `username`, `nama_petugas`, `nip`, `jenis_kelamin`, `foto_profile`, `created_at`, `updated_at`) VALUES
 (1, 'petugas', 'Vick', '123131', 'Laki-laki', '1747_WallpaperPlay_developer-walp-w10-88515_1920x1080.jpg', '2017-06-24 02:10:05', '2017-06-24 02:10:05'),
-(2, 'uhuy', NULL, NULL, NULL, NULL, '2017-09-10 07:33:30', '2017-09-10 07:33:30');
+(2, 'uhuy', NULL, NULL, NULL, NULL, '2017-09-10 07:33:30', '2017-09-10 07:33:30'),
+(3, 'ahmad', NULL, NULL, NULL, NULL, '2017-09-24 22:02:32', '2017-09-24 22:02:32');
 
 -- --------------------------------------------------------
 
@@ -238,7 +247,7 @@ CREATE TABLE `transaksi_buku` (
   `id_transaksi` int(10) UNSIGNED NOT NULL,
   `id_buku` int(11) UNSIGNED NOT NULL,
   `id_siswa` int(11) UNSIGNED NOT NULL,
-  `kode` varchar(75) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_buku` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stok_pinjam` int(11) DEFAULT NULL,
   `tanggal_pinjam_buku` date DEFAULT NULL,
   `tanggal_jatuh_tempo` date DEFAULT NULL,
@@ -273,11 +282,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `remember_token`, `level`, `status`, `last_login`, `created_at`, `updated_at`) VALUES
-(2, 'hafidlh', '$2y$10$8m8xD9WKDRkerGd9E7zRqez31IdG7S4uTtwwjUFTcx8ZqeJSVL6Ce', '7IRUzDcl8DyAzsiVuz6V4R52GeaC12DoqNJlIRYYs2xdmq3BFR56Vj3NDiLP', 0, 1, '2017-09-08 12:46:00', '2017-09-07 15:54:05', '2017-09-10 07:33:01'),
+(2, 'hafidlh', '$2y$10$8m8xD9WKDRkerGd9E7zRqez31IdG7S4uTtwwjUFTcx8ZqeJSVL6Ce', 'QnwoBCeHtkjmcVfNBY2nfapOH40HvQ9hWOt5RoYnkRgY7ZdFCGOaWqXc0qal', 0, 1, '2017-09-24 01:52:38', '2017-09-07 15:54:05', '2017-09-23 17:52:38'),
 (3, 'petugas', '$2y$10$oBu6gkuKPmrbFk7M.kGEO..yzPV7bqpN0qHkenalYbY6gdbr/6LI6', 'fO8q4UOrrRmy1Emmjmb6S0SPNFPCiwcIQYFNOqvWc9YPpHdavZIz8VCUBDTP', 1, 1, '2017-07-30 11:49:23', '2017-06-23 04:51:20', '2017-07-30 03:49:23'),
-(4, 'admin', '$2y$10$x44D0Pclz570dxhOqAsD6.VNr9aDy04CX7w.gZ1nDjhAKxG/4Vu8C', 'CshaUiuqoTGxMjUS4XTr4eheO7KQkqfXKV3sG32HISwkNjmAYgh39KYdchK2', 2, 1, '2017-09-12 00:32:10', '2017-07-16 03:52:48', '2017-09-11 16:32:10'),
+(4, 'admin', '$2y$10$x44D0Pclz570dxhOqAsD6.VNr9aDy04CX7w.gZ1nDjhAKxG/4Vu8C', 'YbU3Va4KisOjSVpsmVF9FnNvP1JPtdc3Yo4RbwqCuR4cfbv5U4Wtx9hDcJIg', 2, 1, '2017-09-27 07:10:34', '2017-07-16 03:52:48', '2017-09-26 23:10:34'),
 (5, 'ilham', '$2y$10$tD3vwSfLWgGAsBtLue/Dwuqs6sp1LsinmT4Z/B2frj6e7noh8BwXi', 'dkt6a1yRqUwe6KWip0P1PWfWsqQhlFZz8rEMK6egZF7qWSKQREG5ZwSGupmq', 0, 1, '2017-08-06 09:20:33', '2017-08-06 01:22:09', '2017-09-03 03:51:21'),
-(6, 'uhuy', '$2y$10$0fCXR5aw2X3I315ObFj9mOEg/WAm9jjfFe6avTNuEPrEKMWvxGuyO', NULL, 1, 1, NULL, '2017-09-10 07:33:30', '2017-09-10 07:33:30');
+(6, 'uhuy', '$2y$10$0fCXR5aw2X3I315ObFj9mOEg/WAm9jjfFe6avTNuEPrEKMWvxGuyO', NULL, 1, 1, NULL, '2017-09-10 07:33:30', '2017-09-10 07:33:30'),
+(7, 'ahmad', '$2y$10$9pgytQqHBOExXfY2dsE5F.5JXb9YPBvYSgT63bDwBoamfghp4rWUy', 'dun4lZyB9mGmvQ2RZKDNXwMQ3Th9QdbbuUmD7uKiyRy0Q5OqpW8qFjomfVIB', 1, 1, '2017-09-25 06:09:16', '2017-09-24 22:02:32', '2017-09-24 22:09:16');
 
 -- --------------------------------------------------------
 
@@ -299,7 +309,8 @@ CREATE TABLE `wishtlist_buku` (
 -- Indexes for table `barcode_scan`
 --
 ALTER TABLE `barcode_scan`
-  ADD PRIMARY KEY (`id_scanner`);
+  ADD PRIMARY KEY (`id_barcode`),
+  ADD KEY `id_buku` (`id_buku`);
 
 --
 -- Indexes for table `buku`
@@ -380,7 +391,7 @@ ALTER TABLE `wishtlist_buku`
 -- AUTO_INCREMENT for table `barcode_scan`
 --
 ALTER TABLE `barcode_scan`
-  MODIFY `id_scanner` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_barcode` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `buku`
 --
@@ -405,7 +416,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `petugas`
 --
 ALTER TABLE `petugas`
-  MODIFY `id_petugas` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_petugas` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `rating_buku`
 --
@@ -425,7 +436,7 @@ ALTER TABLE `transaksi_buku`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `wishtlist_buku`
 --
@@ -434,6 +445,12 @@ ALTER TABLE `wishtlist_buku`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `barcode_scan`
+--
+ALTER TABLE `barcode_scan`
+  ADD CONSTRAINT `barcode_scan_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `buku`

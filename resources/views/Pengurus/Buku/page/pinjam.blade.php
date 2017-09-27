@@ -32,11 +32,12 @@
 		              		</select>
 		              	</div>
 		              	<div class="form-group">
+		              	<label for="">Barcode</label>
+		              	<input type="text" class="form-control" id="barcode" placeholder="Barcode">
+		              	</div>
+		              	<div class="form-group">
 		                <label>Judul Buku</label>
-		                <select name="buku[]" class="form-control select2" style="width: 100%;" multiple="multiple" data-placeholder="Judul Buku" required>
-		                  @foreach ($buku as $buku)
-		                  <option value="{{ $buku->id_buku }}">{{ $buku->judul_buku }}</option>
-		                  @endforeach
+		                <select name="buku[]" class="form-control select2 jdl_buku" style="width: 100%;" multiple="multiple" data-placeholder="Judul Buku" required>
 		                </select>
 		              	</div>
 		              	<div class="form-group">
@@ -60,7 +61,7 @@
 
 @section('javascript')
 	<script>
-	
+	var timeout;
 	function TanggalIndo(data)
 	{
 		var data = data.split('-');
@@ -104,7 +105,7 @@
 			.done(function(param){
 				$('.siswa').attr('disabled',false);
 				$('.siswa').each(function(){
-					$(this).append(param);
+					$(this).html(param);
 				});
 			})
 			.fail(function(error){
@@ -126,6 +127,36 @@
 			.fail(function(error) {
 				console.log(error);
 			})
+		});
+
+		$('#barcode').keydown(function(e){
+			var barcode = $(this).val();
+			clearTimeout(timeout);
+			if (e.keyCode==13) {
+				e.preventDefault();
+			}
+			$(this).data('timer',setTimeout(function(){
+				if (barcode != "") {
+					$.ajax({
+						url: 'http://localhost:8000/barcode/buku/'+barcode,
+						type: 'GET',
+					})
+					.done(function(param) {
+						var object = $.$.parseJSON(param);
+						$('.jdl_buku').each(function(){
+							$(this).append(object.jdl_buku);
+						});
+						$('form').each(function(){
+							$(this).append(object.kode_buku);
+						});
+						$('#barcode').val('');
+					})
+					.fail(function(error) {
+						// $('h1').html(error['responseText']);
+						console.log(error);
+					});
+				}
+			}),0.1);
 		});
 	</script>
 @endsection

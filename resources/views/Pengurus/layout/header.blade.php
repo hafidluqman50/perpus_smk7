@@ -83,7 +83,7 @@
           </a>
         </li>
         <li>
-          <a href="{{ url('/data-barcode') }}">
+          <a href="{{ url('/petugas/data-barcode') }}">
             <i class="fa fa-qrcode"></i> <span>Barcode</span>
           </a>
         </li>
@@ -130,7 +130,7 @@
           </a>
         </li>
         <li>
-          <a href="{{ url('/data-barcode') }}">
+          <a href="{{ url('/admin/data-barcode') }}">
             <i class="fa fa-qrcode"></i> <span>Barcode</span>
           </a>
         </li>

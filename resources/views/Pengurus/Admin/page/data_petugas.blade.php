@@ -25,7 +25,7 @@
 					@endif
 				</div>
 				<div class="box-body">
-					<table id="buku" class="table table-hover table-bordered dt-responsive">
+					<table class="table table-hover table-bordered dt-responsive buku">
 						<thead>
 							<th>No.</th>
 							<th>Nama Petugas</th>

@@ -35,7 +35,7 @@
 		              	<label for="">Barcode</label>
 		              	<input type="text" class="form-control" id="barcode" placeholder="Barcode">
 		              	</div>
-		              	<div class="form-group">
+		              	<div class="form-group insert">
 		                <label>Judul Buku</label>
 		                <select name="buku[]" class="form-control select2 jdl_buku" style="width: 100%;" multiple="multiple" data-placeholder="Judul Buku" required>
 		                </select>
@@ -129,9 +129,8 @@
 			})
 		});
 
-		$('#barcode').keydown(function(e){
+		$('form').on('keydown','#barcode',function(e){
 			var barcode = $(this).val();
-			clearTimeout(timeout);
 			if (e.keyCode==13) {
 				e.preventDefault();
 			}
@@ -142,21 +141,20 @@
 						type: 'GET',
 					})
 					.done(function(param) {
-						var object = $.$.parseJSON(param);
-						$('.jdl_buku').each(function(){
-							$(this).append(object.jdl_buku);
-						});
-						$('form').each(function(){
-							$(this).append(object.kode_buku);
-						});
+						var data = param.split("|");
 						$('#barcode').val('');
+						$('.jdl_buku').each(function(){
+							$(this).append(data[0]);
+						});
+						$('.insert').each(function(){
+							$(this).append(data[1]);
+						});
 					})
 					.fail(function(error) {
-						// $('h1').html(error['responseText']);
 						console.log(error);
 					});
 				}
-			}),0.1);
+			}),0);
 		});
 	</script>
 @endsection

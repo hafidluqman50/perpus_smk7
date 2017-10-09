@@ -1,7 +1,7 @@
 @extends('Pengurus.layout.layout-app')
-@section('title') Info Pengembalian @endsection
+@section('title') Kembalikan Buku @endsection
 @section('content')
-<div class="row">
+	<div class="row">
 	<div class="col-md-6 col-xs-12">
 		<div class="box box-danger">
 			<div class="box-header with-border">
@@ -79,29 +79,45 @@
 </div>
 <div class="row">
 	<div class="col-xs-12">
-		<div class="box box-danger">
+		<div class="box box-warning">
 			<div class="box-header">
-				<h3 class="box-title">Data Pengembalian</h3>
+				<h3 class="box-title">Perpanjang</h3>
 			</div>
 			<div class="box-body">
 				<div class="form-group">
 					<label for="">Tanggal Pinjam</label>
-					<input type="text" name="tanggal_pinjam" class="form-control" value="{{ $transaksi->tanggal_pinjam_buku }}" readonly>
+					<input type="text" name="tanggal_pinjam" class="form-control" placeholder="Tanggal Pinjam" value="{{ $transaksi->tanggal_pinjam_buku }}" readonly>
 				</div>
+				@if (Auth::user()->level==1)
+				<form action="{{ url('/perpanjang/petugas/buku',$transaksi->id_transaksi) }}" method="POST">
+				@elseif(Auth::user()->level==2)
+				<form action="{{ url('/perpanjang/admin/buku',$transaksi->id_transaksi) }}" method="POST">
+				@endif	
+				{{ csrf_field() }}
 				<div class="form-group">
 					<label for="">Tanggal Harus Kembalikan</label>
-					<input type="text" name="tanggal_jth_tmpo" class="form-control" value="{{ $transaksi->tanggal_jatuh_tempo }}" readonly>
+					<input type="text" name="tanggal_jth_tmpo" class="form-control" placeholder="Tanggal Harus Kembalikan" value="{{ $transaksi->tanggal_jatuh_tempo }}" readonly>
 				</div>
 				<div class="form-group">
-					<label for="">Tanggal Kembali</label>
-					<input type="text" name="tanggal_jth_tmpo" class="form-control" value="{{ $transaksi->tanggal_kembali }}" readonly>
+					<label for="">Perpanjang</label>
+					<input type="text" class="form-control date2" placeholder="Tanggal Perpanjang" name="tgl_pnjng">
 				</div>
-				<div class="form-group">
-					<label for="">Denda</label>
-					<input type="text" name="tanggal_jth_tmpo" class="form-control" value="{{ $transaksi->denda }}" readonly>
+				<div class="box-footer">
+					<div align="center">
+						<button class="btn btn-warning">Perpanjang Pinjaman</button>
+					</div>
 				</div>
+			</form>
 			</div>	
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('javascript')
+<script>
+$(function(){
+	
+});
+</script>
 @endsection

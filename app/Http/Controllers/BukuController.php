@@ -45,6 +45,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
     			'tahun_terbit'     => $request->tahun_terbit,
     			'id_kategori_buku' => $request->kategori_buku,
+                'klasifikasi'      => $request->nomor_klasifikasi,
     			'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'stok_buku'        => $request->stok_buku,
     			'foto_buku'        => $fileName,
@@ -63,6 +64,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
+                'klasifikasi'      => $request->nomor_klasifikasi,
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'stok_buku'        => $request->stok_buku,
                 'keterangan'       => $request->keterangan,
@@ -98,6 +100,7 @@ class BukuController extends Controller
                             'tempat_terbit'    => $data->tempat_terbit,
                             'tahun_terbit'     => $data->tahun_terbit,
                             'id_kategori_buku' => $data->id_kategori_buku,
+                            'klasifikasi'      => $data->nomor_klasifikasi,
                             'jumlah_eksemplar' => $data->jumlah_eksemplar,
                             'stok_buku'        => $data->stok_buku,
                             'foto_buku'        => $data->foto_buku,
@@ -137,6 +140,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
+                'klasifikasi'      => $request->nomor_klasifikasi,
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'stok_buku'        => $request->stok_buku,
                 'foto_buku'        => $fileName,
@@ -154,6 +158,7 @@ class BukuController extends Controller
                 'tempat_terbit'    => $request->tempat_terbit,
                 'tahun_terbit'     => $request->tahun_terbit,
                 'id_kategori_buku' => $request->kategori_buku,
+                'klasifikasi'      => $request->nomor_klasifikasi,
                 'jumlah_eksemplar' => $request->jumlah_eksemplar,
                 'stok_buku'        => $request->stok_buku,
                 'keterangan'       => $request->keterangan,
@@ -220,6 +225,8 @@ class BukuController extends Controller
     	}
     }
 
+    // CRUD TRANSAKSI //
+
     public function PinjamPost($id_transaksi,Request $request) 
     {
         $get_transaksi = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
@@ -235,24 +242,32 @@ class BukuController extends Controller
     public function PinjamPostMulti(Request $request) 
     {
         $get_buku = $this->buku->whereIn('id_buku',$request->buku)->get();
-        $get_stok = $get_buku->toArray();
 
+        $get_stok = $get_buku->toArray();
+        $input_buku = $request->buku;
+        $input_kode = $request->kode_buku;
         // INSERT MULTIPLE ARRAY PINJAM //
-        foreach ($request->buku as $data) {
+        // if () {
+
+        // }
+        // dd($get_pinjam);
+        foreach ($request->buku as $key => $data) {
             $pinjam[] = [
-                'id_buku'             => $data,
+                'id_buku'             => $input_buku[$key],
                 'id_siswa'            => $request->siswa,
+                'kode_buku'           => $input_kode[$key],
                 'stok_pinjam'         => 1,
                 'tanggal_pinjam_buku' => $request->tgl_pnjm,
                 'tanggal_jatuh_tempo' => $request->tgl_jth_tmpo,
                 'status_pnjm'         => 1,
                 'created_at'          => date('Y-m-d H:i:s')
             ];
+            // dd($input_kode);
         }
         $this->transaksi->insert($pinjam);
         // END INSERT MULTIPLE ARRAY PINJAM //
         
-        // UPDATE MULTIPLE ARRAY STOK BUKU
+        // UPDATE MULTIPLE ARRAY STOK BUKU //
         foreach ($get_stok as $data => $value) {
             $num = $data++;
             $stok[] = $value['stok_buku'] - 1;
@@ -281,33 +296,61 @@ class BukuController extends Controller
         return redirect('/'.$path.'/data-peminjaman')->with('dlt_pnjm','Transaksi Buku Telah Terhapus');
     }
 
-    public function KembalikanBuku($id_transaksi,Request $request)
-    {
-        $transaksi = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
-        $get_buku = $this->buku->where('id_buku',$transaksi->id_buku)->firstOrFail();
-        $stok = $get_buku->stok_buku + $transaksi->stok_pinjam;
-        // $denda = $this->HitungDenda($transaksi->tanggal_jatuh_tempo,$request->tgl_kmbli);
-        $data = [
-            'tanggal_kembali' => $request->tgl_kmbli,
-            'status_kmbli'    => $request->status_kmbli
-        ];
-        $get_buku->update(['stok_buku'=>$stok]);
-        $transaksi->update($data);
-        $path = $request->segment(2);
-        return redirect('/'.$path.'/data-pengembalian')->with('success','Berhasil Mengembalikan Buku');
-    }
+    // public function KembalikanBuku($id_transaksi,Request $request)
+    // {
+    //     $transaksi = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
+    //     $get_buku = $this->buku->where('id_buku',$transaksi->id_buku)->firstOrFail();
+    //     $stok = $get_buku->stok_buku + $transaksi->stok_pinjam;
+    //     // $denda = $this->HitungDenda($transaksi->tanggal_jatuh_tempo,$request->tgl_kmbli);
+    //     $data = [
+    //         'tanggal_kembali' => $request->tgl_kmbli,
+    //         'status_kmbli'    => $request->status_kmbli
+    //     ];
+    //     $get_buku->update(['stok_buku'=>$stok]);
+    //     $transaksi->update($data);
+    //     $path = $request->segment(2);
+    //     return redirect('/'.$path.'/data-pengembalian')->with('success','Berhasil Mengembalikan Buku');
+    // }
 
     public function KembalikanBukuMulti(Request $request)
     {
+        $get_buku = $this->buku->whereIn('id_buku',$request->buku)->get();
+        $get_siswa = $this->transaksi->where('id_siswa',$request->siswa);
+        $jagaw = $this->transaksi->whereIn('kode_buku',$request->kode_buku)->get();
+        $array = $get_buku->toArray();
+        $array2 = $jagaw->toArray();
+        // dd($array2);
+        $id_buku = $request->buku;
+        $magic = $request->kode_buku;
         $data = [
             'tanggal_kembali' => $request->tgl_kmbli,
             'status_kmbli'    => 1
         ];
-        $id_siswa = $this->siswa->where('id_siswa',$request->siswa)->firstOrFail()->id_siswa;
-        $this->transaksi->where('id_siswa',$id_siswa)->whereIn('id_buku',$request->buku)->update($data);
+        $id_siswa = $get_siswa->firstOrFail()->id_siswa;
+        foreach ($get_siswa->get() as $key => $value) {
+            // if ($magic[$key] != $value->kode_buku && $value->id_buku == $id_buku) {
+            //     $this->transaksi->where('id_siswa',$request->siswa)->whereIn('id_buku',$id_buku)->update(['status_kmbli'=>0]);
+            // }
+            $stok[] = $array[$key]['stok_buku'] + 1;
+            $this->transaksi->whereIn('kode_buku',$magic)->update($data);
+            $this->buku->where('id_buku',$id_buku[$key])->update(['stok_buku'=>$stok[$key]]);
+        }
+        $log = 'success';
+        $message = 'Berhasil Mengembalikan Buku';
         $path = $request->segment(2);
-        return redirect('/'.$path.'/data-pengembalian')->with('success','Berhasil Mengembalikan Buku');
+        return redirect('/'.$path.'/data-pengembalian')->with($log,$message);
     }
+
+    public function PerpanjangPinjam($id_transaksi,Request $request) {
+        $tanggal = $request->tgl_perpanjang;
+        $tanggal_jth = $request->tgl_jth_tmpo;
+        $array = ['tanggal_jatuh_tempo'=>$tanggal_jth,'tanggal_pinjam_buku'=>$tanggal];
+        $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail()->update($array);
+        $path = $request->segment(2);
+        return view('/'.$path.'/data-peminjaman')->with('success','Berhasil Memperpanjang Pinjaman');
+    }
+
+    // END CRUD TRANSAKSI //
 
     public function InsertBarcode(Request $request) {
         $data_barcode = [
@@ -321,7 +364,10 @@ class BukuController extends Controller
     }
 
     public function UpdateBarcode($id_barcode,Request $request) {
-        //
+        $buku = $request->buku;
+        $barcode = $request->barcode;
+        $array = ['id_buku'=>$buku,'code_scanner'=>$barcode];
+        $this->barcode->where('id_barcode',$id_barcode)->firstOrFail()->update($array);
     }
 
     public function DeleteBarcode($id_barcode,Request $request) {
@@ -352,13 +398,11 @@ class BukuController extends Controller
          $RandCode1 = str_shuffle($subA.$subD.$subB.$subF.$subC.$subE);
          $RandCode2 = str_shuffle($RandCode1);
          $RandCode = $RandCode1.$RandCode2;
-         if ($kode>$min_length && $kode<$max_length)
-         {
-         $CodeEX = substr($RandCode,0,$kode);
+         if ($kode>$min_length && $kode<$max_length) {
+            $CodeEX = substr($RandCode,0,$kode);
          }
-         else
-         {
-         $CodeEX = $RandCode;
+         else {
+            $CodeEX = $RandCode;
          }
          return $CodeEX;
     }

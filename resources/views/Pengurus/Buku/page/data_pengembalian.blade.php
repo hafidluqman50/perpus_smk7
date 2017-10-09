@@ -1,6 +1,27 @@
 @extends('Pengurus.layout.layout-app')
-@section('title') Data Buku @endsection
+@section('title') Data Pengembalian @endsection
 @section('content')
+@if (session()->has('success'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-success">
+				{{ session('success') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@elseif(session()->has('log'))
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-danger">
+				{{ session('log') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+@endif
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
@@ -10,18 +31,30 @@
 					</p>
 					<br>
 					<br>
-					@if (Auth::user()->level==1)					
-					<a href="{{ url('/petugas/kembali-buku') }}">
-					<button class="btn btn-primary">
-						Kembalikan Buku
-					</button>
-					</a>
+					@if (Auth::user()->level==1)
+						@if($count > 0)				
+							<a href="{{ url('/petugas/kembali-buku') }}">
+							<button class="btn btn-primary">
+								Kembalikan Buku
+							</button>
+							</a>
+						@else
+							<button class="btn btn-primary" disabled>
+								Kembalikan Buku
+							</button>
+						@endif
 					@elseif(Auth::user()->level==2)
-					<a href="{{ url('/admin/kembali-buku') }}">
-					<button class="btn btn-primary">
-						Kembalikan Buku
-					</button>
-					</a>
+						@if($count > 0)				
+							<a href="{{ url('/admin/kembali-buku') }}">
+							<button class="btn btn-primary">
+								Kembalikan Buku
+							</button>
+							</a>
+						@else
+							<button class="btn btn-primary" disabled>
+								Kembalikan Buku
+							</button>
+						@endif
 					@endif
 				</div>
 				<div class="box-body">
@@ -62,27 +95,29 @@
 							@endif
 								<td>
 								@if (Auth::user()->level==1)
-									<a href="{{ url('/petugas/detail-kembali-buku',$data->id_transaksi) }}">
-										<button class="btn btn-info">
-											Info Kembali
-										</button>
-									</a>
-									<a href="{{ url('/petugas/kembali-buku',$data->id_transaksi) }}">
-										<button class="btn btn-success">
-									embalikan
-										</button>
-									</a>
+									@if($data->status_kmbli=='1')
+										<a href="{{ url('/petugas/detail-kembali-buku',$data->id_transaksi) }}">
+											<button class="btn btn-info">
+												Info Kembali
+											</button>
+										</a>
+									@else
+									<button class="btn btn-info" disabled>
+										Info Kembali
+									</button>
+									@endif
 								@elseif(Auth::user()->level==2)
-									<a href="{{ url('/admin/detail-kembali-buku',$data->id_transaksi) }}">
-										<button class="btn btn-info">
-											Info Kembali
-										</button>
-									</a>
-									<a href="{{ url('/admin/kembali-buku',$data->id_transaksi) }}">
-										<button class="btn btn-success">
-											Kembali
-										</button>
-									</a>
+									@if($data->status_kmbli=='1')
+										<a href="{{ url('/admin/detail-kembali-buku',$data->id_transaksi) }}">
+											<button class="btn btn-info">
+												Info Kembali
+											</button>
+										</a>
+									@else
+									<button class="btn btn-info" disabled>
+										Info Kembali
+									</button>
+									@endif
 								@endif
 								</td>
 							</tr>

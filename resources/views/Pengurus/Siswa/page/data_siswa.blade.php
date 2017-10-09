@@ -29,9 +29,18 @@
 					<p class="box-title">
 						Data Siswa
 					</p>
+					<br/>
+					<br/>
+					@if(Auth::user()->level==2)
+					<a href="{{ url('/admin/import-siswa') }}">
+						<button class="btn btn-success">
+							Import Siswa
+						</button>
+					</a>	
+					@endif
 				</div>
 				<div class="box-body">
-					<table id="buku" class="table table-hover table-bordered dt-responsive">
+					<table class="table table-hover table-bordered dt-responsive buku">
 						<thead>
 							<th>No.</th>
 							<th>Nama Siswa</th>

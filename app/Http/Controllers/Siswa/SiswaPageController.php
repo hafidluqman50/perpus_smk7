@@ -12,6 +12,13 @@ use DB;
 
 class SiswaPageController extends Controller
 {
+    public function __construct() {
+        // if (Auth::check() && Auth::user()->status==0) {
+        //     return redirect('/login-form');
+        // }
+        // dd(Auth::check());
+    }
+
     public function Page()
     {
     	if (Auth::check()) {
@@ -28,21 +35,31 @@ class SiswaPageController extends Controller
     	return view('Main.page.main-page');
     }
 
-    public function Profile($user)
+    public function Profile($user,Request $request)
     {
-        $siswa     = Siswa::with('kelas')->where('username',$user)->firstOrFail();
-        $transaksi = DB::table('transaksi_buku')
-                        ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
-                        ->select('transaksi_buku.*','buku.judul_buku','buku.judul_slug','buku.foto_buku')
-                        ->where('transaksi_buku.id_siswa',$siswa->id_siswa)
-                        ->first();
-    	return view('Main.page.profile',compact('siswa','transaksi'));
+        if (Auth::user()->username != $request->segment(2)) {
+            return view('Errors.not-profile');
+        }
+        else {
+            $siswa     = Siswa::with('kelas')->where('username',$user)->firstOrFail();
+            $transaksi = DB::table('transaksi_buku')
+                            ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+                            ->select('transaksi_buku.*','buku.judul_buku','buku.judul_slug','buku.foto_buku')
+                            ->where('transaksi_buku.id_siswa',$siswa->id_siswa)
+                            ->first();
+        	return view('Main.page.profile',compact('siswa','transaksi'));   
+        }
     }
 
-    public function SuntingProfile($user)
+    public function SuntingProfile($user,Request $request)
     {
-        $siswa = Siswa::where('username',$user)->firstOrFail();
-        return view('Main.page.sunting-profile',compact('siswa'));
+        if (Auth::user()->username != $request->segment(2)) {
+            return view('Errors.not-profile');
+        }
+        else {
+            $siswa = Siswa::where('username',$user)->firstOrFail();
+            return view('Main.page.sunting-profile',compact('siswa'));
+        }
     }
 
     public function Buku()

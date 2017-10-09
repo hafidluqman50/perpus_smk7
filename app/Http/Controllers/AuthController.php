@@ -17,6 +17,7 @@ class AuthController extends Controller
     	$username = $request->username;
     	$password = $request->password;
     	if (Auth::attempt(['username' => $username, 'password' => $password, 'status'=> 1 ])) {
+            // dd(Auth::check());
             $this->updateLastLogin(Auth::id());
             if (Auth::user()->level==0) {
     			return redirect()->intended('/');
@@ -32,15 +33,21 @@ class AuthController extends Controller
     		$error = array_except($request->all(),['password']);
     		\Log::critical('Login gagal',$error);
             if (!empty($username)) {
-                $check = User::where('username',$username)->firstOrFail()->status;
-                if ($check==0) {
-                    $data = 'Akun Di NonAktifkan';
+                $check = User::where('username',$username)->where('status',0)->get();
+                $array = $check->toArray();
+                if (count($check) == 1) {
+                    $data = 'Akun Di Non Aktifkan';
+                }
+                // elseif ($array['']) {
+                    
+                // }
+                else {
+                    $data= 'User Dan Pass Salah';
                 }
             }
-            else {
+            elseif (empty($username)) {
                 $data = 'Silahkan Isi Username Dan Password';
             }
-            $data = 'User Dan Pass Salah';
             return redirect('/login-form')->with('fail',$data);
     	}
     }

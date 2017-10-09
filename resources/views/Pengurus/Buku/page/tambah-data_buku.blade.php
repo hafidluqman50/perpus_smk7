@@ -19,6 +19,10 @@
                   <input type="text" name="judul_buku" class="form-control" id="exampleInputEmail1" placeholder="Judul Buku">
                 </div>
                 <div class="form-group">
+                  <label for="">Nomor Klasifikasi</label>
+                  <input type="text" name="nomor_klasifikasi" class="form-control">
+                </div>
+                <div class="form-group">
                   <label for="exampleInputEmail1">Pengarang</label>
                   <input type="text" name="pengarang" class="form-control" id="exampleInputEmail1" placeholder="Pengarang">
                 </div>

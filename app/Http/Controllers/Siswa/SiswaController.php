@@ -61,61 +61,66 @@ class SiswaController extends Controller
 	// 	return redirect('/dashboard-siswa');
 	// }
 
-	public function UpdateProfile(Request $request,$username)
+	public function UpdateProfile($username,Request $request)
 	{
-		//=======================================//
-		if ($request->foto_profile != '') {
-			$unlink = $this->siswa->where('username',$username)->firstOrFail()->foto_profile;
-			if (file_exists(public_path('/admin-assets/profile_siswa/').$unlink)) {
-            	unlink(public_path('/admin-assets/profile_siswa/').$unlink);
-            }  
-			$foto     = $request->foto_profile;
-			$fileName = date('Y-m-d H:i:s').'_'.$foto->getClientOriginalName();
-			$foto->move(public_path('/admin-assets/profile_siswa/'),$fileName);
-			$data_siswa = [
-				'nama_siswa'    => $request->nama_siswa,
-				'nama_slug'		=> str_slug($request->nama_siswa,"-"),
-				'nisn'          => $request->nisn,
-				'email'			=> $request->email,
-				'kelas'         => $request->kelas,
-				'foto_profile'  => $fileName,
-				'created_at'    => date('Y-m-d H:i:s'),
-				'updated_at'    => date('Y-m-d H:i:s')
-			];
+		if (Auth::user()->username != $request->segment(3)) {
+			return view('Errors.not-profile');
 		}
 		else {
-			$data_siswa = [
-				'nama_siswa'    => $request->nama_siswa,
-				'nama_slug'		=> str_slug($request->nama_siswa,"-"),
-				'nisn'          => $request->nisn,
-				'email'			=> $request->email,
-				'kelas'         => $request->kelas,
-				'created_at'    => date('Y-m-d H:i:s'),
-				'updated_at'    => date('Y-m-d H:i:s')
-			];
-		}
-		//=======================================//
+			//=======================================//
+			if ($request->foto_profile != '') {
+				$unlink = $this->siswa->where('username',$username)->firstOrFail()->foto_profile;
+				if (file_exists(public_path('/admin-assets/profile_siswa/').$unlink)) {
+	            	unlink(public_path('/admin-assets/profile_siswa/').$unlink);
+	            }  
+				$foto     = $request->foto_profile;
+				$fileName = date('Y-m-d H:i:s').'_'.$foto->getClientOriginalName();
+				$foto->move(public_path('/admin-assets/profile_siswa/'),$fileName);
+				$data_siswa = [
+					'nama_siswa'    => $request->nama_siswa,
+					'nama_slug'		=> str_slug($request->nama_siswa,"-"),
+					'nisn'          => $request->nisn,
+					'email'			=> $request->email,
+					'kelas'         => $request->kelas,
+					'foto_profile'  => $fileName,
+					'created_at'    => date('Y-m-d H:i:s'),
+					'updated_at'    => date('Y-m-d H:i:s')
+				];
+			}
+			else {
+				$data_siswa = [
+					'nama_siswa'    => $request->nama_siswa,
+					'nama_slug'		=> str_slug($request->nama_siswa,"-"),
+					'nisn'          => $request->nisn,
+					'email'			=> $request->email,
+					'kelas'         => $request->kelas,
+					'created_at'    => date('Y-m-d H:i:s'),
+					'updated_at'    => date('Y-m-d H:i:s')
+				];
+			}
+			//=======================================//
 
-		//=======================================//
-		if ($request->password!='') {
-			$update_login = [
-				'username'   => $request->username,
-				'password'   => bcrypt($request->password),
-				'created_at' => date('Y-m-d H:i:s'),
-				'updated_at' => date('Y-m-d H:i:s')
-			];
+			//=======================================//
+			if ($request->password!='') {
+				$update_login = [
+					'username'   => $request->username,
+					'password'   => bcrypt($request->password),
+					'created_at' => date('Y-m-d H:i:s'),
+					'updated_at' => date('Y-m-d H:i:s')
+				];
+			}
+			else {
+				$update_login = [
+					'username'   => $request->username,
+					'created_at' => date('Y-m-d H:i:s'),
+					'updated_at' => date('Y-m-d H:i:s')
+				];	
+			}
+			//=======================================//
+			$this->users->where('username',$username)->update($update_login);
+			$this->siswa->where('username',$username)->update($data_siswa);
+			return redirect('/');
 		}
-		else {
-			$update_login = [
-				'username'   => $request->username,
-				'created_at' => date('Y-m-d H:i:s'),
-				'updated_at' => date('Y-m-d H:i:s')
-			];	
-		}
-		//=======================================//
-		$this->users->where('username',$username)->update($update_login);
-		$this->siswa->where('username',$username)->update($data_siswa);
-		return redirect('/');
 	}
 
 	public function PinjamPost($id_buku,Request $request)

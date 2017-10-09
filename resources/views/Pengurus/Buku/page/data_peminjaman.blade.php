@@ -1,5 +1,5 @@
 @extends('Pengurus.layout.layout-app')
-@section('title') Data Buku @endsection
+@section('title') Data Peminjaman @endsection
 @section('content')
 @if (session()->has('dlt_pnjm'))
 	<div class="row">
@@ -72,9 +72,28 @@
 											Info Pinjam
 										</button>
 									</a>
+									@if($data->status_pnjm !='0')
+									<a href="{{ url('/petugas/detail-data-peminjaman',$data->id_transaksi) }}">
+										<button class="btn btn-info">
+											Info Pinjam
+										</button>
+									</a>
+									<button class="btn btn-success" disabled>
+										Atur Transaksi
+									</button>
+									@else
+									<button class="btn btn-info" disabled>
+										Info Pinjam
+									</button>
 									<a href="{{ url('/petugas/atur-transaksi',$data->id_transaksi) }}">
 										<button class="btn btn-success">
 											Atur Transaksi
+										</button>
+									</a>
+									@endif
+									<a href="{{ url('/petugas/perpanjang-pinjam',$data->id_transaksi) }}">
+										<button class="btn btn-warning">
+											Perpanjang
 										</button>
 									</a>
 									<a href="{{ url('/delete/petugas/data-peminjaman',$data->id_transaksi) }}">
@@ -83,14 +102,28 @@
 										</button>
 									</a>
 								@elseif(Auth::user()->level==2)
+									@if($data->status_pnjm !='0')
 									<a href="{{ url('/admin/detail-data-peminjaman',$data->id_transaksi) }}">
 										<button class="btn btn-info">
 											Info Pinjam
 										</button>
 									</a>
+									<button class="btn btn-success" disabled>
+										Atur Transaksi
+									</button>
+									@else
+									<button class="btn btn-info" disabled>
+										Info Pinjam
+									</button>
 									<a href="{{ url('/admin/atur-transaksi',$data->id_transaksi) }}">
 										<button class="btn btn-success">
 											Atur Transaksi
+										</button>
+									</a>
+									@endif
+									<a href="{{ url('/admin/perpanjang-pinjam',$data->id_transaksi) }}">
+										<button class="btn btn-warning">
+											Perpanjang
 										</button>
 									</a>
 									<a href="{{ url('/delete/admin/data-peminjaman',$data->id_transaksi) }}">

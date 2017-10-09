@@ -10,6 +10,16 @@
       </a>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+          
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              {{-- <span class="label label-warning">10</span> --}}
+            </a>
+            <ul class="dropdown-menu">
+              
+            </ul>
+          </li>
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             @if (Auth::user()->level==1)
@@ -27,19 +37,6 @@
                   Alexander Pierce - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
-              </li>
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
               </li>
               <li class="user-footer">
                 <div class="pull-left">
@@ -134,6 +131,11 @@
             <i class="fa fa-qrcode"></i> <span>Barcode</span>
           </a>
         </li>
+        <li>
+        	<a href="{{ url('/admin/data-catat-transaksi') }}">
+        		<i class="fa fa-history"></i> <span>Catatan Transaksi</span>
+        	</a>
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-book"></i>
@@ -145,6 +147,7 @@
           <ul class="treeview-menu">
             <li><a href="{{ url('/admin/data-buku') }}"><i class="fa fa-circle-o"></i> 
             Data Buku</a></li>
+            <li><a href="{{ url('/admin/data-sub-kategori') }}"><i class="fa fa-circle-o"></i> Data Sub Kategori Buku</a></li>
             <li><a href="{{ url('/admin/data-kategori') }}"><i class="fa fa-circle-o"></i> Data Kategori Buku</a></li>
             <li><a href="{{ url('/admin/data-peminjaman') }}"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
             <li><a href="{{ url('/admin/data-pengembalian') }}"><i class="fa fa-circle-o"></i> Data Pengembalian</a></li>

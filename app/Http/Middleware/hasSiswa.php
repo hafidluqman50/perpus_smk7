@@ -16,9 +16,12 @@ class hasSiswa
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->level==0) {
+        if (Auth::check() && Auth::user()->level==0 && Auth::user()->status==1) {
             return $next($request);    
         }
-        return redirect('/login-form')->with('log','Silahkan Login Terlebih Dahulu');
+        else {
+            Auth::logout();
+            return redirect('/login-form')->with('log','Login Dolo Sana');
+        }
     }
 }

@@ -41,4 +41,9 @@ class AdminPageController extends Controller
                     
         return view('Pengurus.Siswa.page.data_siswa',compact('siswa'));
     }
+
+    public function DetailSiswa($id_siswa)
+    {
+        return view('Pengurus.Siswa.page.detail-data_siswa',compact(''));
+    }
 }

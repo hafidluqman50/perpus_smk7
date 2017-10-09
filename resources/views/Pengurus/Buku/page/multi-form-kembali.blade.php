@@ -30,12 +30,16 @@
 							<select name="siswa" id="siswa" class="form-control select2" disabled></select>
 						</div>
 						<div class="form-group">
+							<label for="">Barcode</label>
+							<input type="text" id="barcode" class="form-control" placeholder="Barcode">
+						</div>
+						<div class="form-group">
 							<label for="">Buku</label>
-							<select name="buku[]" id="buku" class="form-control select2" multiple disabled></select>
+							<select name="buku[]" class="form-control select2 jdl_buku" multiple></select>
 						</div>
 						<div class="form-group">
 							<label for="">Tanggal Kembali</label>
-							<input type="text" name="tgl_kmbli" class="form-control date2 tanggal" disabled>
+							<input type="text" name="tgl_kmbli" class="form-control date2 tanggal">
 						</div>
 						<button class="btn btn-primary">Kembalikan Buku</button>
 						</form>
@@ -85,5 +89,33 @@
 			$('h1').html(error['responseText']);
 		})
 	});
+
+	$('form').on('keydown','#barcode',function(e){
+			var barcode = $(this).val();
+			if (e.keyCode==13) {
+				e.preventDefault();
+			}
+			$(this).data('timer',setTimeout(function(){
+				if (barcode != "") {
+					$.ajax({
+						url: 'http://localhost:8000/barcode/buku/'+barcode,
+						type: 'GET',
+					})
+					.done(function(param) {
+						var data = param.split("|");
+						$('#barcode').val('');
+						$('.jdl_buku').each(function(){
+							$(this).append(data[0]);
+						});
+						$('form').each(function(){
+							$(this).prepend(data[1]);
+						});
+					})
+					.fail(function(error) {
+						console.log(error);
+					});
+				}
+			}),0);
+		});
 </script>
 @endsection

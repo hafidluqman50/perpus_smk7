@@ -14,10 +14,21 @@
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              {{-- <span class="label label-warning">10</span> --}}
+              <span class="label label-danger">{{ count($notif) }}</span>
             </a>
             <ul class="dropdown-menu">
-              
+              <li class="header">Anda Punya {{ count($notif) }} Notifikasi</li>
+              <li>
+                <ul class="menu">
+                  @foreach($notif as $notif)
+                  <li>
+                    <a href="#">
+                      <span class="fa fa-user text-red"></span> {{ $notif->nama_siswa }} Ingin Meminjam Buku {{ $notif->judul_buku }}
+                    </a>
+                  </li>
+                  @endforeach
+                </ul>
+              </li>
             </ul>
           </li>
           <li class="dropdown user user-menu">

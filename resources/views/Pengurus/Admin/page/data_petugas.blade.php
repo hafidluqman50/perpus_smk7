@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app')
+@extends('Pengurus.layout.layout-app',['data'=>$notif])
 @section('title') Data Petugas @endsection
 @section('content')
 	<div class="row">
@@ -28,6 +28,7 @@
 					<table class="table table-hover table-bordered dt-responsive buku">
 						<thead>
 							<th>No.</th>
+							<th>Username</th>
 							<th>Nama Petugas</th>
 							<th>NIP</th>
 							<th>Action</th>
@@ -36,8 +37,9 @@
 						@foreach ($data_petugas as $no => $petugas)
 							<tr>
 								<td>{{ $no+1 }}</td>
-								<td>{{ $petugas->nama_petugas }}</td>
-								<td>{{ $petugas->nip }}</td>
+								<td>{{ $petugas->username }}</td>
+								<td>@if($petugas->nama_petugas != ''){{ $petugas->nama_petugas }}@else-@endif</td>
+								<td>@if($petugas->nip != ''){{ $petugas->nip }}@else-@endif</td>
 								<td>
 									<a href="{{ url('/admin/detail-petugas') }}">
 										<button class="btn btn-info">

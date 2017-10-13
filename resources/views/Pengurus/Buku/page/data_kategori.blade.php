@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app')
+@extends('Pengurus.layout.layout-app',['data'=>$notif])
 @section('title') Data Kategori @endsection
 @section('content')
 @if (session()->has('dlt_ktgr'))
@@ -21,19 +21,11 @@
 					</p>
 					<br/>
 					<br/>
-					@if (Auth::user()->level==1)
-					<a href="{{ url('/petugas/tambah-data-kategori') }}">
-						<button class="btn btn-primary">
-							Tambah Data Kategori
-						</button>
-					</a>
-					@elseif(Auth::user()->level==2)
 					<a href="{{ url('/admin/tambah-data-kategori') }}">
 						<button class="btn btn-primary">
 							Tambah Data Kategori
 						</button>
 					</a>
-					@endif
 				</div>
 				<div class="box-body">
 					<table class="table table-hover table-bordered dt-responsive buku">

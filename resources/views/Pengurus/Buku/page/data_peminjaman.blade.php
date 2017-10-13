@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app')
+@extends('Pengurus.layout.layout-app',['data'=>$notif])
 @section('title') Data Peminjaman @endsection
 @section('content')
 @if (session()->has('dlt_pnjm'))
@@ -67,11 +67,6 @@
 								@endif
 								<td>
 								@if (Auth::user()->level==1)
-									<a href="{{ url('/petugas/detail-data-peminjaman',$data->id_transaksi) }}">
-										<button class="btn btn-info">
-											Info Pinjam
-										</button>
-									</a>
 									@if($data->status_pnjm !='0')
 									<a href="{{ url('/petugas/detail-data-peminjaman',$data->id_transaksi) }}">
 										<button class="btn btn-info">

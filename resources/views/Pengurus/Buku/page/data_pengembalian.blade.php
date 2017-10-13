@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app')
+@extends('Pengurus.layout.layout-app',['data'=>$notif])
 @section('title') Data Pengembalian @endsection
 @section('content')
 @if (session()->has('success'))

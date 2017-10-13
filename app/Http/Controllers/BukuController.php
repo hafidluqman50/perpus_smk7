@@ -7,6 +7,7 @@ use App\Models\BukuModel as Buku;
 use App\Models\KategoriBukuModel as KategoriBuku;
 use App\Models\TransaksiBukuModel as TransaksiBuku;
 use App\Models\Siswa\SiswaModel as Siswa;
+use App\History;
 use App\Barcode;
 use Auth;
 use Excel;
@@ -20,14 +21,16 @@ class BukuController extends Controller
     public $transaksi;
     public $siswa;
     public $barcode;
+    public $history;
 
-    public function __construct(Buku $buku,KategoriBuku $kategori_buku,TransaksiBuku $transaksi,Siswa $siswa,Barcode $barcode)
+    public function __construct(Buku $buku,KategoriBuku $kategori_buku,TransaksiBuku $transaksi,Siswa $siswa,Barcode $barcode,History $history)
     {
     	$this->buku = $buku;
     	$this->kategori_buku = $kategori_buku;
         $this->transaksi = $transaksi;
         $this->siswa = $siswa;
         $this->barcode = $barcode;
+        $this->history = $history;
     }
 
     public function TambahBuku(Request $request)
@@ -225,6 +228,35 @@ class BukuController extends Controller
     	}
     }
 
+    public function InsertSubKategori()
+    {
+        $data_sub = [
+            'id_kategori_buku' => $request->kategori,
+            'nama_sub'         => $request->nama_sub
+        ];
+        $this->sub->create($data_sub);
+        $path = $request->segment(2);
+        return redirect('/'.$path.'/data-sub-kategori')->with('success','Berhasil Menambahkan Data');
+    }
+
+    public function UpdateSubKategori($id)
+    {
+        $data_sub = [
+            'id_kategori_buku' => $request->kategori,
+            'nama_sub'         => $request->nama_sub
+        ];
+        $this->sub->where('id_sub_ktg',$id)->firstOrFail()->update($data_sub);
+        $path = $request->segment(2);
+        return redirect('/'.$path.'/data-sub-kategori')->with('update','Berhasil Mengubah Data');
+    }
+
+    public function DeleteSubKategori($id)
+    {
+        $this->sub->where('id_sub_ktg',$id)->firstOrFail()->delete();
+        $path = $request->segment(2);
+        return redirect('/'.$path.'/data-sub-kategori')->with('delete','Berhasil Menghapus Data');
+    }
+
     // CRUD TRANSAKSI //
 
     public function PinjamPost($id_transaksi,Request $request) 
@@ -236,6 +268,9 @@ class BukuController extends Controller
         $stok = $get_buku->stok_buku - 1;
         $get_buku->update(['stok_buku'=>$stok]);
         $path = $request->segment(2);
+        // $date = date('Y-m-d');
+        // $text = "Berhasil Meminjamkan Buku Kepada $siswa Pada Tanggal $date";
+        // $catat = ['']
         return redirect('/'.$path.'/data-peminjaman')->with('success','Berhasil Meminjamkan Buku');
     }
 
@@ -262,8 +297,13 @@ class BukuController extends Controller
                 'status_pnjm'         => 1,
                 'created_at'          => date('Y-m-d H:i:s')
             ];
-            // dd($input_kode);
+            $buku = $this->buku->whereIn('id_buku',$input_buku)->get();
+            $siswa = $this->siswa->where('id_siswa',$request->siswa)->firstOrFail()->nama_siswa;
+            $buku2 = $buku->toArray();
+            $buku3 = $buku2[$key]['judul_buku'];
+            $catat[] = ['text'=>"Berhasil Meminjamkan Buku Berjudul $buku3 Kepada Siswa $siswa",'tanggal_catat'=>date('Y-m-d H:i:s')];
         }
+        $this->history->insert($catat);
         $this->transaksi->insert($pinjam);
         // END INSERT MULTIPLE ARRAY PINJAM //
         
@@ -354,9 +394,9 @@ class BukuController extends Controller
 
     public function InsertBarcode(Request $request) {
         $data_barcode = [
-            'code_scanner'=>$request->barcode,
-            'kode_buku'=>$this->KodePinjam(100),
-            'id_buku'=>$request->buku
+            'code_scanner' => $request->barcode,
+            'kode_buku'    => $this->KodePinjam(100),
+            'id_buku'      => $request->buku
         ];
         $this->barcode->create($data_barcode);
         $path = $request->segment(2);

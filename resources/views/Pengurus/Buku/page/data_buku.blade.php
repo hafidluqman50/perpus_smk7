@@ -1,6 +1,7 @@
-@extends('Pengurus.layout.layout-app')
+@extends('Pengurus.layout.layout-app',['data'=>$notif])
 @section('title') Data Buku @endsection
 @section('content')
+{{-- {{ dd($notif) }} --}}
 @if (session()->has('tmbh_buku'))
 	<div class="row">
 		<div class="col-xs-12">
@@ -81,9 +82,9 @@
 							<th>No.</th>
 							<th>Judul Buku</th>
 							<th>Kategori</th>
+							<th>Sub Kategori</th>
 							<th>Penerbit</th>
 							<th>Tahun Terbit</th>
-							<th>Jumlah Eksemplar</th>
 							<th>Stok Buku</th>
 							<th>Action</th>
 						</thead>
@@ -92,10 +93,10 @@
 							<tr>
 								<td>{{ $no+1 }}</td>
 								<td>{{ $buku->judul_buku }}</td>
-								<td>{{ $buku->kategori->nama_kategori }}</td>
+								<td>{{ $buku->nama_kategori }}</td>
+								<td>{{ $buku->nama_sub }}</td>
 								<td>{{ $buku->penerbit }}</td>
 								<td>{{ $buku->tahun_terbit }}</td>
-								<td>{{ $buku->jumlah_eksemplar }}</td>
 								<td>@if ($buku->stok_buku == 0)
 								<small class="label label-danger">
 								0

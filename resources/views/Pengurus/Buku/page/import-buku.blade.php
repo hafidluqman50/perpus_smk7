@@ -1,11 +1,25 @@
-@extends('Pengurus.layout.layout-app')
+@extends('Pengurus.layout.layout-app',['data'=>$notif])
 @section('title') Import Data Buku @endsection
 @section('content')
 <div class="row">
         <div class="col-md-12">
-          <div class="box box-default">
+          <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Tambah Data Buku</h3>
+              @if(Auth::user()->level==1)
+              <a href="{{ url('/petugas/data-buku') }}">
+                <button class="btn btn-primary">
+                  <span class="fa fa-arrow-left"></span> Kembali
+                </button>
+              </a>
+              @elseif(Auth::user()->level==2)
+              <a href="{{ url('/admin/data-buku') }}">
+                <button class="btn btn-primary">
+                  <span class="fa fa-arrow-left"></span> Kembali
+                </button>
+              </a>
+              @endif
+              &nbsp;
+              <h3 class="box-title">Import Data Buku</h3>
             </div>
             @if (Auth::user()->level==1)
             <form method="POST" action="{{ url('/import/petugas/data-buku') }}" role="form" enctype="multipart/form-data">

@@ -19,8 +19,9 @@ Route::group(['middleware'=>'AjaxRequest'],function(){
 	Route::get('/siswa/{kelas}',['uses'=>'BukuPageController@GetSiswa','as'=>'get-siswa-name']);
 	Route::get('/dua-minggu/{tanggal}',['uses'=>'BukuPageController@DuaMinggu','as'=>'get-dua-minggu']);
 	Route::get('/siswa/buku/pinjam/{id_siswa}',['uses'=>'BukuPageController@GetBuku','as'=>'get-buku-siswa']);
-});
 	Route::get('/barcode/buku/{barcode}',['uses'=>'BukuPageController@GetBarcode','as'=>'get-barcode-buku']);
+	Route::get('/buku/kategori/{kategori}',['uses'=>'BukuPageController@GetSubKtg','as'=>'get-sub-ktg']);
+});
 // End Ajax Request //
 
 Route::group(['middleware'=>'hasSiswa'],function(){
@@ -140,10 +141,11 @@ Route::group(['middleware'=>'isAuth'],function (){
 
 		// CRUD SUB KATEGORI BUKU //
 		Route::get('/admin/data-sub-kategori',['uses'=>'BukuPageController@ShowSubKategori','as'=>'sub-kategori-page']);
-		Route::get('/admin/tambah-sub-kategori',['uses'=>'BukuPageController@SimpanSubKategori','as'=>'simpan-sub-form']);
+		Route::get('/admin/tambah-data-sub',['uses'=>'BukuPageController@SimpanSubKategori','as'=>'simpan-sub-form']);
 		Route::get('/insert/admin/data-sub-kategori',['uses'=>'BukuController@TambahSubKategori','as'=>'tambah-sub-post']);
-		Route::get('/admin/edit-sub-kategori/{id}',['uses'=>'BukuPageController@EditSubKategori','as'=>'edit-sub-page']);
+		Route::get('/admin/edit-data-sub/{id}',['uses'=>'BukuPageController@EditSubKategori','as'=>'edit-sub-page']);
 		Route::get('/update/admin/data-sub-kategori/{id}',['uses'=>'BukuController@UpdateSubKategori','as'=>'update-sub-post']);
+		Route::get('/delete/admin/data-sub-kategori/{id}',['uses'=>'BukuController@DeleteSubKategori','as'=>'delete-sub-kategori']);
 		// END CRUD KATEGORI BUKU
 
 		// CRUD PINJAM BUKU //

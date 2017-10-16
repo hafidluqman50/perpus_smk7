@@ -21,7 +21,8 @@
 		max-height: 70px!important;
 		display: flex!important;
 	}
-	#nav img{
+	#petugas figure > img{
+		height: 300px;
 	}
 	/* HEADER */
 	#header > figure > figcaption {

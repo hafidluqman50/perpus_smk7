@@ -25,6 +25,20 @@ $(document).ready(function(){
         $('.overlay').fadeIn(200);
     });
 });
+
+  $(".btn-drop").click(function(e){
+    e.preventDefault();
+    var element = $(this);
+    element.next(".drop-menu").slideToggle(100);
+  });
+
+  $(window).click(function(e){
+    if (!e.target.matches(".btn-drop")) {
+      if ($(".drop-menu").slideToggle(100)) {
+        $(".drop-menu").css("display","none");
+      }
+    }
+  });
   </script>
 </body>
 </html>

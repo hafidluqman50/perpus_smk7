@@ -44,8 +44,14 @@
 		  <ul class="menu-list kategori">
 		    <li><a>Semua buku</a></li>
 		    <li>
-		      <a>Refrensi <span class="tag is-primary">300</span></a>
-		      <ul>
+		      <a class="btn-drop">Refrensi <span class="tag is-primary">300</span></a>
+		      <ul class="drop-menu is-none">
+		        <li>
+		        	<a>
+		        		Semua
+		        		<p>120</p>
+		        	</a>
+		        </li>
 		        <li>
 		        	<a>
 		        		rekayasa perangkat lunak
@@ -73,8 +79,14 @@
 		      </ul>
 		    </li>
 		    <li>
-		      <a>Pelajaran <span class="tag is-primary">280</span></a>
-		      <ul>
+		      <a class="btn-drop">Pelajaran <span class="tag is-primary">280</span></a>
+		      <ul class="drop-menu is-none">
+		        <li>
+		        	<a>
+		        		Semua
+		        		<p>120</p>
+		        	</a>
+		        </li>
 		        <li>
 		        	<a>
 		        		mateatika

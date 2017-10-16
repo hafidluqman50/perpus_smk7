@@ -1,6 +1,145 @@
 @extends('Main.layout.layout-app')
 @section('title') Buku @endsection
 @section('content')
+	<div id="wrap-badges">
+		<button id="badges" class="btn-drop">
+			<i class="fa fa-bell-o fa-2x animated ringdong"></i>
+			<p>20</p>
+		</button>
+		<ul id="drop-badges" class="drop-menu">
+			<li><a href="lol.php">mnu1</a></li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+			<li>mnu2</li>
+		</ul>
+	</div>
 <section id="page-buku" class="container is-fluid">
 		<button class="button icon is-medium open-menu is-hidden-desktop">
 			<i class="fa fa-bars"></i>
@@ -400,7 +539,7 @@
 			 					</div>
 			 				</div>
 		 				</div>
-					</div>
+					</div><!-- 
 					<div class="column is-10-mobile is-offset-1-mobile is-one-third-tablet is-one-quarter-desktop">
 						<div class="card">
 		    				<div class="card-image">
@@ -449,10 +588,10 @@
 			 					</div>
 			 				</div>
 		 				</div>
-					</div>
+					</div> --><!-- 
 					<span class="icon is-large load-icon">
 						<i class="fa fa-circle-o-notch fa-spin"></i>
-					</span>
+					</span> -->
 				</div>
 		</div>
 	</div>

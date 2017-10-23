@@ -1112,15 +1112,15 @@ footer i {
   transition: all 0.3s ease;
 }
 #notif,
-#wish {
+.wish-box {
   display: none;
   position: relative !important;
-  margin-bottom: 10px;
+  margin: 20px 0 0;
   font-size: 14px;
   border-radius: 0;
 }
 #notif > div,
-#wish > div {
+.wish-box > div {
   min-width: 250px;
   width: 300px;
   padding: 0;
@@ -1128,11 +1128,11 @@ footer i {
   margin: 10px 0;
 }
 #notif i,
-#wish i {
+.wish-box i {
   color: #fff;
 }
 #notif .column:nth-of-type(1),
-#wish .column:nth-of-type(1) {
+.wish-box .column:nth-of-type(1) {
   background-color: rgba(20,30,48,0.1);
   vertical-align: middle;
   padding: 20px 12px;

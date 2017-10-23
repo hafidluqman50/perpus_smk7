@@ -9,7 +9,9 @@ $(document).ready(function(){
 	        $(this).show().animate({
 	        	right:'10px'
 	        },300);
-	 		$("#wish").clone().appendTo("#wrap-notif").fadeIn('slow').delay(5000).fadeOut('slow');
+	 		$(".wish-box:first-child").clone().appendTo("#wrap-notif").show().animate({
+        right:'10px'
+      },300).delay(5000).fadeOut();
         });
     });
 });

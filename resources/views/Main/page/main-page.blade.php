@@ -219,9 +219,8 @@
 		</ul>
 	</div>
       	<div id="wrap-notif">
-			<div id="wish">
+			<div class="wish-box">
 	    		<div class="wish-notif columns is-multiline notification is-default is-mobile is-tablet">
-	    			<button class="delete delete-notif"></button>
 			        <div class="column is-2-mobile is-2-tablet is-2-desktop">
 			          <span class="icon">
 			            <i class="fa fa-heart"></i>

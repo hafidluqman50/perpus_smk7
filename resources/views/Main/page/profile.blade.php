@@ -1,6 +1,7 @@
 @extends('Main.layout.layout-app')
 @section('title') Profile @endsection
 @section('content')
+<a href="#" class="back-menu"><i class="fa fa-arrow-circle-left fa-lg"></i> Kembali</a>
 <div class="banner2"></div>
 <section id="profil">
 			<figure class="foto-siswa">

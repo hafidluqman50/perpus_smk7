@@ -51,6 +51,19 @@ p.title-style::after {
   left: 10px;
   height: 40px;
 }
+.back-menu {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #fff;
+}
+.back-menu:hover {
+  color: #fff;
+  opacity: 0.8;
+}
+.back-menu > * {
+  color: #fff;
+}
 .overlay {
   position: fixed;
   min-width: 120%;

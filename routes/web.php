@@ -31,12 +31,12 @@ Route::group(['middleware'=>'isAuth'],function (){
 //-------------------------------//
 
 //----------Route Siswa----------//
-	// Route::group(['middleware'=>'hasSiswa'],function(){
-	// 	Route::get('/dashboard-siswa',['uses'=>'Siswa\SiswaPageController@Dashboard','as'=>'dashboard-siswa-page']);
-	// 	Route::get('/profile-siswa/{username}',['uses'=>'Siswa\SiswaPageController@ProfileSiswa','as'=>'profile-siswa-page']);
-	// 	Route::get('/edit-profile-siswa/{username}',['uses'=>'Siswa\SiswaPageController@EditProfile','as'=>'edit-profile-siswa']);
-	// 	Route::post('/edit/profile/siswa/{username}',['uses'=>'Siswa\SiswaController@UpdateProfile','as'=>'post-updated-profile-siswa']);
-	// });
+	Route::group(['middleware'=>'hasSiswa'],function(){
+		Route::get('/dashboard-siswa',['uses'=>'Siswa\SiswaPageController@Dashboard','as'=>'dashboard-siswa-page']);
+		Route::get('/profile-siswa/{username}',['uses'=>'Siswa\SiswaPageController@ProfileSiswa','as'=>'profile-siswa-page']);
+		Route::get('/edit-profile-siswa/{username}',['uses'=>'Siswa\SiswaPageController@EditProfile','as'=>'edit-profile-siswa']);
+		Route::post('/edit/profile/siswa/{username}',['uses'=>'Siswa\SiswaController@UpdateProfile','as'=>'post-updated-profile-siswa']);
+	});
 //----------End Siswa----------//
 
 //----------Route Petugas----------//

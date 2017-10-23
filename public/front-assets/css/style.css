@@ -83,10 +83,26 @@ p.title-style::after {
   z-index: 4;
   background: #fff;
 }
+#page-buku #side-menu aside > div {
+  margin-bottom: 30px;
+}
+#page-buku #side-menu aside > div .menu-label {
+  margin: 0 0 5px;
+}
 #page-buku #side-menu > .close-menu {
   position: absolute;
   right: 10px;
   display: none;
+}
+#page-buku #side-menu .back-button {
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+#page-buku #side-menu .back-button a {
+  vertical-align: middle;
+}
+#page-buku #side-menu .back-button i {
+  vertical-align: baseline;
 }
 #page-buku > .open-menu {
   width: 35px;

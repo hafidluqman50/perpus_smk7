@@ -80,11 +80,11 @@
 <main>
 	<div id="content">
 	<div id="wrap-badges">
-		<button id="badges">
+		<button id="badges" class="btn-drop">
 			<i class="fa fa-bell-o fa-2x animated ringdong"></i>
 			<p>20</p>
 		</button>
-		<ul id="drop-badges">
+		<ul id="drop-badges" class="drop-menu">
 			<li><a href="lol.php">mnu1</a></li>
 			<li>mnu2</li>
 			<li>mnu2</li>
@@ -293,7 +293,7 @@
 		<section id="terpopuler" class="hero is-medium is-info is-bold">
 			<div class="hero-body">
 				<div class="container">
-					<div class="columns is-multiline is-tablet is-mobile">
+					<div class="columns is-centered is-multiline is-tablet is-mobile">
 						<div data-aos="fade-right" data-aos-offset="200" class="column is-12-mobile is-12-tablet is-3-desktop">
 							<h1 class="title">
 								Buku Terpopuler
@@ -303,7 +303,7 @@
 								Beberapa buku dengan rating tertinggi
 							</p>
 						</div>
-			    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200" class="column is-10-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -352,7 +352,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div data-aos="fade-down" data-aos-delay="400" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-down" data-aos-delay="400" data-aos-offset="200" class="column is-10-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">
@@ -401,7 +401,7 @@
 				 				</div>
 			 				</div>
 			    		</div>
-			    		<div data-aos="fade-left" data-aos-delay="600" data-aos-offset="200" class="column is-10-mobile is-offset-1-mobile is-3-desktop">
+			    		<div data-aos="fade-left" data-aos-delay="600" data-aos-offset="200" class="column is-10-mobile is-3-desktop">
 							<div class="card">
 			    				<div class="card-image">
 			    					<figure class="image is-1by1">

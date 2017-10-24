@@ -146,7 +146,7 @@
 		</button>
 	<div class="columns is-multiline is-mobile">
 		@include('Main.layout.sidebar')
-		<div class="column is-9-desktop is-offset-3">
+		<div class="column is-9-desktop is-offset-3-desktop is-centered">
 				<div class="columns is-multiline is-mobile">
 					<div class="column is-10-mobile is-offset-1-mobile is-one-third-tablet is-one-quarter-desktop">
 						<div class="card">

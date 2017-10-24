@@ -6,7 +6,7 @@
 			<i class="fa fa-bars"></i>
 		</button>
 	@include('Main.layout.sidebar')
-	<div class="column is-offset-3-desktop">
+	<div class="column is-offset-3-desktop is-centered">
 				<div class="columns is-multiline is-mobile is-tablet">
 					<div class="column is-12-mobile is-12-tablet is-12-desktop banner">
 						<section class="hero is-danger">
@@ -236,10 +236,10 @@
 			 					</div>
 			 				</div>
 		 				</div>
-					</div>
 					<span class="icon is-large load-icon">
 						<i class="fa fa-circle-o-notch fa-spin"></i>
 					</span>
+					</div>
 				</div>
 		</div>
 	</div>

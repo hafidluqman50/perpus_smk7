@@ -25,15 +25,15 @@
 			</div>
 		</div>
 		<div class="column is-4-tablet is-2-desktop" align="center">
-				<li class="logo"><a href="#">perpus7</a></li>
+			<li class="logo"><a href="#">perpus7</a></li>
 		</div>
 		<div class="column is-4-tablet is-12-mobile is-5-desktop">
 			<div class="columns is-multiline is-mobile is-tablet">
 				<div class="column is-12-mobile is-half-tablet is-one-quarter-desktop">
-				<li><a href="#" class="navbar-item menu-3">panduan</a></li>
+					<li><a href="#" class="navbar-item menu-3">panduan</a></li>
 				</div>
 				<div class="column is-12-mobile is-half-tablet is-one-quarter-desktop">
-				<li><a href="#" class="navbar-item menu-4">petugas</a></li>
+					<li><a href="#" class="navbar-item menu-4">petugas</a></li>
 				</div>
 			</div>
 		</div>
@@ -79,10 +79,10 @@
 
 <main>
 	<div id="content">
-	<div id="wrap-notif">
-			<div id="wish">
+		@include('Main.layout.notif-bubble')
+      	<div id="wrap-notif">
+			<div class="wish-box">
 	    		<div class="wish-notif columns is-multiline notification is-default is-mobile is-tablet">
-	    			<button class="delete delete-notif"></button>
 			        <div class="column is-2-mobile is-2-tablet is-2-desktop">
 			          <span class="icon">
 			            <i class="fa fa-heart"></i>
@@ -532,10 +532,10 @@
 		<section id="petugas" class="hero is-medium is-danger is-bold">
 		  <div class="hero-body">
 		    <div class="container">
-		    	<div class="columns is-multiline is-tablet is-mobile">
-		    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200"  class="column is-hidden-desktop is-12-mobile is-12-tablet has-text-centered">
+		    	<div class="columns is-multiline is-tablet is-mobile is-centered">
+		    		<div data-aos="fade-up" data-aos-delay="200" data-aos-offset="200"  class="column is-hidden-desktop is-10-mobile is-12-tablet has-text-centered">
 		    			<div>
-			    			  <h1 class="title">
+			    			  <h1 class="title is-4">
 					      	  Petugas Perpustakaan
 					      	  </h1>
 					      <hr>
@@ -544,18 +544,18 @@
 						      </p>
 					     </div>
 		    		</div>
-		    		<div data-aos="fade-right" data-aos-delay="300" data-aos-offset="200" class="column is-12-mobile is-half-tablet is-4-desktop">
+		    		<div data-aos="fade-right" data-aos-delay="300" data-aos-offset="200" class="column is-10-mobile is-half-tablet is-3-desktop">
     					<figure class="image">
     						<img src="{{ asset('/front-assets/img/petugas.jpg') }}">
     						<figcaption>
-    							<p class="title is-5">Wulandary widyodiningrat s.kom</p>
+    							<p class="title is-6">Wulandary widyodiningrat s.kom</p>
     							<p class="subtitle is-6">00292394245</p>
     						</figcaption>
     					</figure>
 		    		</div>
 		    		<div data-aos="fade-down" data-aos-delay="200" data-aos-offset="200" class="column is-4-desktop is-hidden-mobile is-hidden-tablet-only has-text-centered">
 		    			<div>
-			    			  <h1 class="title">
+			    			  <h1 class="title is-4">
 					      	  Petugas Perpustakaan
 					      	  </h1>
 					      <hr>
@@ -564,11 +564,11 @@
 						      </p>
 					     </div>
 		    		</div>
-		    		<div data-aos="fade-left" data-aos-delay="300" data-aos-offset="200" class="column is-12-mobile is-half-tablet is-4-desktop">
+		    		<div data-aos="fade-left" data-aos-delay="300" data-aos-offset="200" class="column is-10-mobile is-half-tablet is-3-desktop">
     					<figure class="image">
     						<img src="{{ asset('/front-assets/img/petugas2.jpg') }}">
     						<figcaption>
-    							<p class="title is-5">Muhammad Jagaw hermanysah, S.Pd</p>
+    							<p class="title is-6">Petugas Perpustakaan, S.Pd</p>
     							<p class="subtitle is-6">00292394245</p>
     						</figcaption>
     					</figure>

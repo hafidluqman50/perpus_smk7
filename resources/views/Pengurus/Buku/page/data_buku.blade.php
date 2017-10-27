@@ -1,7 +1,6 @@
 @extends('Pengurus.layout.layout-app',['data'=>$notif])
 @section('title') Data Buku @endsection
 @section('content')
-{{-- {{ dd($notif) }} --}}
 @if (session()->has('tmbh_buku'))
 	<div class="row">
 		<div class="col-xs-12">
@@ -55,23 +54,33 @@
 					@if (Auth::user()->level==1)
 					<a href="{{ url('/petugas/tambah-data-buku') }}">
 						<button class="btn btn-primary">
-							Tambah Data Buku
+							<span class="fa fa-book"></span> Tambah Data Buku
 						</button>
 					</a>
 					<a href="{{ url('/petugas/import-buku') }}">
 						<button class="btn btn-success">
-							Import Data Buku
+							<span class="fa fa-file-excel-o"></span> Import Data Buku
+						</button>
+					</a>
+					<a href="{{ url('/cetak/petugas/report') }}">
+						<button class="btn btn-info">
+							<span class="fa fa-print"></span> Cetak Report
 						</button>
 					</a>
 					@elseif(Auth::user()->level==2)
 					<a href="{{ url('/admin/tambah-data-buku') }}">
 						<button class="btn btn-primary">
-							Tambah Data Buku
+							<span class="fa fa-book"></span> Tambah Data Buku
 						</button>
 					</a>
 					<a href="{{ url('/admin/import-buku') }}">
 						<button class="btn btn-success">
-							Import Data Buku
+							<span class="fa fa-file-excel-o"></span> Import Data Buku
+						</button>
+					</a>
+					<a href="{{ url('/cetak/admin/report') }}">
+						<button class="btn btn-info">
+							<span class="fa fa-print"></span> Cetak Report
 						</button>
 					</a>
 					@endif
@@ -93,8 +102,8 @@
 							<tr>
 								<td>{{ $no+1 }}</td>
 								<td>{{ $buku->judul_buku }}</td>
-								<td>{{ $buku->nama_kategori }}</td>
-								<td>{{ $buku->nama_sub }}</td>
+								<td>{{ ($buku->nama_kategori != '' ? $buku->nama_kategori : '-') }}</td>
+								<td>{{ ($buku->nama_sub != '' ? $buku->nama_sub : '-') }}</td>
 								<td>{{ $buku->penerbit }}</td>
 								<td>{{ $buku->tahun_terbit }}</td>
 								<td>@if ($buku->stok_buku == 0)
@@ -149,4 +158,56 @@
 			</div>
 		</div>
 	</div>
+@endsection
+
+@section('javascript')
+@if (Auth::user()->level==2)
+	<script>
+		$(function(){
+			function notifikasi() {
+				$.ajax({
+					url: 'http://localhost:8000/notifikasi/admin',
+					type: 'GET',
+				})
+				.done(function(param) {
+					var obj = JSON.parse(param);
+					$('#badges').html(obj.badges);
+					$('#head-notif').html(obj.catat);
+					$('#menu').html(obj.notif);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+			}
+			notifikasi();
+			setInterval(function(){
+				notifikasi();
+			},1000);
+		});
+	</script>
+@elseif(Auth::user()->level==1)
+	<script>
+		$(function(){
+			function notifikasi() {
+				$.ajax({
+					url: 'http://localhost:8000/notifikasi/petugas',
+					type: 'GET',
+				})
+				.done(function(param) {
+					var obj = JSON.parse(param);
+					$('#badges').html(obj.badges);
+					$('#head-notif').html(obj.catat);
+					$('#menu').html(obj.notif);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+			}
+			notifikasi();
+			setInterval(function(){
+				notifikasi();
+			},1000);
+		});
+	</script>
+@endif
 @endsection

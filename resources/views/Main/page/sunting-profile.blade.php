@@ -1,6 +1,7 @@
 @extends('Main.layout.layout-app')
 @section('title') Sunting Profile @endsection
 @section('content')
+@include('Main.layout.notif-bubble')
 <div class="banner2"></div>
 <section id="profil">
     <figure class="foto-siswa">

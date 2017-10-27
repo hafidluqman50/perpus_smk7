@@ -5,6 +5,19 @@
         <div class="col-md-12">
           <div class="box box-default">
             <div class="box-header with-border">
+              @if(Auth::user()->level==1)
+              <a href="{{ url('/petugas/data-kategori') }}">
+                <button class="btn btn-primary">
+                  <span class="fa fa-arrow-left"></span> Kembali
+                </button>
+              </a>
+              @elseif(Auth::user()->level==2)
+              <a href="{{ url('/admin/data-kategori') }}">
+                <button class="btn btn-primary">
+                  <span class="fa fa-arrow-left"></span> Kembali
+                </button>
+              </a>
+              @endif
               <h3 class="box-title">Tambah Data Buku</h3>
             </div>
             @if (Auth::user()->level==1)
@@ -54,5 +67,53 @@
             </form>
           </div>
          </div>
-    </div>
+    </div>@if (Auth::user()->level==2)
+  <script>
+    $(function(){
+      function notifikasi() {
+        $.ajax({
+          url: 'http://localhost:8000/notifikasi/admin',
+          type: 'GET',
+        })
+        .done(function(param) {
+          var obj = JSON.parse(param);
+          $('#badges').html(obj.badges);
+          $('#head-notif').html(obj.catat);
+          $('#menu').html(obj.notif);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+      }
+      notifikasi();
+      setInterval(function(){
+        notifikasi();
+      },1000);
+    });
+  </script>
+@elseif(Auth::user()->level==1)
+  <script>
+    $(function(){
+      function notifikasi() {
+        $.ajax({
+          url: 'http://localhost:8000/notifikasi/petugas',
+          type: 'GET',
+        })
+        .done(function(param) {
+          var obj = JSON.parse(param);
+          $('#badges').html(obj.badges);
+          $('#head-notif').html(obj.catat);
+          $('#menu').html(obj.notif);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+      }
+      notifikasi();
+      setInterval(function(){
+        notifikasi();
+      },1000);
+    });
+  </script>
+@endif
 @endsection

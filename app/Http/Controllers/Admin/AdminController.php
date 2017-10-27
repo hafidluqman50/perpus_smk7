@@ -12,13 +12,6 @@ use Auth;
 
 class AdminController extends Controller
 {
-    public $petugas;
-    public $users;
-    public function __construct(Petugas $petugas, User $users)
-    {
-		    $this->petugas = $petugas;
-        $this->users = $users;
-    }
     // public function admin(Request $request)
     // {
     // 	$users = new User;
@@ -45,14 +38,14 @@ class AdminController extends Controller
         'username' => $request->username,
        ];
 
-       $this->users->create($data_login);
-       $this->petugas->create($data_petugas);
+       User::create($data_login);
+       Petugas::create($data_petugas);
        return redirect('/admin/data-petugas')->with('data_petugas','Sukses Menambahkan Data petugas');
     } 
 
     public function PengaturanAkun($username,Request $request)
     {
-      $get_data = $this->users->where('username',$username)->firstOrFail();
+      $get_data = User::where('username',$username)->firstOrFail();
       // dd($get_data);
       if ($get_data->status==1) {
         $get_data->update(['status' => 0]);

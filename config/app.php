@@ -231,7 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

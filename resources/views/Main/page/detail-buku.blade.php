@@ -1,6 +1,7 @@
 @extends('Main.layout.layout-app')
 @section('title') Info Buku @endsection
 @section('content')
+@include('Main.layout.notif-bubble')
 <section id="info-buku">
 	<div class="container">
 		<div class="columns is-multiline is-mobile">
@@ -12,7 +13,7 @@
 								<p>{{ $buku->judul_buku }}</p>
 							</div>
 						</figure>
-						<img class="front" src="{{ asset('/admin-assets/foto_buku/'.$buku->foto_buku) }}" alt="">
+						<img class="front" src="{{ $buku->foto_buku != '' ? asset('/admin-assets/foto_buku/'.$buku->foto_buku) : asset('/admin-assets/foto_buku/book.png') }}" alt="">
 					</div>
 				</figure>
 			</div>

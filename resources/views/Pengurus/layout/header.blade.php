@@ -1,52 +1,45 @@
 <div class="wrapper">
-  <header class="main-header">
-    <a href="#" class="logo">
-      <span class="logo-mini"><b>SMK</b>7</span>
-      <span class="logo-lg"><b>Perpus</b> SMKN7</span>
-    </a>
+    <header class="main-header">
+        <a href="#" class="logo">
+            <span class="logo-mini"><b>SMK</b>7</span>
+            <span class="logo-lg"><b>Perpus</b> SMKN7</span>
+        </a>
     <nav class="navbar navbar-static-top">
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <div class="navbar-custom-menu">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+    <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-danger">{{ count($notif) }}</span>
-            </a>
+            <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-bell-o"></i>
+                  <span class="label label-danger" id="badges"></span>
+                </a>
             <ul class="dropdown-menu">
-              <li class="header">Anda Punya {{ count($notif) }} Notifikasi</li>
-              <li>
-                <ul class="menu">
-                  @foreach($notif as $notif)
-                  <li>
-                    <a href="#">
-                      <span class="fa fa-user text-red"></span> {{ $notif->nama_siswa }} Ingin Meminjam Buku {{ $notif->judul_buku }}
-                    </a>
-                  </li>
-                  @endforeach
+                <li class="header" id="head-notif"></li>
+                <li>
+                <ul class="menu" id="menu">
+
                 </ul>
               </li>
             </ul>
-          </li>
+            </li>
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             @if (Auth::user()->level==1)
-              <img src="{{ asset('/admin-assets/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">Petugas Perpustakaan</span>
+                <img src="{{ asset('/admin-assets/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+                <span class="hidden-xs">Petugas Perpustakaan</span>
             @elseif(Auth::user()->level==2)
-              <img src="{{ asset('/admin-assets/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">Admin Perpustakaan</span>
+                <img src="{{ asset('/admin-assets/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+                <span class="hidden-xs">Admin Perpustakaan</span>
             @endif
             </a>
             <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="{{ asset('/admin-assets/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                <li class="user-header">
+                    <img src="{{ asset('/admin-assets/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                    Alexander Pierce - Web Developer
+                    <small>Member since Nov. 2012</small>
                 </p>
               </li>
               <li class="user-footer">
@@ -91,6 +84,11 @@
           </a>
         </li>
         <li>
+          <a href="{{ url('/petugas/data-catat-transaksi') }}">
+            <i class="fa fa-history"></i> <span>Catatan Transaksi</span>
+          </a>
+        </li>
+        <li>
           <a href="{{ url('/petugas/data-barcode') }}">
             <i class="fa fa-qrcode"></i> <span>Barcode</span>
           </a>
@@ -106,8 +104,7 @@
           <ul class="treeview-menu">
             <li><a href="{{ url('/petugas/data-buku') }}"><i class="fa fa-circle-o"></i> 
             Data Buku</a></li>
-            <li><a href="{{ url('/petugas/data-peminjaman') }}"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
-            <li><a href="{{ url('/petugas/data-pengembalian') }}"><i class="fa fa-circle-o"></i> Data Pengembalian</a></li>
+            <li><a href="{{ url('/petugas/data-peminjaman') }}"><i class="fa fa-circle-o"></i> Data Transaksi</a></li>
           </ul>
         </li>
       </ul>
@@ -142,11 +139,6 @@
             <i class="fa fa-qrcode"></i> <span>Barcode</span>
           </a>
         </li>
-        <li>
-        	<a href="{{ url('/admin/data-catat-transaksi') }}">
-        		<i class="fa fa-history"></i> <span>Catatan Transaksi</span>
-        	</a>
-        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-book"></i>
@@ -158,10 +150,8 @@
           <ul class="treeview-menu">
             <li><a href="{{ url('/admin/data-buku') }}"><i class="fa fa-circle-o"></i> 
             Data Buku</a></li>
-            <li><a href="{{ url('/admin/data-sub-kategori') }}"><i class="fa fa-circle-o"></i> Data Sub Kategori Buku</a></li>
             <li><a href="{{ url('/admin/data-kategori') }}"><i class="fa fa-circle-o"></i> Data Kategori Buku</a></li>
-            <li><a href="{{ url('/admin/data-peminjaman') }}"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
-            <li><a href="{{ url('/admin/data-pengembalian') }}"><i class="fa fa-circle-o"></i> Data Pengembalian</a></li>
+            <li><a href="{{ url('/admin/data-transaksi') }}"><i class="fa fa-circle-o"></i> Data Transaksi</a></li>
           </ul>
         </li>
       </ul>

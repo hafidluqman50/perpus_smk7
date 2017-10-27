@@ -8,6 +8,7 @@ use App\Models\Siswa\SiswaModel as Siswa;
 use App\Models\BukuModel as Buku;
 use App\Models\TransaksiBukuModel as Transaksi;
 use App\Models\WishtlistBukuModel as Wishlist;
+use App\Models\DetailTransaksiModel as DetailTransaksi;
 use App\User;
 use Auth;
 use DB;
@@ -19,14 +20,16 @@ class SiswaController extends Controller
 	protected $transaksi;
 	protected $wishlist;
 	protected $buku;
+	protected $detail;
 
-	public function __construct(User $users,Siswa $siswa, Transaksi $transaksi,Wishlist $wishlist, Buku $buku)
+	public function __construct(User $users,Siswa $siswa, Transaksi $transaksi,Wishlist $wishlist, Buku $buku,DetailTransaksi $detail)
 	{
 		$this->users = $users;
 		$this->siswa = $siswa;
 		$this->transaksi = $transaksi;
 		$this->wishlist = $wishlist;
 		$this->buku = $buku;
+		$this->detail = $detail;
 	}
 
 	// public function RegisterSiswa(Request $request)
@@ -125,26 +128,47 @@ class SiswaController extends Controller
 
 	public function PinjamPost($id_buku,Request $request)
 	{
-			$id_siswa = $this->siswa
-						 ->where('username',Auth::user()->username)
-						 ->firstOrFail()
-						 ->id_siswa;
-
-			$check = $this->buku->where('id_buku',$id_buku)->firstOrFail()->stok_buku;
-
+			$get_siswa 	  	= $this->siswa->where('username',Auth::user()->username);
+			$siswa          = $get_siswa->firstOrFail()->id_siswa;
+			$get_transaksi  = $this->transaksi->where('id_siswa',$siswa)->get();
+			$check          = $this->buku->where('id_buku',$id_buku)->firstOrFail()->stok_buku;
+			$tanggal_pinjam = date('Y-m-d');
+			$tanggal_wajib_kembali = dua_minggu($tanggal_pinjam);
 			if ($check != 0) {
-
-			$data_pinjam = [
-				'id_buku'             => $id_buku,
-				'id_siswa'            => $id_siswa,
-				'tanggal_pinjam_buku' => $request->tgl_pnjm,
-				'tanggal_jatuh_tempo' => $request->tgl_jth_tmpo,
-				'status_pnjm'		  => 0,
-				'created_at'          => date('Y-m-d H:i:s')
-			];
-
-			 $this->transaksi->create($data_pinjam);
-			 $url = $this->transaksi->where('id_siswa',$id_siswa)->where('id_buku',$id_buku)->firstOrFail()->id_transaksi;
+				if (count($get_transaksi) == 0) {
+					$data_transaksi = [
+						'id_siswa'   => $siswa,
+						'ket'        => $request->ket,
+						'created_at' => date('Y-m-d H:i:s')
+					];	
+					$id_transaksi = $this->transaksi->insertGetId($data_transaksi);
+					
+					$transaksi = [
+						'id_transaksi'        => $id_transaksi,
+						'id_buku'             => $id_buku,
+						'tanggal_pinjam_buku' => $tanggal_pinjam,
+						'tanggal_jatuh_tempo' => $tanggal_wajib_kembali,
+						'status_transaksi'	  => 1,
+						'created_at'	      => date('Y-m-d'),
+						'updated_at'		  => date('Y-m-d')
+					];
+					$this->detail->create($transaksi);
+				}
+				else {
+					$id_transaksi = $this->transaksi->where('id_siswa',$siswa)->firstOrFail()->id_transaksi;
+					$transaksi = [
+						'id_transaksi'        => $id_transaksi,
+						'id_buku'             => $id_buku,
+						'tanggal_pinjam_buku' => $tanggal_pinjam,
+						'tanggal_jatuh_tempo' => $tanggal_wajib_kembali,
+						'status_transaksi'	  => 1,
+						'created_at'	      => date('Y-m-d H:i:s'),
+						'updated_at'		  => date('Y-m-d H:i:s')
+					];
+					$this->detail->create($transaksi);
+				}
+			 $get_url = $this->transaksi->where('id_siswa',$siswa)->firstOrFail()->id_transaksi;
+			 $url = $this->detail->where('id_transaksi',$get_url)->where('id_buku',$id_buku)->orderBy('updated_at','desc')->firstOrFail()->id_detail_transaksi;
 			 return redirect('/buku/detail-pinjam/'.$url.'/'.Auth::user()->username)->with('pending','Silahkan Verifikasi Peminjaman Ke Perpustakaan');
 			}
 			else {
@@ -152,13 +176,13 @@ class SiswaController extends Controller
 			}
 	}
 
-	public function BatalPinjam($id_transaksi,Request $request) {
+	public function BatalPinjam($id,Request $request) {
 		$batal = [
 				'tanggal_pinjam_buku' => NULL,
 				'tanggal_jatuh_tempo' => NULL,
-				'status_pnjm'         => NULL,
+				'status_pnjm'         => 0,
 			];
-		$this->transaksi->where('id_transaksi',$id_transaksi)->update($batal);
+		$this->detail->where('id_detail_transaksi',$id)->update($batal);
 		return redirect('/buku')->with('log','Buku Batal Pinjam');
 	}
 

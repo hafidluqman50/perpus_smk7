@@ -1,6 +1,7 @@
 @extends('Main.layout.layout-app')
 @section('title') Transaksi @endsection
 @section('content')
+@include('Main.layout.notif-bubble')
 <section id="transaksi">
 	<div class="container">
 		<div class="columns is-multiline data-buku">
@@ -11,7 +12,7 @@
 			</div>
 			<div class="column is-5-tablet is-4-desktop">
 				<figure>
-					<img src="{{ asset('/admin-assets/foto_buku/'.$buku->foto_buku) }}" alt="">
+					<img src="{{ $buku->foto_buku != NULL ? asset('/admin-assets/foto_buku/'.$buku->foto_buku) : asset('/admin-assets/foto_buku/book.png') }}" alt="">
 				</figure>
 			</div>
 			<div class="column is-7-tablet">
@@ -20,8 +21,7 @@
 						<ul>
 							<div class="wrap-info">
 								<p class="title is-6">Judul buku</p>
-								<li class="subtitle is-4">{{ $buku->judul_buku }}
-								</li>
+								<li class="subtitle is-4">{{ $buku->judul_buku }}</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Nama peminjam</p>
@@ -42,11 +42,11 @@
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Tanggal Peminjaman</p>
-								<li class="subtitle is-4">17 Jul 2019</li>
+								<li class="subtitle is-4">{{ $tanggal_pinjam }}</li>
 							</div>
 							<div class="wrap-info">	
 								<p class="title is-6">Tanggal Max pengembalian</p>
-								<li class="subtitle is-4">19 Jan 2020</li>
+								<li class="subtitle is-4">{{ $tanggal_wajib_kembali }}</li>
 							</div>
 						</ul>
 					</div>
@@ -67,8 +67,6 @@
 						</div>
 						<form action="{{ url('/buku/pinjam',$buku->id_buku) }}" method="POST">
 						{{ csrf_field() }}
-						<input type="hidden" name="tgl_pnjm" value="2017-09-20">
-						<input type="hidden" name="tgl_jth_tmpo" value="2017-10-10">
 						<div class="field is-grouped">
 						  <p class="control">
 						    <button type="submit" class="button is-primary" disabled>Pinjam</button>

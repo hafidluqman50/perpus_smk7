@@ -10,15 +10,6 @@ use Auth;
 
 class PetugasController extends Controller
 {
-	protected $petugas;
-	protected $users;
-
-	public function __construct(Petugas $petugas,User $users)
-	{
-		$this->petugas = $petugas;
-		$this->users   = $users;
-	}
-
     public function UpdateProfile($username,Request $request)
     {
     	//================================//
@@ -67,14 +58,14 @@ class PetugasController extends Controller
 				'updated_at' => date('Y-m-d H:i:s')
     		];
     	}
-    	$this->users->where('username',$username)->update($update_login);
-		$this->petugas->where('username',$username)->update($data_petugas);
+    	User::where('username',$username)->update($update_login);
+		Petugas::where('username',$username)->update($data_petugas);
 		return redirect('/dashboard-petugas');	
     }
 
     public function DeleteUser($username)
     {
-    	$delete = $this->users->where('username',$username)->delete();
+    	$delete = User::where('username',$username)->delete();
     	return redirect('/data-user')->with('sukses','Sukses Menghapus');
     }
   //   public function RegisterPetugas(Request $request)

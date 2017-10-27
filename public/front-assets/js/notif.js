@@ -2,29 +2,11 @@ $(function(){
     $("button.notif-wishlist").click(function(){
         $("#wrap-notif").each(function(){
           $(this).show().animate({
-          	right:'10px'
+            right:'10px'
           },300);
-	 		  $("#wish").clone().appendTo("#wrap-notif").fadeIn('slow').delay(5000).fadeOut('slow');
+      $(".wish-box:first-child").clone().appendTo("#wrap-notif").show().animate({
+        right:'10px'
+      },300).delay(5000).fadeOut();
         });
-    });
-    $('.is-borrow').click(function(){
-      $("#wrap-notif").each(function(){
-        $(this).show().animate({
-          right:'10px'
-        },300);
-        $("#borrow").clone().appendTo("#wrap-notif").fadeIn('slow').delay(5000).fadeOut('slow');
-      });
-    });
-    $('#wrap-notif').each(function(){
-      $(this).show().animate({
-        right:'10px'
-      },300);
-      $('#success').clone().appendTo('#wrap-notif').fadeIn('slow').delay(5000).fadeOut('slow');
-    });
-    $('#wrap-notif').each(function(){
-      $(this).show().animate({
-        right:'10px'
-      },300);
-      $('#danger').clone().appendTo('#wrap-notif').fadeIn('slow').delay(5000).fadeOut('slow');
     });
 });

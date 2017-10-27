@@ -11,16 +11,22 @@
 |
 */
 
+// Route Main Page //
 Route::get('/',['uses'=>'Siswa\SiswaPageController@Page','as'=>'index-main-page']);
 Route::get('/buku',['uses'=>'Siswa\SiswaPageController@Buku','as'=>'all-buku-page']);
+Route::get('/buku/kategori/{slug}',['uses'=>'Siswa\SiswaPageController@Kategori','as'=>'kategori-main-page']);
+Route::get('/buku/kategori/sub/{slug}',['uses'=>'Siswa\SiswaPageController@SubKategori','as'=>'sub-main-page']);
+// End Route Main Page //
 
 // Ajax Request //
 Route::group(['middleware'=>'AjaxRequest'],function(){
 	Route::get('/siswa/{kelas}',['uses'=>'BukuPageController@GetSiswa','as'=>'get-siswa-name']);
-	Route::get('/dua-minggu/{tanggal}',['uses'=>'BukuPageController@DuaMinggu','as'=>'get-dua-minggu']);
-	Route::get('/siswa/buku/pinjam/{id_siswa}',['uses'=>'BukuPageController@GetBuku','as'=>'get-buku-siswa']);
+	Route::get('/siswa/buku/pinjam/{id}',['uses'=>'BukuPageController@GetBuku','as'=>'get-buku-siswa']);
 	Route::get('/barcode/buku/{barcode}',['uses'=>'BukuPageController@GetBarcode','as'=>'get-barcode-buku']);
 	Route::get('/buku/kategori/{kategori}',['uses'=>'BukuPageController@GetSubKtg','as'=>'get-sub-ktg']);
+	Route::get('/dua-minggu/{tanggal}',['uses'=>'BukuPageController@DuaMinggu','as'=>'get-dua-minggu']);
+	Route::get('/notifikasi/petugas',['uses'=>'NotifikasiController@NotifikasiPetugas','as'=>'notifikasi-petugas-cek']);
+	Route::get('/notifikasi/admin',['uses'=>'NotifikasiController@NotifikasiAdmin','as'=>'notifikasi-admin-cek']);
 });
 // End Ajax Request //
 
@@ -63,13 +69,11 @@ Route::group(['middleware'=>'isAuth'],function (){
 	// Route::get('/coba','PetugasController@RegisterPetugas');
 	Route::group(['middleware'=>'hasPetugas'],function(){
 		Route::get('/dashboard-petugas',['uses'=>'Petugas\PetugasPageController@DashboardPetugas','as'=>'petugas-dashboard']);
+		
 		// UPDATE PROFILE PETUGAS //
 		Route::get('/profile/{username}',['uses'=>'Petugas\PetugasPageController@ProfilePetugas','as'=>'petugas-profile-page']);
 		Route::post('/update/petugas',['uses'=>'Petugas\PetugasController@UpdateProfile','as'=>'petugas-update-profile']);
 		// END UPDATE PROFILE PETUGAS //
-
-		// Route::get('/petugas/profile',['uses'=>'Petugas\PetugasPageController@DataUser','as'=>'data-user-petugas']);
-		// Route::get('/delete/petugas/{username}',['uses'=>'Petugas\PetugasController@DeleteUser','as'=>'delete-petugas-siswa']);
 
 		// CRUD BUKU //
 		Route::get('/petugas/data-buku',['uses'=>'BukuPageController@ShowBuku','as'=>'show-data-buku']);
@@ -81,18 +85,33 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::get('/delete/petugas/data-buku/{id_buku}',['uses'=>'BukuController@DeleteBuku','as'=>'delete-data-buku']);
 		// END CRUD BUKU //
 		
-		// CRUD TRANSAKSI BUKU //
-		Route::get('/petugas/data-peminjaman',['uses'=>'BukuPageController@ShowPeminjaman','as'=>'page-pinjam-buku']);
-		Route::get('/petugas/pinjam-buku',['uses'=>'BukuPageController@Pinjam','as'=>'form-pinjam-buku']);
-		Route::post('/pinjam/petugas/data-transaksi',['uses'=>'BukuController@PinjamBuku','as'=>'insert-pinjam-buku']);
-		Route::get('/petugas/edit-data-peminjaman/{id_transaksi}',['uses'=>'BukuPageController@EditPinjam','as'=>'edit-pinjam-buku']);
-		Route::post('/edit/petugas/data-transaksi/{id_transaksi}',['uses'=>'BukuController@UpdatePinjam','as'=>'update-pinjam-buku']);
-		Route::get('/delete/petugas/data-transaksi/{id_transaksi}',['uses'=>'BukuController@DeleteTransaksi','as'=>'delete-pinjam-buku']);
+		// CRUD TRANSAKSI //
+		Route::get('/petugas/data-transaksi',['uses'=>'BukuPageController@ShowTransaksi','as'=>'show-transaksi-page']);
+		Route::get('/petugas/lihat-transaksi/{id_transaksi}',['uses'=>'BukuPageController@LihatTransaksi','as'=>'detail-transaksi-page']);
+		Route::get('/petugas/pinjam-buku',['uses'=>'BukuPageController@PinjamMultiForm','as'=>'form-pinjam-buku']);
+		Route::get('/petugas/detail-data-peminjaman/{id_transaksi}',['uses'=>'BukuPageController@DetailPeminjaman','as'=>'detail-pinjam-page']);
+		Route::get('/petugas/atur-pinjaman/{id_transaksi}',['uses'=>'BukuPageController@PinjamSingleForm','as'=>'atur-transaksi-page']);
+		Route::get('/petugas/perpanjang-pinjam/{id}',['uses'=>'BukuPageController@PerpanjangPinjamPage','as'=>'perpanjang-pinjam-buku']);
+		Route::post('/perpanjang/petugas/buku/{id}',['uses'=>'BukuController@PerpanjangPinjam','as'=>'perpanjang-pinjam-post']);
+		Route::post('/pinjam/petugas/data-peminjaman',['uses'=>'BukuController@PinjamPostMulti','as'=>'pinjam-buku-post']);
+		Route::post('/pinjam/petugas/atur/{id_transaksi}',['uses'=>'BukuController@PinjamPost','as'=>'pinjam-transaksi-post']);
 
-		Route::get('/petugas/data-pengembalian',['uses'=>'BukuPageController@Showpengembalian','as'=>'page-kembali-buku']);
-		Route::get('/petugas/kembali-buku/{id_transaksi}',['uses'=>'BukuPageController@Pengembalian','as'=>'kembali-pinjam-buku']);
-		Route::post('/kembali/petugas/data-transaksi/{id_transaksi}',['uses'=>'BukuController@KembalikanBuku','as'=>'post-kembali-buku']);
-		// END CRUD TRANSAKSI BUKU //
+		Route::get('/petugas/kembali-buku',['uses'=>'BukuPageController@KembaliForm','as'=>'kembali-multi-form']);
+		Route::get('/petugas/detail-kembali-buku/{id_transaksi}',['uses'=>'BukuPageController@DetailKembali','as'=>'detail-kembali-page']);
+		Route::post('/kembali/petugas/buku',['uses'=>'BukuController@KembaliBuku','as'=>'post-kembali-banyak']);
+
+		Route::get('/delete/petugas/data-transaksi/{id}',['uses'=>'BukuController@DeleteTransaksi','as'=>'delete-data-transaksi']);
+		Route::get('/delete/petugas/detail-transaksi/{id_transaksi}/{id_detail}',['uses'=>'BukuController@DeleteDetailTransaksi','as'=>'delete-detail-transaksi']);
+		// END CRUD TRANSAKSI //
+
+		// CRUD BARCODE BUKU //
+		Route::get('/petugas/data-barcode',['uses'=>'BukuPageController@Barcode','as'=>'data-barcode-page']);
+		Route::get('/petugas/tambah-data-barcode',['uses'=>'BukuPageController@AddFormBarcode','as'=>'form-barcode-page']);
+		Route::post('/insert/petugas/data-barcode',['uses'=>'BukuController@InsertBarcode','as'=>'post-barcode-data']);
+		Route::get('/petugas/edit-data-barcode/{id_barcode}',['uses'=>'BukuPageController@EditFormBarcode','as'=>'form-barcode-page']);
+		Route::post('/update/petugas/data-barcode/{id_barcode}',['uses'=>'BukuController@UpdateBarcode','as'=>'post-barcode-data']);
+		Route::get('/delete/petugas/data-barcode/{id_barcode}',['uses'=>'BukuController@DeleteBarcode','as'=>'delete-barcode-data']);
+		// END CRUD BARCODE BUKU //
 	});
 //----------End Petugas--------//
 
@@ -113,8 +132,8 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::get('/admin/data-siswa',['uses'=>'Admin\AdminPageController@ShowSiswa','as'=>'data-siswa-page']);
 		Route::get('/admin/siswa/akun/nonaktif/{username}',['uses'=>'Admin\AdminController@PengaturanAkun','as'=>'siswa-nonaktif-akun']);
 		Route::get('/admin/siswa/akun/aktif/{username}',['uses'=>'Admin\AdminController@PengaturanAkun','as'=>'siswa-aktif-akun']);
-		Route::get('/admin/import-siswa',['uses'=>'AdminPageController@ImportSiswa','as'=>'import-siswa-page']);
-		Route::get('/admin/siswa-detail/{id_siswa}',['uses'=>'AdminPageController@DetailSiswa','as'=>'detail-data-siswa']);
+		Route::get('/admin/import-siswa',['uses'=>'Admin\AdminPageController@ImportSiswa','as'=>'import-siswa-page']);
+		Route::get('/admin/siswa-detail/{id_siswa}',['uses'=>'Admin\AdminPageController@DetailSiswa','as'=>'detail-data-siswa']);
 		// END DATA SISWA //
 
 		// CRUD BUKU //
@@ -133,40 +152,40 @@ Route::group(['middleware'=>'isAuth'],function (){
 		Route::get('/admin/data-kategori',['uses'=>'BukuPageController@ShowKategori','as'=>'show-data-kategori']);
 		Route::get('/admin/tambah-data-kategori',['uses'=>'BukuPageController@SimpanKategori','as'=>'insert-page-kategori']);
 		Route::post('/insert/admin/data-kategori',['uses'=>'BukuController@TambahKategori','as'=>'insert-data-kategori']);
-		Route::get('/admin/detail-kategori/{id_kategori_buku}',['uses'=>'BukuPageController@DetailKategori','as'=>'detail-data-kategori']);
 		Route::get('/admin/edit-kategori/{id_kategori_buku}',['uses'=>'BukuPageController@EditKategori','as'=>'edit-data-kategori']);
 		Route::post('/update/admin/data-kategori/{id_kategori_kategori}',['uses'=>'BukuController@UpdateKategori','as'=>'insert-data-kategori']);
 		Route::get('/delete/admin/data-kategori/{id_kategori_kategori}',['uses'=>'BukuController@DeleteKategori','as'=>'delete-data-kategori']);
-		// END CRUD KATEGORI BUKU //
 
-		// CRUD SUB KATEGORI BUKU //
-		Route::get('/admin/data-sub-kategori',['uses'=>'BukuPageController@ShowSubKategori','as'=>'sub-kategori-page']);
 		Route::get('/admin/tambah-data-sub',['uses'=>'BukuPageController@SimpanSubKategori','as'=>'simpan-sub-form']);
 		Route::get('/insert/admin/data-sub-kategori',['uses'=>'BukuController@TambahSubKategori','as'=>'tambah-sub-post']);
 		Route::get('/admin/edit-data-sub/{id}',['uses'=>'BukuPageController@EditSubKategori','as'=>'edit-sub-page']);
 		Route::get('/update/admin/data-sub-kategori/{id}',['uses'=>'BukuController@UpdateSubKategori','as'=>'update-sub-post']);
 		Route::get('/delete/admin/data-sub-kategori/{id}',['uses'=>'BukuController@DeleteSubKategori','as'=>'delete-sub-kategori']);
-		// END CRUD KATEGORI BUKU
+		// END CRUD KATEGORI BUKU //
 
 		// CRUD PINJAM BUKU //
-		Route::get('/admin/data-peminjaman',['uses'=>'BukuPageController@ShowPeminjaman','as'=>'page-pinjam-buku']);
-		Route::get('/admin/pinjam-buku',['uses'=>'BukuPageController@PinjamMultiForm','as'=>'form-pinjam-buku']);
-		Route::get('/admin/detail-data-peminjaman/{id_transaksi}',['uses'=>'BukuPageController@DetailPeminjaman','as'=>'detail-pinjam-page']);
-		Route::get('/admin/atur-transaksi/{id_transaksi}',['uses'=>'BukuPageController@PinjamSingleForm','as'=>'atur-transaksi-page']);
-		Route::get('/admin/perpanjang-pinjam/{id_transaksi}',['uses'=>'BukuPageController@PerpanjangPinjamPage','as'=>'perpanjang-pinjam-buku']);
-		Route::post('/pinjam/admin/data-peminjaman',['uses'=>'BukuController@PinjamPostMulti','as'=>'pinjam-buku-post']);
-		Route::post('/pinjam/admin/atur/{id_transaksi}',['uses'=>'BukuController@PinjamPost','as'=>'pinjam-transaksi-post']);
+		// Route::get('/admin/data-peminjaman',['uses'=>'BukuPageController@ShowPeminjaman','as'=>'page-pinjam-buku']);
 		Route::get('/delete/admin/data-peminjaman/{id_transaksi}',['uses'=>'BukuController@DeleteTransaksi','as'=>'delete-transaksi-data']);
 		// END CRUD PINJAM BUKU //
 
-		// CRUD KEMBALIKAN BUKU //
-		Route::get('/admin/data-pengembalian',['uses'=>'BukuPageController@ShowPengembalian','as'=>'page-kembali-buku']);
-		Route::get('/admin/kembali-buku',['uses'=>'BukuPageController@PengembalianMultiForm','as'=>'kembali-multi-form']);
-		Route::get('/admin/detail-kembali-buku/{id_transaksi}',['uses'=>'BukuPageController@DetailPengembalian','as'=>'detail-kembali-page']);
-		// Route::get('/admin/kembali-buku/{id_transaksi}',['uses'=>'BukuPageController@PengembalianSingleForm','as'=>'kembali-single-form']);
-		// Route::post('/kembali/admin/buku/{id_transaksi}',['uses'=>'BukuController@KembalikanBuku','as'=>'post-kembali-buku']);
-		Route::post('/kembali/admin/buku',['uses'=>'BukuController@KembalikanBukuMulti','as'=>'post-kembali-banyak']);
-		// END CRUD KEMBALIKAN BUKU //
+		// CRUD TRANSAKSI //
+		Route::get('/admin/data-transaksi',['uses'=>'BukuPageController@ShowTransaksi','as'=>'show-transaksi-page']);
+		Route::get('/admin/lihat-transaksi/{id_transaksi}',['uses'=>'BukuPageController@LihatTransaksi','as'=>'detail-transaksi-page']);
+		Route::get('/admin/pinjam-buku',['uses'=>'BukuPageController@PinjamMultiForm','as'=>'form-pinjam-buku']);
+		Route::get('/admin/detail-data-peminjaman/{id_transaksi}',['uses'=>'BukuPageController@DetailPeminjaman','as'=>'detail-pinjam-page']);
+		Route::get('/admin/atur-pinjaman/{id_transaksi}',['uses'=>'BukuPageController@PinjamSingleForm','as'=>'atur-transaksi-page']);
+		Route::get('/admin/perpanjang-pinjam/{id}',['uses'=>'BukuPageController@PerpanjangPinjamPage','as'=>'perpanjang-pinjam-buku']);
+		Route::post('/perpanjang/admin/buku/{id}',['uses'=>'BukuController@PerpanjangPinjam','as'=>'perpanjang-pinjam-post']);
+		Route::post('/pinjam/admin/data-peminjaman',['uses'=>'BukuController@PinjamPostMulti','as'=>'pinjam-buku-post']);
+		Route::post('/pinjam/admin/atur/{id_transaksi}',['uses'=>'BukuController@PinjamPost','as'=>'pinjam-transaksi-post']);
+
+		Route::get('/admin/kembali-buku',['uses'=>'BukuPageController@KembaliForm','as'=>'kembali-multi-form']);
+		Route::get('/admin/detail-kembali-buku/{id_transaksi}',['uses'=>'BukuPageController@DetailKembali','as'=>'detail-kembali-page']);
+		Route::post('/kembali/admin/buku',['uses'=>'BukuController@KembaliBuku','as'=>'post-kembali-banyak']);
+
+		Route::get('/delete/admin/data-transaksi/{id}',['uses'=>'BukuController@DeleteTransaksi','as'=>'delete-data-transaksi']);
+		Route::get('/delete/admin/detail-transaksi/{id_transaksi}/{id_detail}',['uses'=>'BukuController@DeleteDetailTransaksi','as'=>'delete-detail-transaksi']);
+		// END CRUD TRANSAKSI //
 
 		// DATA CATATAN TRANSAKSI //
 		Route::get('/admin/data-catat-transaksi',['uses'=>'BukuPageController@CatatanPage','as'=>'catatan-transaksi-page']);

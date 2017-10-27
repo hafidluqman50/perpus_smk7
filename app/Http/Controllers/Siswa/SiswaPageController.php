@@ -7,17 +7,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Siswa\SiswaModel as Siswa;
 use App\Models\BukuModel as Buku;
 use App\Models\TransaksiBukuModel as Transaksi;
+use App\Models\SubKategoriModel as SubKategori;
+use App\Models\KategoriBukuModel as Kategori;
 use Auth;
 use DB;
 
 class SiswaPageController extends Controller
 {
-    public function __construct() {
-        // if (Auth::check() && Auth::user()->status==0) {
-        //     return redirect('/login-form');
-        // }
-        // dd(Auth::check());
-    }
+    // protected $sub;
+    // protected $kategori;
+
+    // public function __construct(SubKategori $sub,Kategori $kategori) {
+    //     $this->sub      = $sub;
+    //     $this->kategori = $kategori;
+    // }
 
     public function Page()
     {
@@ -42,12 +45,17 @@ class SiswaPageController extends Controller
         }
         else {
             $siswa     = Siswa::with('kelas')->where('username',$user)->firstOrFail();
-            $transaksi = DB::table('transaksi_buku')
-                            ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
-                            ->select('transaksi_buku.*','buku.judul_buku','buku.judul_slug','buku.foto_buku')
+            $cek       = DB::table('detail_transaksi')
+                            ->join('transaksi_buku','detail_transaksi.id_transaksi','=','transaksi_buku.id_transaksi')
+                            ->join('buku','detail_transaksi.id_buku','=','buku.id_buku')
+                            ->join('sub_kategori','buku.id_sub_ktg','=','sub_kategori.id_sub_ktg')
+                            ->join('kategori_buku','sub_kategori.id_kategori_buku','=','kategori_buku.id_kategori_buku')
+                            ->select('detail_transaksi.*','buku.*','sub_kategori.*','kategori_buku.*')
                             ->where('transaksi_buku.id_siswa',$siswa->id_siswa)
-                            ->first();
-        	return view('Main.page.profile',compact('siswa','transaksi'));   
+                            ->whereIn('detail_transaksi.status_transaksi',[1,2])
+                            ->get();
+            // dd($cek);
+        	return view('Main.page.profile',compact('siswa','cek'));   
         }
     }
 
@@ -64,51 +72,100 @@ class SiswaPageController extends Controller
 
     public function Buku()
     {
-        $bukus = Buku::all();
+        $bukus = DB::table('buku')
+                 ->join('sub_kategori','buku.id_sub_ktg','=','sub_kategori.id_sub_ktg')
+                 ->join('kategori_buku','sub_kategori.id_kategori_buku','=','kategori_buku.id_kategori_buku')
+                 ->select('buku.*','sub_kategori.nama_sub','sub_kategori.slug_sub_ktg','kategori_buku.nama_kategori','kategori_buku.slug_kategori')
+                 ->get();
+        $kategoris = Kategori::all();
+        $sub_class = new SubKategori;
         if (Auth::check()) {
             $siswa     = Siswa::where('username',Auth::user()->username)->firstOrFail()->id_siswa;
-            $get_transaksi = Transaksi::where('id_siswa',$siswa)->get();
-            if (count($get_transaksi) == 0) {
-                $transaksi = [
-                    'tanggal_pinjam_buku' => NULL
-                ];
-            }
-            else {
-                $transaksi = $get_transaksi->toArray();
-            }
-            // dd($transaksi);
-            return view('Main.page.buku',compact('bukus','transaksi','get_transaksi'));
+            $cek       = DB::table('detail_transaksi')
+                            ->join('transaksi_buku','detail_transaksi.id_transaksi','=','transaksi_buku.id_transaksi')
+                            ->select('detail_transaksi.*')
+                            ->where('transaksi_buku.id_siswa',$siswa)
+                            ->whereIn('detail_transaksi.status_transaksi',[1,2,4])
+                            ->get();
+            // dd(count($cek));
+            return view('Main.page.buku',compact('bukus','cek','kategoris','sub_class'));
         }
         else {
-            return view('Main.page.buku',compact('bukus'));
+            return view('Main.page.buku',compact('bukus','kategoris','sub_class'));
         }
     }
 
-    public function InfoKategori($kategori)
+    public function Kategori($slug)
     {
-        $get_kategori = Kategori::with('kategori')->where('id_kategori_buku',$kategori)->get();
-        return view('Main.page.kategori',compact('get_kategori'));
+        $get    = DB::table('buku')
+                ->join('sub_kategori','buku.id_sub_ktg','=','sub_kategori.id_sub_ktg')
+                ->join('kategori_buku','sub_kategori.id_kategori_buku','=','kategori_buku.id_kategori_buku')
+                ->select('buku.*','kategori_buku.*','sub_kategori.*')
+                ->where('kategori_buku.slug_kategori',$slug);
+        $bukus         = $get->get();
+        if (count($bukus) > 0) {
+            $nama_kategori = $get->first()->nama_kategori;
+            $keterangan    = $get->first()->deskripsi_kategori;
+        }
+        else {
+            $nama_kategori = '';
+            $keterangan    = '';
+        }
+        // dd($get->first()->nama_kategori);
+        $foto_kategori = $get->limit(4)->get();
+        $kategoris     = Kategori::all();
+        $sub_class     = new SubKategori;
+        return view('Main.page.kategori',compact('bukus','nama_kategori','keterangan','kategoris','sub_class','foto_kategori'));
+    }
+
+    public function SubKategori($slug)
+    {
+        $get = DB::table('buku')
+                ->join('sub_kategori','buku.id_sub_ktg','=','sub_kategori.id_sub_ktg')
+                ->join('kategori_buku','sub_kategori.id_kategori_buku','=','kategori_buku.id_kategori_buku')
+                ->select('buku.*','kategori_buku.*','sub_kategori.*')
+                ->where('sub_kategori.slug_sub_ktg',$slug);
+        $bukus     = $get->get();
+        if (count($bukus) > 0) {
+            $nama_sub   = $get->first()->nama_sub;
+            $keterangan = $get->first()->deskripsi_sub;
+        }
+        else {
+            $nama_sub   = '';
+            $keterangan = '';
+        }
+        $foto_sub  = $get->limit(4)->get();
+        $kategoris = Kategori::all();
+        $sub_class = new SubKategori;
+        return view('Main.page.sub-kategori',compact('bukus','nama_sub','keterangan','kategoris','sub_class','foto_sub'));   
     }
 
     public function Pinjam($slug)
     {
         $buku = Buku::where('judul_slug',$slug)->firstOrFail();
         $siswa = Siswa::with('kelas')->where('username',Auth::user()->username)->firstOrFail();
-        return view('Main.page.transaksi-buku',compact('buku','siswa'));
+        $tanggal_pinjam = explode_tanggal(date('Y-m-d'));
+        $tanggal_wajib_kembali = explode_tanggal(dua_minggu(date('Y-m-d')));
+        // dd($tanggal_wajib_kembali);
+        return view('Main.page.transaksi-buku',compact('buku','siswa','tanggal_pinjam','tanggal_wajib_kembali'));
     }
 
-    public function PinjamDetail($id_transaksi,$username)
+    public function PinjamDetail($id,$username)
     {
         $id_siswa = Siswa::where('username',$username)->firstOrFail()->id_siswa;
-        $transaksi = DB::table('transaksi_buku')
-                        ->join('buku','transaksi_buku.id_buku','=','buku.id_buku')
+        $transaksi = DB::table('detail_transaksi')
+                        ->join('transaksi_buku','detail_transaksi.id_transaksi','=','transaksi_buku.id_transaksi')
                         ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
+                        ->join('buku','detail_transaksi.id_buku','=','buku.id_buku')
                         ->join('kelas_siswa','siswa.id_kelas','=','kelas_siswa.id_kelas')
-                        ->select('transaksi_buku.id_transaksi','transaksi_buku.tanggal_pinjam_buku','transaksi_buku.tanggal_jatuh_tempo','transaksi_buku.id_buku','transaksi_buku.status_pnjm','buku.judul_buku','buku.foto_buku','siswa.nama_siswa','siswa.nisn','kelas_siswa.nama_kelas')
-                        ->where('id_transaksi',$id_transaksi)
+                        ->select('detail_transaksi.*','siswa.*','buku.*','kelas_siswa.nama_kelas')
                         ->where('transaksi_buku.id_siswa',$id_siswa)
+                        ->where('detail_transaksi.id_detail_transaksi',$id)
                         ->first();
-        return view('Main.page.pinjam-buku',compact('transaksi'));
+        // dd($transaksi);
+        $tanggal_pinjam = explode_tanggal($transaksi->tanggal_pinjam_buku);
+        $tanggal_wajib_kembali = explode_tanggal($transaksi->tanggal_jatuh_tempo);
+        return view('Main.page.pinjam-buku',compact('transaksi','tanggal_pinjam','tanggal_wajib_kembali'));
     }
 
     public function InfoBuku($slug)

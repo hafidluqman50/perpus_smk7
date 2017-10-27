@@ -1,6 +1,7 @@
 @extends('Main.layout.layout-app')
 @section('title') Pinjam Buku @endsection
 @section('content')
+@include('Main.layout.notif-bubble')
 <section id="info-peminjaman">
 @if (session()->has('pending'))
 	<div id="wrap-notif">
@@ -26,7 +27,7 @@
 			</div>
 			<div class="column is-4-desktop is-5-tablet is-12-mobile data-buku">
 				<figure>
-					<img src="{{asset('/admin-assets/foto_buku/'.$transaksi->foto_buku)}}" alt="">
+					<img src="{{$transaksi->foto_buku != NULL ? asset('/admin-assets/foto_buku/'.$transaksi->foto_buku) : asset('/admin-assets/foto_buku/book.png')}}" alt="">
 				</figure>
 			</div>
 			<div class="column">
@@ -55,34 +56,34 @@
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Tanggal peminjaman</p>
-								<li class="subtitle is-4">{{-- {{ $transaksi->tanggal_pinjam_buku }} --}}
-								17 Jan 2017
+								<li class="subtitle is-4">
+								{{ $tanggal_pinjam }}
 								</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Tanggal Max pengembalian</p>
-								<li class="subtitle is-4">{{ $transaksi->tanggal_jatuh_tempo }}</li>
+								<li class="subtitle is-4">{{ $tanggal_wajib_kembali }}</li>
 							</div>
 							<div class="wrap-info">
 								<p class="title is-6">Status Peminjaman</p>
 								<li class="subtitle is-4">	
-									@if ($transaksi->status_pnjm==1)
-										<span class="tag is-danger">Belum Di Pinjamkan</span>
-									@elseif($transaksi->status_pnjm==2)
+									@if($transaksi->status_transaksi==1)
+										<span class="tag is-warning">Pending</span>
+									@elseif($transaksi->status_transaksi==2)
 										<span class="tag is-primary">Di pinjamkan</span>
 									@endif
 								</li>
 							</div>
 						</ul>
 					</div>
-					@if ($transaksi->status_pnjm==0)
+					@if ($transaksi->status_transaksi==1)
 				<div class="columns is-multiline is-desktop is-mobile is-tablet">
 					<div class="column is-12-mobile is-4-tablet is-4-desktop">
 						<div class="field">
 							<p class="control">
-							<a href="{{ url('/buku') }}">
-								<button class="button is-default">Kembali</button>
-							</a>
+								<a href="{{ url('/buku') }}">
+									<button class="button is-default">Kembali</button>
+								</a>
 							</p>
 						</div>
 					</div>
@@ -106,12 +107,21 @@
 						</div>
 					</div>
 				</div>
-					@elseif($transaksi->status_pnjm==1)
-					<div class="column is-6-mobile is-6-tablet is-6-desktop">
+					@elseif($transaksi->status_transaksi==2)
+					<div class="column is-6-mobile is-6-tablet is-4-desktop">
 						<div class="field">
 							<p class="control">
 							<a href="{{ url('/buku') }}">
 								<button class="button is-default">Kembali</button>
+							</a>
+							</p>
+						</div>
+					</div>
+					<div class="column is-12-mobile is-4-tablet is-2-desktop">
+						<div class="field">
+							<p class="control">
+							<a href="{{ url('/profile/'.Auth::user()->username.'#list-transaksi') }}">
+								<button class="button is-primary">Lihat Transaksi</button>
 							</a>
 							</p>
 						</div>

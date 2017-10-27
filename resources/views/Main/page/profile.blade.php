@@ -1,6 +1,8 @@
 @extends('Main.layout.layout-app')
 @section('title') Profile @endsection
 @section('content')
+@include('Main.layout.notif-bubble')
+<a href="{{ url('/') }}" class="back-menu"><i class="fa fa-arrow-circle-left fa-lg"></i> Kembali</a>
 <div class="banner2"></div>
 <section id="profil">
 	<figure class="foto-siswa">
@@ -37,12 +39,7 @@
 						<a class="button is-primary" href="{{ url('/sunting-profile',$siswa->username) }}">Sunting
 						</a>
 					</div>
-					<div class="column is-3-tablet is-half-mobile is-2-tablet is-2-desktop">
-						<a class="button is-default" href="{{ url('/') }}">
-							Kembali
-						</a>
-					</div>
-					<div class="column is-offset-4-tablet is-2-tablet is-2-desktop is-offset-6-desktop">
+					<div class="column is-offset-4-tablet is-2-tablet is-4-desktop is-offset-6-desktop">
 						<a class="button is-danger" href="{{ url('/logout') }}">
 							Logout
 						</a>
@@ -51,154 +48,28 @@
 				</div>
 			</div>
 	<br>
-	<section id="list-rating">
+
+	<section id="list-transaksi">
 			<p class="title is-4 pinjaman">
-				Rating buku
+				Peminjaman Buku
 				<span class="icon is-small">
 					<i class="fa fa-chevron-down"></i>
 				</span>
 			</p>
-				<div class="columns is-multiline is-tablet is-mobile" id="rating">
-					<div class="column is-10-mobile is-offset-1-mobile is-10-tablet is-offset-1-tablet is-6-desktop is-offset-0-desktop book-rate">
-						<div class="columns is-multiline">
-								<div class="column is-half">
-				    					<figure class="image">
-				    					<a href="#">
-				    						<img src="{{ asset('/front-assets/img/buku4.jpg') }}" draggable="false">
-				    					</a>
-				    					</figure>
-				    			</div>
-								<div class="column is-half">
-									<b>X-MEN dan kawan kawan</b>
-									<span class="tag is-danger">blood</span>
-									<span class="tag is-primary">fantasy</span>
-									<p>tanggal pengembalian 30 jul 2012</p>
-									<br>
-									<span class="stars">
-										<span class="star"></span>
-										<span class="star"></span>
-										<span class="star"></span>
-										<span class="star"></span>
-										<span class="star"></span>
-									</span>
-							</div>
-						</div>
-					</div>
-					<div class="column is-10-mobile is-offset-1-mobile is-10-tablet is-offset-1-tablet is-6-desktop is-offset-0-desktop book-rate">
-						<div class="columns is-multiline">
-							<div class="column is-half">
-			    					<figure class="image">
-			    					<a href="#">
-			    						<img src="{{ asset('/front-assets/img/buku4.jpg') }}" draggable="false">
-			    					</a>
-			    					</figure>
-			    			</div>
-							<div class="column is-half">
-								<b>X-MEN dan kawan kawan</b>
-								<span class="tag is-danger">blood</span>
-								<span class="tag is-primary">fantasy</span>
-								<p>tanggal pengembalian 30 jul 2012</p>
-								<br>
-								
-									<span class="stars">
-										<span class="star"></span>
-										<span class="star"></span>
-										<span class="star"></span>
-										<span class="star"></span>
-										<span class="star"></span>
-									</span>
-							</div>
-						</div>
-					</div>
-				</div>
-	</section>
-	<br>
-	@if ($transaksi != null)
-		@if ($transaksi->status_pnjm == 0)
-		<section id="list-transaksi">
-			<p class="title is-4 pinjaman">
-					Pending Transaksi
-				<span class="icon is-small">
-					<i class="fa fa-chevron-down"></i>
-				</span>
-			</p>	
-				<div class="columns is-multiline">
-					<div class="column is-offset-4-desktop is-offset-3-tablet is-6-tablet is-10-mobile is-offset-1-mobile is-4-desktop">
-						<div class="card">
-			    				<div class="card-image">
-			    					<figure class="image is-1by1">
-			    					<a href="{{ url('/buku/detail/'.$transaksi->judul_slug) }}">
-			    						<img src="{{ asset('/admin-assets/foto_buku/'.$transaksi->foto_buku) }}" draggable="false">
-			    					</a>
-			    					</figure>
-			    				</div>
-			    				<div class="card-content">
-				 					<p class="title is-4">{{ $transaksi->judul_buku }}</p>
-										<small>1 Jan 2016 -
-										<span class="icon is-small">
-											<i class="fa fa-star"></i>
-										</span>
-										<span class="icon is-small">
-											<i class="fa fa-star"></i>
-										</span>
-										<span class="icon is-small">
-											<i class="fa fa-star"></i>
-										</span>
-										<span class="icon is-small">
-											<i class="fa fa-star-o"></i>
-										</span>
-										<span class="icon is-small">
-											<i class="fa fa-star-o"></i>
-										</span>
-										</small>
-					 				<div>
-						 				<a class="tag is-danger">blood</a>
-						 				<a class="tag is-success">comedy</a>
-					 				</div>
-				 				</div>
-				 				<div class="content">
-				 					<div class="columns is-gapless">
-				 						<div class="column is-10">
-					 						<a href="{{ url('/buku/detail-pinjam/'.$transaksi->id_transaksi.'/'.Auth::user()->username) }}">
-					 							<button class="button is-danger pinjam">Pending</button>
-					 						</a>
-				 						</div>
-				 						<div class="column is-2">
-				 							<button class="button is-inverted is-dark pinjam">
-				 								<span class="icon">
-				 									<i class="fa fa-heart-o animated pulse"></i>
-				 								</span>
-				 							</button>
-				 						</div>
-				 					</div>
-				 				</div>
-			 				</div>
-					</div>
-				</div>
-		</section>
-		@endif
-	<br>
-	<section id="list-pinjam">
-			<p class="title is-4 pinjaman">
-				Buku yang dipinjam
-				<span class="icon is-small">
-					<i class="fa fa-chevron-down"></i>
-				</span>
-			</p>	
 			<div class="columns is-multiline">
+				@foreach ($cek as $value)
 				<div class="column is-one-third-tablet is-10-mobile is-offset-1-mobile is-one-quarter-desktop">
-	@if ($transaksi->status_pnjm==1)
 					<div class="card">
 		    				<div class="card-image">
 		    					<figure class="image is-1by1">
-		    					<a href="{{ url('/buku/detail/'.$transaksi->judul_buku) }}">
-		    						<img src="{{ asset('/admin-assets/foto_buku/'.$transaksi->foto_buku) }}" draggable="false">
+		    					<a href="{{ url('/buku/detail',$value->judul_slug) }}">
+		    						<img src="{{ $value->foto_buku != NULL ? asset('/admin-assets/foto_buku/'.$value->foto_buku) : asset('/admin-assets/foto_buku/book.png') }}" draggable="false">
 		    					</a>
 		    					</figure>
 		    				</div>
 		    				<div class="card-content">
-			 					<p class="title is-4">{{ $transaksi->judul_buku }}</p>
-									<small>1 Jan 2016 -
+			 					<p class="title is-4">{{ $value->judul_buku }}</p>
+									<small>{{ $value->tanggal_upload }} -
 									<span class="icon is-small">
 										<i class="fa fa-star"></i>
 									</span>
@@ -216,15 +87,16 @@
 									</span>
 									</small>
 				 				<div>
-					 				<a class="tag is-danger">blood</a>
-					 				<a class="tag is-success">comedy</a>
+					 				<a class="tag is-danger">{{ $value->nama_kategori }}</a>
+					 				<a class="tag is-success">{{ $value->nama_sub }}</a>
 				 				</div>
 			 				</div>
 			 				<div class="content">
 			 					<div class="columns is-gapless">
 			 						<div class="column is-10">
-			 						<a href="{{ url('/buku/detail-pinjam/'.$transaksi->id_transaksi) }}"></a>
-			 							<button class="button is-borrow pinjam">Info Pinjam</button>
+			 							<a href="{{ url('/buku/detail-pinjam/'.$value->id_detail_transaksi.'/'.Auth::user()->username) }}">
+				 							<button class="button {{ $value->status_transaksi == 1 ? 'is-warning' : 'is-danger' }} pinjam">Detail Peminjaman</button>
+				 						</a>
 			 						</div>
 			 						<div class="column is-2">
 			 							<button class="button is-inverted is-dark pinjam">
@@ -235,17 +107,12 @@
 			 						</div>
 			 					</div>
 			 				</div>
-		 			</div>
-	@else
-		<h1 class="has-text-centered">
-			Tidak Ada Daftar Pinjam!
-		</h1>
-	@endif
+		 				</div>
 				</div>
-			</div>	
+				@endforeach
+			</div>
 	</section>
-	@endif
-	<br>		
+	<br>
 	<section id="wishlist">
 			<p class="title is-4 pinjaman">
 				Buku wishlist

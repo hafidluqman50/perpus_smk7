@@ -6,6 +6,7 @@
     background rgba(0,0,0, 0.4)
     display none
 #page-buku
+    padding-bottom 60px
     & > div
         padding 15px 0
         & > .column
@@ -21,10 +22,22 @@
         transition all 0.5s ease
         position fixed
         z-index 4
+        background #fff
+        aside > div
+            margin-bottom 30px
+            .menu-label
+                margin 0 0 5px
         & > .close-menu
             position absolute
             right 10px
             display none
+        .back-button
+            padding-bottom 5px
+            border-bottom 1px solid rgba(0,0,0,0.1)
+            a
+                vertical-align middle
+            i
+                vertical-align baseline
     & > .open-menu
         width 35px
         height 35px

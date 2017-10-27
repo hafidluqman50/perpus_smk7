@@ -14,7 +14,7 @@
 					  <div class="hero-body">
 					  	<div class="columns is-multiline is-mobile is-tablet">
 					  		<div class="column is-4-desktop books is-hidden-touch">
-					  			@foreach($foto_kategori as $foto)
+					  			@foreach($foto_sub as $foto)
 					  			<figure>
 					  				<img draggable="false" src="{{$foto->foto_buku != '' ? asset('/admin-assets/foto_buku/'.$foto->foto_buku) : asset('/admin-assets/foto_buku/book.png')}}" alt="">
 					  			</figure>
@@ -22,7 +22,7 @@
 					  		</div>
 					  		<div class="column">
 						  		<h4 class="title is-4">
-						  			{{ $nama_kategori }}
+						  			{{ $nama_sub }}
 						  		</h4>
 						  		<p class="subtitle is-6">
 						  			{{ $keterangan }}
@@ -38,7 +38,7 @@
 					<div class="card">
 	    				<div class="card-image">
 	    					<figure class="image is-1by1">
-	    					<a href="#">
+	    					<a href="{{ url('/buku/detail',$buku->judul_slug) }}">
 	    						<img src="{{ $buku->foto_buku != '' ? asset('/admin-assets/foto_buku/'.$buku->foto_buku) : asset('/admin-assets/foto_buku/book.png')}}" draggable="false">
 	    					</a>
 	    					</figure>

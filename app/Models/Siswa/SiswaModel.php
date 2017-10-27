@@ -9,7 +9,8 @@ class SiswaModel extends Model
   	protected $table = 'siswa';
   	protected $primaryKey = 'id_siswa';
   	protected $guarded = [];
-
+    protected $dates = ['deleted_at'];
+    
   	public function users()
   	{
   		return $this->belongsTo('App\User','username');

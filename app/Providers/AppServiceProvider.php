@@ -16,14 +16,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        
-        Blade::directive('admin',function(){
-            return "<?php if (Auth::user()->level==2): ?>";
-        });
-
-        Blade::directive('endadmin',function(){
-            return "<?php endif; ?>";
-        });
     }
 
     /**
@@ -33,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        require_once __DIR__ .'/../Helper/helper.php';
     }
 }

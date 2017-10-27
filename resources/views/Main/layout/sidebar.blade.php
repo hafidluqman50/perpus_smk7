@@ -17,7 +17,17 @@
 				  <ul class="menu-list">
 				  	<div class="field">
 						<p class="control">
-							<input class="input" type="text" placeholder="Judul buku">
+						<div class="columns is-multiline">
+								<div style="padding-bottom: 0px; padding-right: 0" class="column is-10">
+									<input class="input" type="text" placeholder="Judul buku">
+									
+								</div>
+								<div style="padding-bottom: 0px; padding-right: 0" class="column is-2">
+									<button type="submit" class="button is-primary">
+										<i class="fa fa-chevron-right" style="color:#fff"></i>
+									</button>									
+								</div>
+						</div>
 						</p>
 					</div>
 				  </ul>

@@ -170,7 +170,7 @@ class BukuController extends Controller
 
     public function DeleteBuku(Request $request,$id_buku)
     {
-    	$this->buku->where('id_buku',$id_buku)->delete();
+    	$this->buku->where('id_buku',$id_buku)->update(['status'=>'0']);
     	if ($request->segment(2)=="petugas") {
     		return redirect('/petugas/data-buku')->with('dlt_buku','Buku Telah Terhapus');
     	}

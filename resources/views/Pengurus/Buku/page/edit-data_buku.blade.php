@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app',['data'=>$notif])
+@extends('Pengurus.layout.layout-app')
 @section('title') Edit Data @endsection
 @section('content')
 	<div class="row">

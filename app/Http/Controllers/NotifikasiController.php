@@ -21,7 +21,7 @@ class NotifikasiController extends Controller
 	    			$nama = $explode[0];
 	    		}
 	    		$judul_buku = $value->judul_buku;
-	    		$jagaw = '
+	    		$jagaw[] = '
 	                    <li>
 	                        <a href="/petugas/atur-pinjaman/'.$value->id_detail_transaksi.'">
 	                            <span class="fa fa-user text-red"></span> '.$nama.' Ingin Pinjam Buku '.$judul_buku.'
@@ -50,7 +50,7 @@ class NotifikasiController extends Controller
 	    			$nama = $explode[0];
 	    		}
 	    		$judul_buku = $value->judul_buku;
-	    		$jagaw = '
+	    		$jagaw[] = '
 	                    <li>
 	                        <a href="/admin/atur-pinjaman/'.$value->id_detail_transaksi.'">
 	                            <span class="fa fa-user text-red"></span> '.$nama.' Ingin Pinjam Buku '.$judul_buku.'

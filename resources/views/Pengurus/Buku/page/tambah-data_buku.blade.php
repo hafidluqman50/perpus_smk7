@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app',['data'=>$notif])
+@extends('Pengurus.layout.layout-app')
 @section('title') Tambah Data Buku @endsection
 @section('content')
 	<div class="row">
@@ -127,11 +127,12 @@ $(function(){
   $('#kategori').change(function(){
     var kategori = $(this).val();
     $.ajax({
-      url: 'http://localhost:8000/buku/kategori/'+kategori,
+      url: 'http://localhost:8000/buku/get/kategori/'+kategori,
       type: 'GET',
     })
     .done(function(param) {
       $('#sub').attr('disabled',false);
+      // alert();
       $('#sub').each(function(){
         $(this).html(param);
       });

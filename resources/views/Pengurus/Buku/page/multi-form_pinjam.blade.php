@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app',['data'=>$notif])
+@extends('Pengurus.layout.layout-app')
 @section('title') Pinjam Buku @endsection
 @section('content')
 <h1 class="response"></h1>

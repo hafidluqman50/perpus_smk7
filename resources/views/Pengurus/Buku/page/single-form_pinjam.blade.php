@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app',['data'=>$notif])
+@extends('Pengurus.layout.layout-app')
 @section('title') Atur Transaksi @endsection
 @section('content')
 @if (session()->has('log'))

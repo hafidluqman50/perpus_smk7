@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\BukuModel as Buku;
 use App\Models\TransaksiBukuModel as Transaksi;
 use App\Models\KategoriBukuModel as Kategori;
 use App\Models\Siswa\SiswaModel as Siswa;
 use App\Models\Siswa\KelasSiswa as Kelas;
 use App\Models\SubKategoriModel as SubKategori;
-// use App\History;
 use App\Barcode;
 use Auth;
 use DB;
@@ -31,9 +31,15 @@ class BukuPageController extends Controller
                     ->leftJoin('sub_kategori','buku.id_sub_ktg','=','sub_kategori.id_sub_ktg')
                     ->leftJoin('kategori_buku','sub_kategori.id_kategori_buku','=','kategori_buku.id_kategori_buku')
                     ->select('buku.*','sub_kategori.*','kategori_buku.*')
+                    ->where('buku.status',1)
                     ->get();
         $notif = $this->transaksi->cek_transaksi();
     	return view('Pengurus.Buku.page.data_buku',compact('bukus','notif'));
+    }
+
+    public function RestApi() {
+        $buku = Buku::all()->where('status',2);
+        return response()->json($buku,200);
     }
 
     public function SimpanBuku()
@@ -131,9 +137,9 @@ class BukuPageController extends Controller
 
     public function DetailTransaksi($id)
     {
-        $detail = $this->transaksi->detail_transaksi($id);
+        $transaksi = $this->transaksi->get_transaksi($id);
         $notif  = $this->transaksi->cek_transaksi();
-        return view('Pengurus.Buku.page.detail-transaksi',compact('notif','detail'));
+        return view('Pengurus.Buku.page.detail-transaksi',compact('notif','transaksi'));
     }
 
     public function LihatTransaksi($id_transaksi)
@@ -159,11 +165,11 @@ class BukuPageController extends Controller
         return view('Pengurus.Buku.page.single-form_pinjam',compact('transaksi','notif'));
     }
 
-    public function DetailPeminjaman($id_transaksi) {
-        $transaksi = $this->transaksi->get_transaksi($id_transaksi);
-        $notif     = $this->transaksi->cek_transaksi();
-        return view('Pengurus.Buku.page.detail-data_peminjaman',compact('transaksi','notif'));
-    }
+    // public function DetailPeminjaman($id_transaksi) {
+    //     $transaksi = $this->transaksi->get_transaksi($id_transaksi);
+    //     $notif     = $this->transaksi->cek_transaksi();
+    //     return view('Pengurus.Buku.page.detail-data_peminjaman',compact('transaksi','notif'));
+    // }
 
     public function PerpanjangPinjamPage($id)
     {

@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app',['data'=>$notif])
+@extends('Pengurus.layout.layout-app')
 @section('title') Data Kategori @endsection
 @section('content')
 @if (session()->has('dlt_ktgr'))

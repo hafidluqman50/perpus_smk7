@@ -1,4 +1,4 @@
-@extends('Pengurus.layout.layout-app',['data'=>$notif])
+@extends('Pengurus.layout.layout-app')
 @section('title') Petugas @endsection
 @section('content')
 	{{-- @if ($petugas->nama_petugas==null && $petugas->nip==null && $petugas->jenis_kelamin==null)

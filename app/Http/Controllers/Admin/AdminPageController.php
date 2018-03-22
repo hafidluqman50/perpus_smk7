@@ -17,37 +17,30 @@ use Auth;
 use DB;
 
 class AdminPageController extends Controller
-{   
-    protected $transaksi;
-    
-    public function __construct(Transaksi $transaksi)
-    {
-        $this->transaksi = $transaksi;
-    }
-
+{  
     public function DashboardAdmin()
     {
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
     	return view('Pengurus.Admin.page.dashboard',compact('notif'));
     }
 
     public function ShowPetugas()
     {
         $data_petugas = Petugas::all();
-        $notif        = $this->transaksi->cek_transaksi();
+        $notif        = Transaksi::cek_transaksi();
     	return view('Pengurus.Admin.page.data_petugas',compact('data_petugas','notif'));
     }
 
     public function SimpanPetugas()
     {
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Admin.page.tambah-data_petugas','notif');
     }
 
     public function EditPetugas($id_petugas)
     {
         $data  = Petugas::with('user')->where('id_petugas',$id_petugas)->firstOrFail();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
     	return view('Pengurus.Admin.page.edit-data_petugas',compact('data','notif'));
     }
 
@@ -58,13 +51,13 @@ class AdminPageController extends Controller
                     ->join('users','siswa.username','=','users.username')
                     ->select('siswa.*','kelas_siswa.nama_kelas','users.status')
                     ->get();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Siswa.page.data_siswa',compact('siswa','notif'));
     }
 
     public function DetailSiswa($id_siswa)
     {
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Siswa.page.detail-data_siswa',compact('notif'));
     }
 
@@ -76,7 +69,7 @@ class AdminPageController extends Controller
                     ->select('buku.*','sub_kategori.*','kategori_buku.*')
                     ->where('buku.status',1)
                     ->get();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.data_buku',compact('bukus','notif'));
     }
 
@@ -88,13 +81,13 @@ class AdminPageController extends Controller
     public function SimpanBuku()
     {
         $kategoris = Kategori::select('id_kategori_buku','nama_kategori')->get();
-        $notif     = $this->transaksi->cek_transaksi();
+        $notif     = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.tambah-data_buku',compact('kategoris','notif'));
     }
 
     public function ImportBuku()
     {
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.import-buku',compact('notif'));
     }
 
@@ -102,7 +95,7 @@ class AdminPageController extends Controller
     {
         $buku      = Buku::with('kategori')->where('id_buku',$id_buku)->firstOrFail();
         $kategoris = Kategori::select('id_kategori_buku','nama_kategori')->get();
-        $notif     = $this->transaksi->cek_transaksi();
+        $notif     = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.edit-data_buku',compact('buku','kategoris','notif'));
     }
 
@@ -113,7 +106,7 @@ class AdminPageController extends Controller
                     ->join('kategori_buku','sub_kategori.id_kategori_buku','=','kategori_buku.id_kategori_buku')
                     ->select('buku.*','kategori_buku.*','sub_kategori.*')
                     ->first();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.detail-data_buku',compact('buku','notif'));
     }
 
@@ -121,41 +114,41 @@ class AdminPageController extends Controller
     {
         $kategoris = Kategori::all();
         $sub       = SubKategori::with('kategori')->get();
-        $notif     = $this->transaksi->cek_transaksi();
+        $notif     = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.data_kategori',compact('kategoris','sub','notif'));
     }
 
     public function SimpanKategori()
     {
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.tambah-data_kategori','notif');
     }
 
     public function DetailKategori($id_kategori_buku)
     {
         $kategori = Kategori::where('id_kategori_buku',$id_kategori_buku)->firstOrFail();
-        $notif    = $this->transaksi->cek_transaksi();
+        $notif    = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.detail-data_kategori',compact('kategori','notif'));
     }
 
     public function EditKategori($id_kategori_buku)
     {
         $kategori = Kategori::where('id_kategori_buku',$id_kategori_buku)->firstOrFail();
-        $notif    = $this->transaksi->cek_transaksi();
+        $notif    = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.edit-data_kategori',compact('kategori','notif'));
     }
 
     public function ShowSubKategori()
     {
         $sub   = SubKategori::with('kategori')->get();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.data_sub-kategori',compact('sub','notif'));
     }
 
     public function SimpanSubKategori()
     {
         $kategori = Kategori::all();
-        $notif    = $this->transaksi->cek_transaksi();
+        $notif    = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.tambah-data_sub',compact('kategori','notif'));
     }
 
@@ -167,26 +160,28 @@ class AdminPageController extends Controller
                      ->select('transaksi_buku.created_at','transaksi_buku.id_transaksi','transaksi_buku.ket','siswa.nama_siswa','siswa.nisn','kelas_siswa.nama_kelas')
                      ->orderBy('transaksi_buku.created_at','desc')
                      ->get();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.data_transaksi',compact('transaksi','notif'));
     }
 
     public function PinjamMultiForm()
     {
         $kelas = Kelas::all();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.multi-form_pinjam',compact('kelas','notif'));
     }
 
     public function DetailTransaksi($id)
     {
-        $transaksi = $this->transaksi->get_transaksi($id);
-        $notif  = $this->transaksi->cek_transaksi();
+        $model = new Transaksi;
+        $transaksi = $model->get_transaksi($id);
+        $notif     = $model->cek_transaksi();
         return view('Pengurus.Buku.page.detail-transaksi',compact('notif','transaksi'));
     }
 
     public function LihatTransaksi($id_transaksi)
     {
+        $model = new Transaksi;
         $lihat = DB::table('detail_transaksi')
                       ->join('transaksi_buku','detail_transaksi.id_transaksi','=','transaksi_buku.id_transaksi')
                       ->join('siswa','transaksi_buku.id_siswa','=','siswa.id_siswa')
@@ -195,36 +190,38 @@ class AdminPageController extends Controller
                       ->where('detail_transaksi.id_transaksi',$id_transaksi)
                       ->orderBy('detail_transaksi.updated_at','desc')
                       ->get();
-        $get_transaksi = $this->transaksi->where('id_transaksi',$id_transaksi)->firstOrFail();
+        $get_transaksi = $model->where('id_transaksi',$id_transaksi)->firstOrFail();
         $siswa         = Siswa::with('kelas')->where('id_siswa',$get_transaksi->id_siswa)->firstOrFail();
-        $notif         = $this->transaksi->cek_transaksi();
+        $notif         = $model->cek_transaksi();
         return view('Pengurus.Buku.page.lihat-transaksi',compact('lihat','notif','siswa'));
     }
 
     public function PinjamSingleForm($id)
     {
-        $transaksi = $this->transaksi->get_transaksi($id);
-        $notif     = $this->transaksi->cek_transaksi();
+        $model = new Transaksi;
+        $transaksi = $model->get_transaksi($id);
+        $notif     = $model->cek_transaksi();
         return view('Pengurus.Buku.page.single-form_pinjam',compact('transaksi','notif'));
     }
 
     // public function DetailPeminjaman($id_transaksi) {
-    //     $transaksi = $this->transaksi->get_transaksi($id_transaksi);
-    //     $notif     = $this->transaksi->cek_transaksi();
+    //     $transaksi = Transaksi::get_transaksi($id_transaksi);
+    //     $notif     = Transaksi::cek_transaksi();
     //     return view('Pengurus.Buku.page.detail-data_peminjaman',compact('transaksi','notif'));
     // }
 
     public function PerpanjangPinjamPage($id)
     {
-        $transaksi = $this->transaksi->get_transaksi($id);
-        $notif     = $this->transaksi->cek_transaksi();
+        $model = new Transaksi;
+        $transaksi = $model->get_transaksi($id);
+        $notif     = $model->cek_transaksi();
         return view('Pengurus.Buku.page.perpanjang-pinjam',compact('transaksi','notif'));
     }
 
     public function KembaliForm()
     {
         $kelas = Kelas::select('id_kelas','nama_kelas')->get();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.kembali_form',compact('kelas','notif'));
     }
 
@@ -244,19 +241,19 @@ class AdminPageController extends Controller
                          ->select('transaksi_buku.*','siswa.*','buku.*','kelas_siswa.nama_kelas','kategori_buku.*')
                          ->where('id_transaksi',$id_transaksi)
                          ->first();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.detail-data_pengembalian',compact('transaksi','notif'));
     }
 
     public function Barcode() {
         $data_barcode = Barcode::with('buku')->get();
-        $notif        = $this->transaksi->cek_transaksi();
+        $notif        = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.barcode-page',compact('data_barcode','notif'));
     }
 
     public function AddFormBarcode() {
         $bukus = Buku::all();
-        $notif = $this->transaksi->cek_transaksi();
+        $notif = Transaksi::cek_transaksi();
         return view('Pengurus.Buku.page.tambah-data_barcode',compact('bukus','notif'));
     }
 

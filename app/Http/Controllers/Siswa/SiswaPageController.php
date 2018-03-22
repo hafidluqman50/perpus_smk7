@@ -25,7 +25,7 @@ class SiswaPageController extends Controller
     public function Page()
     {
     	if (Auth::check()) {
-	    	$siswa = Siswa::with('kelas')->where('username',Auth::user()->username)->firstOrFail();
+	    	$siswa = Siswa::with('kelas')->where('id_users',Auth::id())->firstOrFail();
 	    	$explode = explode(" ",$siswa->nama_siswa);
 	    	if ($explode[0]=="M.") {
 	    		$nama_siswa = $explode[1];

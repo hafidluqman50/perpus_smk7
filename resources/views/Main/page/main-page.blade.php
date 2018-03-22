@@ -111,7 +111,7 @@
 			    				{{ $siswa->nama_siswa }}</li>
 			    			<p class="title is-5">Username</p>
 			    				<li class="subtitle is-4">
-			    				{{ $siswa->username }}</li>
+			    				{{ Auth::user()->username }}</li>
 			    			<p class="title is-5">Kelas</p>	
 			    				<li class="subtitle is-4">
 			    				{{ $siswa->kelas->nama_kelas }}</li>

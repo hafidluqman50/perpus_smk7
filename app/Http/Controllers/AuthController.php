@@ -17,8 +17,8 @@ class AuthController extends Controller
     	$username = $request->username;
     	$password = $request->password;
     	if (Auth::attempt(['username' => $username, 'password' => $password, 'status'=> 1 ])) {
-            // dd(Auth::check());
-            $this->updateLastLogin(Auth::id());
+            // dd(Auth::user()->username);
+            User::updateLastLogin(Auth::id());
             if (Auth::user()->level==0) {
     			return redirect()->intended('/');
             }
@@ -50,12 +50,6 @@ class AuthController extends Controller
             }
             return redirect('/login-form')->with('fail',$data);
     	}
-    }
-
-    public function updateLastLogin($login_id)
-    {
-        $users = new User;
-        $users->where('id',$login_id)->update(['last_login'=>date('Y-m-d H:i:s')]);
     }
 
     public function AuthLogout()
